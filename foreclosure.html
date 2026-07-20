@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facing Foreclosure in BC? We Can Help | James Park Mortgage</title>
+<meta name="description" content="Confidential, no-cost foreclosure strategy session. Refinance, sell, or stop the clock — real options, explained by a licensed BC mortgage broker.">
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['foreclosure.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/lead-capture.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#1A2B3C; --ink-soft:#4A5F72; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-dark:#C4291B; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:center;padding:14px 24px;}
+  .brand-logo img{height:64px;display:block;}
+
+  main{padding:0 0 80px;}
+
+  .urgent-band{background:var(--ink);color:#fff;text-align:center;padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:0.03em;}
+  .urgent-band .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--coral);margin-right:8px;animation:pulse-dot 1.6s infinite;}
+  @keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+  .hero{padding:44px 0 8px;text-align:center;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--coral-dark);margin-bottom:14px;}
+  h1{font-size:clamp(28px,4.2vw,42px);line-height:1.16;margin-bottom:16px;max-width:18ch;margin-left:auto;margin-right:auto;}
+  p.sub{font-size:16px;color:var(--ink-soft);line-height:1.65;max-width:56ch;margin:0 auto 28px;}
+
+  .video-frame{max-width:720px;margin:0 auto 8px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-md);background:#0B1520;background-size:cover;background-position:center;position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;}
+  .video-frame .play-badge{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;}
+  .video-frame .video-caption{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(to top, rgba(0,0,0,0.65), transparent);color:#fff;font-size:13px;font-weight:600;text-align:left;}
+
+  .trust-bar{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin:26px 0 40px;}
+  .trust-bar span{font-size:12.5px;font-weight:600;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .trust-bar span::before{content:"✓";color:var(--brand);font-weight:800;}
+
+  .help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
+  .help-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow-sm);text-align:left;}
+  .help-card .hc-icon{width:42px;height:42px;border-radius:11px;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:14px;}
+  .help-card h3{font-size:15.5px;margin-bottom:8px;}
+  .help-card p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;}
+  @media (max-width:760px){ .help-grid{grid-template-columns:1fr;} }
+
+  .form-module{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:36px;box-shadow:var(--shadow-md);max-width:520px;margin:0 auto;}
+  .form-module h2{font-size:20px;text-align:center;margin-bottom:6px;}
+  .form-module p.formsub{text-align:center;font-size:13.5px;color:var(--ink-soft);margin:0 0 24px;line-height:1.5;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input, .field textarea{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .field textarea{resize:vertical;min-height:90px;}
+  .field input:focus, .field textarea:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+  .error-msg{display:none;background:var(--coral-wash);color:var(--coral);font-size:12.5px;border-radius:8px;padding:10px 14px;margin-bottom:14px;}
+  .error-msg.show{display:block;}
+  .btn-urgent{width:100%;background:var(--coral);color:#fff;border:none;font-weight:700;font-size:15.5px;padding:15px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .btn-urgent:hover{background:var(--coral-dark);}
+  .form-privacy{text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:14px;line-height:1.6;}
+
+  .success-box{display:none;text-align:center;}
+  .success-box.show{display:block;}
+  .form-body.hide{display:none;}
+  .success-icon{width:56px;height:56px;border-radius:50%;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin:0 auto 16px;}
+
+  footer.site-footer{border-top:1px solid var(--border);padding:32px 0 24px;margin-top:56px;text-align:center;}
+  footer.site-footer .foot-contact{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px;}
+  footer.site-footer .foot-contact a{font-weight:700;color:var(--brand-dark);}
+  footer.site-footer .disclaimer{font-size:10.5px;color:var(--ink-faint);line-height:1.6;max-width:640px;margin:0 auto;}
+</style>
+</head>
+<body>
+
+<div class="urgent-band"><span class="dot"></span>CONFIDENTIAL &amp; URGENT — Free Foreclosure Strategy Session Available Now</div>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <span class="kicker">Confidential Foreclosure Strategy Session</span>
+    <h1>Behind on Your Mortgage? You Have More Options Than You Think.</h1>
+    <p class="sub">A foreclosure notice isn't the end of the road — it's a deadline to act. In a free, confidential call, we'll walk through exactly what's possible for your situation before any decisions get made for you.</p>
+  </div>
+
+  <!-- VIDEO: set the real YouTube URL from admin.html → Video Pages. Falls back to a placeholder until set. -->
+  <div class="video-frame" id="fcVideoFrame">
+    <div class="play-badge">▶</div>
+    <div class="video-caption">Watch: How we help BC homeowners facing foreclosure</div>
+  </div>
+
+  <div class="trust-bar">
+    <span>Licensed BC Mortgage Broker</span>
+    <span>100% Confidential</span>
+    <span>No Cost, No Obligation</span>
+  </div>
+
+  <div class="help-grid">
+    <div class="help-card">
+      <div class="hc-icon">🔄</div>
+      <h3>Refinance &amp; Catch Up</h3>
+      <p>If there's equity in your home, we may be able to restructure your mortgage and bring you current — no need to sell.</p>
+    </div>
+    <div class="help-card">
+      <div class="hc-icon">🏡</div>
+      <h3>Sell On Your Terms</h3>
+      <p>If selling makes more sense, we'll connect you with a realtor who moves fast — so you walk away with equity, not a foreclosure on record.</p>
+    </div>
+    <div class="help-card">
+      <div class="hc-icon">⏱️</div>
+      <h3>Stop the Clock</h3>
+      <p>The earlier you act, the more options stay open. We'll tell you plainly what your timeline actually looks like.</p>
+    </div>
+  </div>
+
+  <div class="form-module">
+    <div class="form-body" id="fcFormBody">
+      <h2>Get Your Free Strategy Session</h2>
+      <p class="formsub">Tell us a bit about your situation. James reviews every submission personally and responds fast.</p>
+      <div class="error-msg" id="fcError">Please fill in your name, email, and phone number.</div>
+      <div class="field"><label>Full name</label><input type="text" id="fc-name" placeholder="Jane Doe"></div>
+      <div class="field"><label>Email</label><input type="text" id="fc-email" placeholder="jane@example.com"></div>
+      <div class="field"><label>Phone</label><input type="text" id="fc-phone" placeholder="(604) 555-0100"></div>
+      <div class="field" style="margin-bottom:0;">
+        <label>More information <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
+        <textarea id="fc-info" placeholder="Tell us anything that would help — how far behind, whether you've received a notice, what you're hoping for..."></textarea>
+      </div>
+      <button class="btn-urgent" onclick="submitForeclosureForm()">Get My Free Strategy Session →</button>
+      <p class="form-privacy">Your information is kept strictly confidential and is never sold or shared with anyone outside our team.</p>
+    </div>
+    <div class="success-box" id="fcSuccess">
+      <div class="success-icon">✓</div>
+      <h2 id="fcSuccessName">You're all set.</h2>
+      <p class="formsub">James has your file and will reach out shortly to schedule your strategy session. If it's urgent, call <a href="tel:7782227109" style="color:var(--brand-dark);font-weight:700;">778-222-7109</a> directly.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-contact">Questions? Call or text <a href="tel:7782227109">778-222-7109</a> — James Park, Licensed Mortgage Broker, BC #503774</div>
+  <div class="foot-contact">Or reach Gennady Krivoy, Licensed Realtor, at <a href="tel:6044462929">604-446-2929</a> or <a href="mailto:hhrealtor@proton.me">hhrealtor@proton.me</a></div>
+  <div class="disclaimer">This is not intended as an offer to sell or a solicitation of an offer to buy, including a solicitation of any sales representative or broker currently under contract. © 2026 James Park Mortgage.</div>
+</footer>
+
+<script>
+  function youtubeEmbedUrl(url){
+    if(!url) return null;
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/);
+    return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+  }
+  async function loadForeclosureVideo(){
+    const { data, error } = await sb.from('video_campaigns').select('video_url, thumbnail_url').eq('id', 'foreclosure').maybeSingle();
+    if(error){ console.error('[Supabase] video load failed', error); return; }
+    if(!data) return;
+    const frame = document.getElementById('fcVideoFrame');
+    if(data.thumbnail_url) frame.style.backgroundImage = `url('${data.thumbnail_url}')`;
+    const embedUrl = youtubeEmbedUrl(data.video_url);
+    if(!embedUrl) return; // keep the poster/placeholder until a video URL is set
+    frame.innerHTML = `<iframe src="${embedUrl}" title="Foreclosure Strategy Session" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  }
+  loadForeclosureVideo();
+
+  async function submitForeclosureForm(){
+    const name = document.getElementById('fc-name').value.trim();
+    const email = document.getElementById('fc-email').value.trim();
+    const phone = document.getElementById('fc-phone').value.trim();
+    const info = document.getElementById('fc-info').value.trim();
+    const errorEl = document.getElementById('fcError');
+    if(!name || !email || !phone){
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+
+    const todayStr = new Date().toISOString().slice(0,10);
+    const nameParts = name.split(' ');
+    const newLead = {
+      id: 'lead-foreclosure-' + Date.now(), code: null, name, firstName: nameParts[0] || name, lastName: nameParts.slice(1).join(' '),
+      email, phone, city: '—', purposeType: 'Foreclosure Assistance', keyDate: todayStr,
+      amount: 0, gds: 0, tds: 0, credit: '—', score: 0, temperature: 'hot',
+      notes: [{text: info ? ('Submitted via foreclosure landing page. More info: ' + info) : 'Submitted via foreclosure landing page.', date: timestamp()}],
+      scoreLog: [], registered: todayStr, pipeline: 'Foreclosures Pipeline', stage: 'Flyer Sent 1x',
+      opens: 0, clicks: 0, custom: {},
+      assignedPartnerId: 'gennady-krivoy', assignedPartnerName: 'Gennady Krivoy', partnerStage: 'New'
+    };
+    const { error } = await sb.from('leads').insert({ id: newLead.id, record_type: 'lead', email, data: newLead });
+    if(error){
+      console.error('[Supabase] foreclosure lead insert failed', error);
+      errorEl.textContent = 'Something went wrong submitting your info — please call 778-222-7109 directly.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const subject = 'New Foreclosure Lead — ' + name;
+    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMore information:\n${info || '(none provided)'}`;
+    const key = 'jp_email_log_v1';
+    let log;
+    try { log = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){ log = []; }
+    log.push({id:'email'+Date.now()+'-fc-james', to:'james@jamespark.ca', subject, body, when: timestamp(), read:false});
+    log.push({id:'email'+Date.now()+'-fc-gennady', to:'hhrealtor@proton.me', subject, body, when: timestamp(), read:false});
+    localStorage.setItem(key, JSON.stringify(log));
+    sendRealEmail('james@jamespark.ca', subject, body.replace(/\n/g, '<br>'));
+    sendRealEmail('hhrealtor@proton.me', subject, body.replace(/\n/g, '<br>'));
+
+    document.getElementById('fcSuccessName').textContent = name.split(' ')[0] + ', you\'re all set.';
+    document.getElementById('fcFormBody').classList.add('hide');
+    document.getElementById('fcSuccess').classList.add('show');
+  }
+</script>
+
+</body>
+</html>

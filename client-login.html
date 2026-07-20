@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Login | Track Your Mortgage File | James Park</title>
+<meta name="description" content="Log in to check your pre-qualification status, key dates, and download your certificate anytime.">
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['client-login.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/lead-capture.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF; --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:center;padding:10px 28px;}
+
+  main{padding:56px 20px 90px;display:flex;justify-content:center;}
+  .card{width:100%;max-width:460px;}
+  .card.wide{max-width:600px;}
+
+  .kicker{display:block;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px;}
+  h1{font-size:26px;text-align:center;margin-bottom:8px;}
+  p.sub{font-size:14.5px;color:var(--ink-soft);text-align:center;line-height:1.6;margin-bottom:28px;}
+
+  .module{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .field input:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+
+  .btn-primary{width:100%;background:var(--brand);color:#fff;border:none;font-weight:700;font-size:15px;padding:14px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .btn-primary:hover{background:var(--brand-dark);}
+  .btn-ghost{width:100%;background:var(--surface);color:var(--ink-soft);border:1.5px solid var(--border-strong);font-weight:600;font-size:14px;padding:13px;border-radius:12px;cursor:pointer;margin-top:10px;}
+  .btn-ghost:hover{border-color:var(--ink-soft);}
+
+  .foot-link{text-align:center;margin-top:18px;font-size:13px;color:var(--ink-soft);}
+  .foot-link a{color:var(--brand-dark);font-weight:700;}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .error-msg{background:var(--coral-wash);color:var(--coral);font-size:12.5px;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:none;}
+  .error-msg.show{display:block;}
+
+  .dash-head{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .dash-head .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex-shrink:0;}
+  .dash-head .name{font-weight:700;font-size:17px;}
+  .dash-head .since{font-size:12.5px;color:var(--ink-soft);}
+  .dash-head .logout{margin-left:auto;background:none;border:none;color:var(--ink-soft);font-size:12.5px;font-weight:600;cursor:pointer;text-decoration:underline;}
+
+  .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+  .row:last-child{border-bottom:none;}
+  .row span:first-child{color:var(--ink-soft);}
+  .row span:last-child{font-weight:700;font-family:'IBM Plex Mono',monospace;}
+
+  .contact-title{font-weight:700;font-size:14.5px;margin-bottom:14px;}
+  .expiry-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--amber-wash);color:var(--amber);border:1px solid rgba(181,71,8,0.25);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;font-weight:600;flex-wrap:wrap;}
+  .expiry-banner.expired{background:var(--coral-wash);color:var(--coral);border-color:rgba(240,68,56,0.25);}
+  .expiry-renew-btn{background:var(--ink);color:#fff;border:none;font-weight:700;font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer;flex-shrink:0;}
+  .field textarea{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;resize:vertical;}
+  .field textarea:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+  .msg-sent{display:none;font-size:12.5px;color:var(--brand-dark);margin-top:10px;text-align:center;}
+  .msg-sent.show{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;"><img src="james-park-logo.png" alt="James Park MortgagePal" height="90"><span style="font-size:12px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.05em;">Client Login</span></a>
+  </nav>
+</header>
+
+<main>
+  <div class="card" id="cardWrap">
+
+    <!-- LOGIN VIEW -->
+    <div class="view active" id="view-login">
+      <span class="kicker">Client Login</span>
+      <h1>Check your file status</h1>
+      <p class="sub">Log in with the email and password you set when you downloaded your pre-qualification certificate.</p>
+
+      <div class="module">
+        <div class="error-msg" id="loginError">We couldn't find a matching account — check your email and password, or create an account from the homepage estimator first.</div>
+        <div class="field"><label>Email</label><input type="text" id="login-email" placeholder="jane@example.com"></div>
+        <div class="field" style="margin-bottom:0;"><label>Password</label><input type="password" id="login-password" placeholder="Your password"></div>
+        <button class="btn-primary" onclick="doClientLogin()">Log in →</button>
+      </div>
+      <p class="foot-link">Don't have an account yet? <a href="index.html#estimator">Run the pre-qualification estimator</a> on the homepage to create one.</p>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div class="view" id="view-dash">
+      <div class="expiry-banner" id="expiryBanner" style="display:none;">
+        <span id="expiryBannerText"></span>
+        <button class="expiry-renew-btn" onclick="location.href='index.html#estimator'">Renew Now →</button>
+      </div>
+
+      <div class="module">
+        <div class="dash-head">
+          <div class="avatar" id="dashAvatar">—</div>
+          <div>
+            <div class="name" id="dashName">—</div>
+            <div class="since" id="dashSince">—</div>
+          </div>
+          <button class="logout" onclick="doClientLogout()">Log out</button>
+        </div>
+
+        <div class="row"><span>Goal</span><span id="dashGoal">—</span></div>
+        <div class="row"><span>Pre-qualification code</span><span>
+          <span id="dashCode" class="mono">—</span>
+          <button id="dashCodeCopyBtn" onclick="copyDashCode()" aria-label="Copy code" title="Copy code" style="background:none;border:none;cursor:pointer;font-size:13px;margin-left:6px;">📋</button>
+        </span></div>
+        <div class="row"><span>Registered</span><span id="dashRegistered">—</span></div>
+        <div class="row"><span id="dashAmountLbl">Estimated mortgage amount</span><span id="dashAmount">—</span></div>
+
+        <button class="btn-primary" onclick="downloadMyCertificate()">📄 Re-download My Certificate</button>
+        <button class="btn-ghost" onclick="location.href='index.html'">Back to homepage</button>
+      </div>
+
+      <div class="module">
+        <div class="contact-title">Your mortgage broker</div>
+        <div class="row"><span>Name</span><span>James Park</span></div>
+        <div class="row"><span>Phone</span><span>778-222-7109</span></div>
+        <div class="row"><span>Email</span><span>james@jamespark.ca</span></div>
+        <div class="field" style="margin-top:16px;margin-bottom:0;">
+          <label>Send James a message</label>
+          <textarea id="clientMessageBox" rows="4" placeholder="Type a message for James..."></textarea>
+        </div>
+        <button class="btn-primary" onclick="sendClientMessage()">Send Message</button>
+        <div class="msg-sent" id="clientMessageSent">Message sent — James will get back to you shortly.</div>
+      </div>
+    </div>
+
+    <!-- NO FILE MATCHED VIEW -->
+    <div class="view" id="view-none">
+      <span class="kicker">Client Login</span>
+      <h1>No file found yet</h1>
+      <p class="sub">You're logged in as <strong id="noneEmail">—</strong>, but we don't have a pre-qualification file matched to this account yet.</p>
+      <div class="module">
+        <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 18px;">Run the pre-qualification estimator to create your file, or contact James if you believe this is a mistake.</p>
+        <button class="btn-primary" onclick="location.href='index.html#estimator'">Run the estimator</button>
+        <button class="btn-ghost" onclick="doClientLogout()">Log out</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  let currentClientLead = null;
+  let currentClientSession = null;
+
+  async function bootstrapClient(){
+    const { data: { session } } = await sb.auth.getSession();
+    if(!session) return;
+    await loadClientDashboard(session);
+    sb.auth.onAuthStateChange((event) => { if(event === 'SIGNED_OUT') location.reload(); });
+  }
+
+  async function loadClientDashboard(session){
+    currentClientSession = session;
+    const { data, error } = await sb.from('leads').select('data').eq('email', session.user.email)
+      .order('created_at', { ascending: false }).limit(1).maybeSingle();
+    if(error){ console.error('[Supabase] client lead lookup failed', error); toast('Could not load your file — refresh to retry.'); return; }
+    currentClientLead = data ? data.data : null;
+    renderDashboard(session, currentClientLead);
+  }
+
+  async function doClientLogin(){
+    const email = document.getElementById('login-email').value.trim();
+    const pw = document.getElementById('login-password').value;
+    document.getElementById('loginError').classList.remove('show');
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
+    if(error){
+      document.getElementById('loginError').classList.add('show');
+      return;
+    }
+    await loadClientDashboard(data.session);
+  }
+  async function doClientLogout(){
+    await sb.auth.signOut();
+    currentClientLead = null;
+    currentClientSession = null;
+    document.getElementById('view-dash').classList.remove('active');
+    document.getElementById('view-none').classList.remove('active');
+    document.getElementById('view-login').classList.add('active');
+    document.getElementById('login-password').value = '';
+  }
+
+  function renderDashboard(session, lead){
+    document.getElementById('view-login').classList.remove('active');
+
+    if(!lead){
+      document.getElementById('view-dash').classList.remove('active');
+      document.getElementById('noneEmail').textContent = session.user.email;
+      document.getElementById('view-none').classList.add('active');
+      return;
+    }
+    document.getElementById('view-none').classList.remove('active');
+    document.getElementById('view-dash').classList.add('active');
+
+    const isStrategy = lead.purposeType === 'Burn My Mortgage Strategy';
+    const initials = lead.name.split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('dashAvatar').textContent = initials;
+    document.getElementById('dashName').textContent = lead.name;
+    document.getElementById('dashSince').textContent = 'Client since ' + lead.registered;
+    document.getElementById('dashCode').innerHTML = '<span style="color:#2563EB;font-weight:800;">' + lead.code.slice(0,6) + '</span>' + lead.code.slice(6);
+    if(isStrategy){
+      document.getElementById('dashAmountLbl').textContent = 'Freedom number';
+      document.getElementById('dashAmount').textContent = lead.certificatePayload ? lead.certificatePayload.bestTotalFormatted : '—';
+    } else {
+      document.getElementById('dashAmountLbl').textContent = 'Estimated mortgage amount';
+      document.getElementById('dashAmount').textContent = lead.certificatePayload ? lead.certificatePayload.mortgageFormatted : '—';
+    }
+
+    document.getElementById('dashRegistered').textContent = lead.registered;
+    document.getElementById('dashGoal').textContent = isStrategy ? 'Debt-Free Strategy' : (lead.pipeline || '').replace(' Pipeline', '') || '—';
+
+    const banner = document.getElementById('expiryBanner');
+    if(lead.registered){
+      const daysOld = Math.floor((Date.now() - new Date(lead.registered + 'T12:00:00').getTime()) / 86400000);
+      const daysLeft = 90 - daysOld;
+      if(daysLeft <= 0){
+        banner.classList.add('expired');
+        document.getElementById('expiryBannerText').textContent = '⚠️ Your pre-qualification has expired. Renew to lock in a current rate hold.';
+        banner.style.display = 'flex';
+      } else if(daysLeft <= 15){
+        banner.classList.remove('expired');
+        document.getElementById('expiryBannerText').textContent = `⏳ Your pre-qualification expires in ${daysLeft} day${daysLeft === 1 ? '' : 's'} — renew now to keep your rate hold active.`;
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
+  async function sendClientMessage(){
+    if(!currentClientLead || !currentClientSession) return;
+    const box = document.getElementById('clientMessageBox');
+    const message = box.value.trim();
+    if(!message) return;
+    const key = 'jp_email_log_v1';
+    let log;
+    try { log = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){ log = []; }
+    const subject = 'Message from ' + currentClientLead.name + ' (client portal)';
+    const body = `${currentClientLead.name} (${currentClientSession.user.email}) sent a message from their client dashboard:\n\n${message}`;
+    log.push({id:'email'+Date.now()+'-clientmsg', to:'james@jamespark.ca', subject, body, when: timestamp(), read:false});
+    localStorage.setItem(key, JSON.stringify(log));
+    await sendRealEmail('james@jamespark.ca', subject, body.replace(/\n/g, '<br>'));
+    box.value = '';
+    document.getElementById('clientMessageSent').classList.add('show');
+    setTimeout(() => document.getElementById('clientMessageSent').classList.remove('show'), 4000);
+  }
+
+  function certificateRows(payload, type){
+    if(type === 'burn-strategy'){
+      return `
+    <div class="row"><span>Mortgage balance</span><span>${payload.balanceFormatted} at ${payload.rate}%, ${payload.years}yr</span></div>
+    <div class="row"><span>Extra monthly payment</span><span>$${Math.round(payload.extraMonthly).toLocaleString()}/mo</span></div>
+    <div class="row"><span>Best Strategy freedom number</span><span>${payload.bestTotalFormatted}</span></div>
+    <div class="row"><span>Interest saved</span><span>${payload.bestInterestSavedFormatted}</span></div>
+    <div class="row"><span>Time shaved off mortgage</span><span>${payload.bestShavedFormatted}</span></div>`;
+    }
+    return `
+    <div class="row"><span>Purpose</span><span>${payload.purpose} — ${payload.city}</span></div>
+    <div class="row"><span>Estimated mortgage amount</span><span>${payload.mortgageFormatted}</span></div>
+    <div class="row"><span>Estimated monthly payment</span><span>${payload.paymentFormatted}</span></div>
+    <div class="row"><span>Credit band</span><span>${payload.credit}</span></div>
+    <div class="row"><span>Pre-qualification result</span><span>${payload.clientVerdictLabel || payload.verdictLabel}</span></div>`;
+  }
+  function buildCertificateHTML(payload, contact, type){
+    const issued = new Date().toLocaleDateString('en-CA', {year:'numeric', month:'long', day:'numeric'});
+    const isStrategy = type === 'burn-strategy';
+    const title = isStrategy ? 'Freedom Strategy Certificate' : 'Pre-Qualification Certificate';
+    const logoUrl = new URL('james-park-logo.png', window.location.href).href;
+    const disclosure = 'This pre-qualification is subject to a full mortgage application, pre-approval with a rate hold, and full underwriting and lender review and approval.';
+    const footMsg = isStrategy
+      ? 'This certificate reflects a self-reported strategy estimate, not a formal lender commitment. James Park reviews every file personally before anything is final. Valid as a good-faith summary for 90 days from the issue date above.'
+      : 'This certificate reflects a self-reported pre-qualification estimate, not a formal lender pre-approval or a guarantee of financing. James Park reviews every application personally before anything is final. Valid as a good-faith summary for 90 days from the issue date above.';
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title} — ${payload.code}</title>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;background:#FAFAFB;color:#234361;padding:60px 24px;}
+  .cert{max-width:640px;margin:0 auto;background:#fff;border:1px solid rgba(35,67,97,0.12);border-radius:22px;padding:48px;box-shadow:0 12px 32px rgba(35,67,97,0.10);}
+  .logo{display:block;margin:0 auto 14px;height:40px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F9F6B;text-align:center;display:block;margin-bottom:10px;}
+  h1{text-align:center;font-size:26px;margin:0 0 6px;}
+  .sub{text-align:center;color:#52697D;font-size:13.5px;margin-bottom:4px;}
+  .contact-line{text-align:center;color:#52697D;font-size:12px;margin-bottom:28px;}
+  .code{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:800;letter-spacing:0.05em;background:#E8F8F0;color:#24805A;border-radius:12px;padding:14px;margin-bottom:28px;}
+  .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(35,67,97,0.10);font-size:14px;}
+  .row:last-of-type{border-bottom:none;}
+  .row span:first-child{color:#52697D;}
+  .row span:last-child{font-weight:700;font-family:'IBM Plex Mono',monospace;}
+  .foot{margin-top:32px;font-size:11.5px;color:#8B99A6;line-height:1.7;text-align:center;}
+  .print-btn{display:block;width:100%;margin-top:28px;background:#2F9F6B;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;}
+  @media print{ .print-btn{display:none;} body{background:#fff;padding:0;} .cert{box-shadow:none;border:none;} }
+</style></head><body>
+  <div class="cert">
+    <img class="logo" src="${logoUrl}" alt="James Park Mortgage">
+    <span class="kicker">James Park Mortgage — ${title}</span>
+    <h1>${contact.name}</h1>
+    <p class="sub">Issued ${issued} · Licensed Mortgage Broker, BC #503774</p>
+    <p class="contact-line">james@jamespark.ca &nbsp;·&nbsp; 778-222-7109</p>
+    <div class="code">${payload.code}</div>${certificateRows(payload, type)}
+    <div class="foot"><strong>${disclosure}</strong><br><br>${footMsg}</div>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+</body></html>`;
+  }
+  function downloadMyCertificate(){
+    if(!currentClientLead || !currentClientLead.certificatePayload) return;
+    const type = currentClientLead.purposeType === 'Burn My Mortgage Strategy' ? 'burn-strategy' : 'prequal';
+    const html = buildCertificateHTML(currentClientLead.certificatePayload, {name: currentClientLead.name, email: currentClientLead.email, phone: currentClientLead.phone}, type);
+    const blob = new Blob([html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+  function copyDashCode(){
+    if(!currentClientLead) return;
+    const btn = document.getElementById('dashCodeCopyBtn');
+    const original = btn.textContent;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(currentClientLead.code).then(() => {
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      }).catch(() => {});
+    }
+  }
+
+  bootstrapClient();
+</script>
+
+</body>
+</html>

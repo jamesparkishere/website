@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find a Trusted Partner in Vancouver & Burnaby | James Park</title>
+<meta name="description" content="Connect with vetted lawyers, notaries, financial planners, insurance agents, and accountants serving Vancouver, Burnaby, and BC.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['find-a-partner.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--brand);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-toggle.active{color:var(--brand);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;}
+  .btn-cta-sm{background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;}
+  .btn-cta-sm:hover{background:var(--brand-dark);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  main{padding:44px 0 90px;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px;text-align:center;}
+  h1{font-size:clamp(28px,3.6vw,38px);text-align:center;margin-bottom:10px;}
+  p.sub{font-size:15.5px;color:var(--ink-soft);text-align:center;max-width:56ch;margin:0 auto 12px;line-height:1.6;}
+  .join-link{display:block;text-align:center;font-size:13.5px;font-weight:700;color:var(--brand);margin-bottom:28px;}
+  .join-link:hover{text-decoration:underline;}
+
+  .filter-row{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+  .filter-row input, .filter-row select{padding:12px 16px;border-radius:10px;border:1.5px solid var(--border-strong);font-size:13.5px;background:var(--surface);font-family:inherit;}
+  .filter-row input{flex:1;min-width:220px;}
+  .filter-row input:focus, .filter-row select:focus{outline:none;border-color:var(--brand);}
+
+  .loc-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:28px;}
+  .loc-label{font-size:13px;font-weight:700;}
+  .loc-hint{font-weight:400;color:var(--ink-faint);font-size:12px;}
+  .city-search-input{width:100%;max-width:320px;padding:9px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:13px;margin:10px 0 14px;font-family:inherit;}
+  .city-search-input:focus{outline:none;border-color:var(--brand);}
+  .city-btn-grid{display:flex;flex-wrap:wrap;gap:8px;max-height:160px;overflow-y:auto;}
+  .city-btn{padding:7px 14px;border-radius:999px;border:1.5px solid var(--border-strong);background:var(--bg);color:var(--ink-soft);font-size:12.5px;font-weight:600;cursor:pointer;}
+  .city-btn.selected{background:var(--brand);border-color:var(--brand);color:#fff;}
+  .city-btn:disabled{opacity:0.35;cursor:not-allowed;}
+
+  .partner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+  .partner-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);}
+  .partner-card .avatar{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;overflow:hidden;}
+  .partner-card .avatar img{width:100%;height:100%;object-fit:cover;}
+  .partner-card .name{font-weight:700;font-size:14px;}
+  .partner-card .role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
+  .partner-card .stars{color:#F5A623;font-size:12px;letter-spacing:1px;margin:3px 0;}
+  .partner-card .contact{font-size:12px;color:var(--ink-soft);line-height:1.6;}
+  .partner-card .contact a{color:var(--brand-dark);text-decoration:none;}
+  .partner-card .btn-view{display:inline-block;margin-top:6px;background:var(--ink);color:#fff;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:7px;}
+  .partner-card .btn-view:hover{background:var(--brand-dark);}
+
+  .empty-state{text-align:center;padding:60px 20px;color:var(--ink-faint);font-size:14px;}
+
+  footer.site-footer{border-top:1px solid var(--border);background:var(--surface);padding:40px 0 24px;margin-top:40px;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;margin-bottom:28px;}
+  .footer-grid h4{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);margin-bottom:12px;}
+  .footer-grid a{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
+  .footer-grid a:hover{color:var(--brand);}
+  .footer-grid p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0;}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:18px;font-size:12px;color:var(--ink-faint);text-align:center;}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle active">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html" class="active">Partners</a>
+          <a href="mortgage-app.html">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="mortgage-pre-approval.html" class="btn-cta-sm">Instant Pre-Qualification</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Partner Network</span>
+  <h1>Find a Trusted Partner</h1>
+  <p class="sub">Connect with vetted professionals — lawyers, financial planners, insurance agents, and more — who work alongside our mortgage clients.</p>
+  <a href="partner-portal.html" class="join-link">Looking to Partner? Join Free →</a>
+
+  <div class="filter-row">
+    <input type="text" id="searchBox" placeholder="Search by name, company, or city...">
+    <select id="typeFilter">
+      <option value="all">All Types</option>
+      <option value="lawyer-notary">Lawyer / Notary</option>
+      <option value="financial-planner">Financial Planner</option>
+      <option value="insurance-agent">Insurance Agent</option>
+      <option value="accountant-cpa">Accountant / CPA</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="loc-section">
+    <span class="loc-label">Filter by Location</span> <span class="loc-hint">(up to 5)</span>
+    <input type="text" id="citySearch" class="city-search-input" placeholder="Search cities...">
+    <div class="city-btn-grid" id="cityBtnGrid"></div>
+  </div>
+
+  <div class="partner-grid" id="partnerGrid"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="james-park-logo.png" alt="James Park MortgagePal" height="68">
+      <p>BC's trusted mortgage experts. Helping you navigate every step of your mortgage journey.</p>
+      <p class="mono">778-222-7109</p>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="mortgage-pre-approval.html">Pre-Approval</a>
+      <a href="burn-my-mortgage.html">Burn My Mortgage</a>
+      <a href="mortgage-app.html">📱 Get the App</a>
+    </div>
+    <div>
+      <h4>Network</h4>
+      <a href="find-a-realtor.html">Realtors</a>
+      <a href="find-a-partner.html">Partners</a>
+      <a href="partner-portal.html">Partner Login</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a><br>© 2026 James Park Mortgage. Licensed Mortgage Broker — BC · License #503774.</div>
+</footer>
+
+<script>
+  /* ---------- SHARED PARTNER STORE (localStorage — shared across admin, portal, directories, profile page) ---------- */
+  let partnersCache = [];
+  async function initPartnersCache(){
+    const { data, error } = await sb.from('partners').select('*').eq('status', 'active').order('created_at', { ascending: false });
+    if(error){ console.error('[Supabase] partners load failed', error); partnersCache = []; }
+    else { partnersCache = data.map(row => ({ ...row.data, id: row.id, email: row.email, category: row.category, status: row.status })); }
+  }
+  function loadPartners(){ return partnersCache; }
+
+  const categoryLabel = {'lawyer-notary':'Lawyer / Notary', 'financial-planner':'Financial Planner', 'insurance-agent':'Insurance Agent', 'accountant-cpa':'Accountant / CPA', other:'Other'};
+  const BC_CITIES = ["Other BC","Abbotsford, BC","Burnaby, BC","Campbell River, BC","Chilliwack, BC","Coquitlam, BC","Courtenay, BC","Cranbrook, BC","Delta, BC","Esquimalt, BC","Fort St. John, BC","Kamloops, BC","Kelowna, BC","Langford, BC","Langley, BC","Langley Township, BC","Maple Ridge, BC","Mission, BC","Nanaimo, BC","New Westminster, BC","North Cowichan, BC","North Vancouver, BC","North Vancouver (District), BC","Penticton, BC","Pitt Meadows, BC","Port Alberni, BC","Port Coquitlam, BC","Port Moody, BC","Prince George, BC","Richmond, BC","Saanich, BC","Salmon Arm, BC","Squamish, BC","Surrey, BC","Vancouver, BC","Vernon, BC","Victoria, BC"];
+  let selectedCities = [];
+  let citySearchTerm = '';
+
+  function renderCityButtons(){
+    const filtered = BC_CITIES.filter(c => c.toLowerCase().includes(citySearchTerm.toLowerCase()));
+    document.getElementById('cityBtnGrid').innerHTML = filtered.map(c => {
+      const sel = selectedCities.includes(c);
+      const disabled = !sel && selectedCities.length >= 5;
+      return `<button class="city-btn ${sel ? 'selected' : ''}" ${disabled ? 'disabled' : ''} onclick="toggleCity('${c}')">${c}</button>`;
+    }).join('');
+  }
+  function toggleCity(city){
+    if(selectedCities.includes(city)) selectedCities = selectedCities.filter(c => c !== city);
+    else { if(selectedCities.length >= 5) return; selectedCities.push(city); }
+    renderCityButtons();
+    renderPartners();
+  }
+  document.getElementById('citySearch').addEventListener('input', (e) => {
+    citySearchTerm = e.target.value;
+    renderCityButtons();
+  });
+
+  function initials(name){ return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+  function starString(rating){ return '★★★★★☆☆☆☆☆'.slice(5-rating, 10-rating); }
+  function avatarHTML(p){ return p.photo ? `<img src="${p.photo}" alt="${p.name}">` : initials(p.name); }
+
+  function renderPartners(){
+    const all = loadPartners().filter(p => p.category !== 'realtor');
+    const q = document.getElementById('searchBox').value.trim().toLowerCase();
+    const type = document.getElementById('typeFilter').value;
+    const rows = all.filter(p => {
+      const matchesQ = !q || p.name.toLowerCase().includes(q) || p.firm.toLowerCase().includes(q) || p.city.toLowerCase().includes(q);
+      const matchesType = type === 'all' || p.category === type;
+      const matchesCity = selectedCities.length === 0 || selectedCities.some(sc => (p.cities || []).some(pc => sc.startsWith(pc)));
+      return matchesQ && matchesType && matchesCity;
+    });
+    const grid = document.getElementById('partnerGrid');
+    if(rows.length === 0){
+      grid.innerHTML = '<div class="empty-state">No partners found matching your criteria. <a href="partner-portal.html" style="color:var(--brand);font-weight:700;">Be the first to join!</a></div>';
+      return;
+    }
+    grid.innerHTML = rows.map(p => `
+      <div class="partner-card">
+        <div class="avatar">${avatarHTML(p)}</div>
+        <div>
+          <div class="role">${categoryLabel[p.category]}</div>
+          <div class="name">${p.name} <span style="font-weight:400;color:var(--ink-faint);font-size:12px;">· ${p.firm}</span></div>
+          <div class="stars">${starString(p.rating)}</div>
+          <div class="contact">${p.city}<br><a href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${p.phone}</a> · <a href="https://${p.website}" target="_blank" rel="noopener">${p.website}</a></div>
+          <a class="btn-view" href="partner-profile.html?id=${p.id}">View Profile</a>
+        </div>
+      </div>`).join('');
+  }
+  document.getElementById('searchBox').addEventListener('input', renderPartners);
+  document.getElementById('typeFilter').addEventListener('change', renderPartners);
+  renderCityButtons();
+  (async function(){ await initPartnersCache(); renderPartners(); })();
+</script>
+
+</body>
+</html>

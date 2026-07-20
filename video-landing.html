@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch the Video | James Park Mortgage</title>
+<meta name="description" content="Register to watch the full video.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/lead-capture.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#1A2B3C; --ink-soft:#4A5F72; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-dark:#C4291B; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:center;padding:14px 24px;}
+  .brand-logo img{height:64px;display:block;}
+
+  main{padding:0 0 80px;}
+
+  #vlLoading{text-align:center;padding:80px 24px;color:var(--ink-faint);font-size:14px;}
+
+  .hero{padding:44px 0 8px;text-align:center;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand-dark);margin-bottom:14px;}
+  h1{font-size:clamp(26px,4vw,38px);line-height:1.18;margin-bottom:16px;max-width:20ch;margin-left:auto;margin-right:auto;}
+  p.sub{font-size:15.5px;color:var(--ink-soft);line-height:1.65;max-width:56ch;margin:0 auto 28px;}
+
+  .video-frame{max-width:720px;margin:0 auto 28px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-md);background:#0B1520;background-size:cover;background-position:center;position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;}
+  .lock-overlay{position:absolute;inset:0;background:rgba(11,21,32,0.62);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;}
+  .lock-overlay .lock-icon{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.14);border:2px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;}
+  .lock-overlay p{color:#fff;font-size:13.5px;font-weight:600;margin:0;max-width:32ch;}
+  .unlocked-msg{display:none;text-align:center;font-size:13.5px;color:var(--brand-dark);font-weight:700;margin:0 auto 28px;}
+  .unlocked-msg.show{display:block;}
+
+  .form-module{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:36px;box-shadow:var(--shadow-md);max-width:480px;margin:0 auto;}
+  .form-module h2{font-size:19px;text-align:center;margin-bottom:6px;}
+  .form-module p.formsub{text-align:center;font-size:13.5px;color:var(--ink-soft);margin:0 0 24px;line-height:1.5;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .field input:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+  .error-msg{display:none;background:var(--coral-wash);color:var(--coral);font-size:12.5px;border-radius:8px;padding:10px 14px;margin-bottom:14px;}
+  .error-msg.show{display:block;}
+  .btn-unlock{width:100%;background:var(--brand);color:#fff;border:none;font-weight:700;font-size:15.5px;padding:15px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .btn-unlock:hover{background:var(--brand-dark);}
+  .form-privacy{text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:14px;line-height:1.6;}
+
+  #vlUnavailable{display:none;text-align:center;padding:80px 24px;}
+  #vlUnavailable h2{font-size:20px;margin-bottom:10px;}
+  #vlUnavailable p{color:var(--ink-soft);font-size:14px;}
+
+  footer.site-footer{border-top:1px solid var(--border);padding:32px 0 24px;margin-top:56px;text-align:center;}
+  footer.site-footer .foot-contact{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px;}
+  footer.site-footer .foot-contact a{font-weight:700;color:var(--brand-dark);}
+  footer.site-footer .disclaimer{font-size:10.5px;color:var(--ink-faint);line-height:1.6;max-width:640px;margin:0 auto;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div id="vlLoading">Loading…</div>
+
+  <div id="vlUnavailable">
+    <h2>This page isn't available right now.</h2>
+    <p>The link may be inactive or no longer exists. Have questions? Call or text <a href="tel:7782227109" style="color:var(--brand-dark);font-weight:700;">778-222-7109</a>.</p>
+  </div>
+
+  <div id="vlPage" style="display:none;">
+    <div class="hero">
+      <span class="kicker">Register to Watch</span>
+      <h1 id="vlTitle"></h1>
+      <p class="sub" id="vlDesc"></p>
+    </div>
+
+    <div class="video-frame" id="vlVideoFrame">
+      <div class="lock-overlay" id="vlLockOverlay">
+        <div class="lock-icon">🔒</div>
+        <p>Register below to unlock the full video.</p>
+      </div>
+    </div>
+
+    <p class="unlocked-msg" id="vlUnlockedMsg">✓ You're in — enjoy the video above.</p>
+
+    <div class="form-module" id="vlFormModule">
+      <h2>Unlock the Video</h2>
+      <p class="formsub">Fill in your details and the full video plays right here — no redirects.</p>
+      <div class="error-msg" id="vlError">Please fill in your name, email, and phone number.</div>
+      <div class="field"><label>Full name</label><input type="text" id="vl-name" placeholder="Jane Doe"></div>
+      <div class="field"><label>Email</label><input type="text" id="vl-email" placeholder="jane@example.com"></div>
+      <div class="field"><label>Phone</label><input type="text" id="vl-phone" placeholder="(604) 555-0100"></div>
+      <button class="btn-unlock" onclick="submitVideoRegistration()">Unlock &amp; Watch →</button>
+      <p class="form-privacy">Your information is kept confidential and is never sold or shared with anyone outside our team.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-contact">Questions? Call or text <a href="tel:7782227109">778-222-7109</a> — James Park, Licensed Mortgage Broker, BC #503774</div>
+  <div class="disclaimer">This is not intended as an offer to sell or a solicitation of an offer to buy, including a solicitation of any sales representative or broker currently under contract. © 2026 James Park Mortgage.</div>
+</footer>
+
+<script>
+  const vlParams = new URLSearchParams(window.location.search);
+  const vlSlug = vlParams.get('slug');
+  let vlCampaign = null;
+
+  function youtubeEmbedUrl(url){
+    if(!url) return null;
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/);
+    return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+  }
+
+  function showUnavailable(){
+    document.getElementById('vlLoading').style.display = 'none';
+    document.getElementById('vlUnavailable').style.display = 'block';
+  }
+
+  async function loadCampaign(){
+    if(!vlSlug){ showUnavailable(); return; }
+    const { data, error } = await sb.from('video_campaigns').select('*').eq('id', vlSlug).eq('status', 'active').maybeSingle();
+    if(error || !data){ showUnavailable(); return; }
+    vlCampaign = data;
+    document.title = vlCampaign.title + ' | James Park Mortgage';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if(metaDesc) metaDesc.setAttribute('content', vlCampaign.description || '');
+    document.getElementById('vlTitle').textContent = vlCampaign.title;
+    document.getElementById('vlDesc').textContent = vlCampaign.description || '';
+    if(vlCampaign.thumbnail_url){
+      document.getElementById('vlVideoFrame').style.backgroundImage = `url('${vlCampaign.thumbnail_url}')`;
+    }
+    document.getElementById('vlLoading').style.display = 'none';
+    document.getElementById('vlPage').style.display = 'block';
+    if(sessionStorage.getItem('jp_video_unlocked_' + vlSlug) === '1'){
+      revealVideo();
+    }
+  }
+
+  function revealVideo(){
+    const embedUrl = youtubeEmbedUrl(vlCampaign.video_url);
+    const frame = document.getElementById('vlVideoFrame');
+    if(embedUrl){
+      frame.innerHTML = `<iframe src="${embedUrl}?autoplay=1" title="${vlCampaign.title.replace(/"/g,'&quot;')}" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    } else {
+      frame.innerHTML = `<div style="color:#fff;font-size:14px;padding:24px;text-align:center;">Video coming soon — James will follow up with you directly.</div>`;
+    }
+    document.getElementById('vlFormModule').style.display = 'none';
+    document.getElementById('vlUnlockedMsg').classList.add('show');
+    frame.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  async function submitVideoRegistration(){
+    const name = document.getElementById('vl-name').value.trim();
+    const email = document.getElementById('vl-email').value.trim();
+    const phone = document.getElementById('vl-phone').value.trim();
+    const errorEl = document.getElementById('vlError');
+    if(!name || !email || !phone){
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+
+    const todayStr = new Date().toISOString().slice(0,10);
+    const nameParts = name.split(' ');
+    const partnerId = vlCampaign.assigned_partner_id || null;
+    let partnerName = null, partnerEmail = null;
+    if(partnerId){
+      const { data: p } = await sb.from('partners').select('*').eq('id', partnerId).maybeSingle();
+      if(p){ partnerName = (p.data && p.data.name) || p.id; partnerEmail = p.email || null; }
+    }
+
+    const newLead = {
+      id: 'lead-video-' + Date.now(), code: null, name, firstName: nameParts[0] || name, lastName: nameParts.slice(1).join(' '),
+      email, phone, city: '—', purposeType: 'Video Landing Page Registration', keyDate: todayStr,
+      amount: 0, gds: 0, tds: 0, credit: '—', score: 0, temperature: 'warm',
+      notes: [{text: 'Registered on video landing page: ' + vlCampaign.title, date: timestamp()}],
+      scoreLog: [], registered: todayStr, pipeline: 'Webinar Pipeline', stage: 'Registered',
+      opens: 0, clicks: 0, custom: {}, campaignId: vlCampaign.id, campaignTitle: vlCampaign.title,
+      assignedPartnerId: partnerId, assignedPartnerName: partnerName
+    };
+    if(partnerId) newLead.partnerStage = 'New';
+
+    const { error } = await sb.from('leads').insert({ id: newLead.id, record_type: 'lead', email, data: newLead });
+    if(error){
+      console.error('[Supabase] video lead insert failed', error);
+      errorEl.textContent = 'Something went wrong — please try again in a moment.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const subject = 'New Registration — ' + vlCampaign.title + ' (' + name + ')';
+    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nRegistered on: ${vlCampaign.title}\nPage: ${window.location.href}`;
+    const key = 'jp_email_log_v1';
+    let log;
+    try { log = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){ log = []; }
+    log.push({id:'email'+Date.now()+'-vl-james', to:'james@jamespark.ca', subject, body, when: timestamp(), read:false});
+    sendRealEmail('james@jamespark.ca', subject, body.replace(/\n/g, '<br>'));
+    if(partnerEmail){
+      log.push({id:'email'+Date.now()+'-vl-partner', to: partnerEmail, subject, body, when: timestamp(), read:false});
+      sendRealEmail(partnerEmail, subject, body.replace(/\n/g, '<br>'));
+    }
+    localStorage.setItem(key, JSON.stringify(log));
+
+    sessionStorage.setItem('jp_video_unlocked_' + vlSlug, '1');
+    revealVideo();
+  }
+
+  loadCampaign();
+</script>
+
+</body>
+</html>

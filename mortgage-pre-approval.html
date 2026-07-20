@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Mortgage Pre-Qualification | Vancouver & Burnaby</title>
+<meta name="description" content="Pre-qualify for your mortgage in minutes — no credit check. Serving Vancouver, Burnaby, and all of BC across 150+ lenders.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/lead-capture.js"></script>
+<script src="js/chatbot-kb.js"></script>
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['mortgage-pre-approval.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF; --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --indigo:#2F9F6B; --indigo-dark:#24805A; --indigo-wash:#E8F8F0;
+    --mint:#2F9F6B; --mint-wash:#E8F8F0; --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a{color:inherit;text-decoration:none;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--indigo);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-toggle.active{color:var(--indigo);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;text-decoration:none;}
+  .btn-cta-sm{background:var(--indigo);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;text-decoration:none;}
+  .btn-cta-sm:hover{background:var(--indigo-dark);}
+  @media (max-width:900px){ .nav-links{display:none;} }
+
+  main{padding:40px 0 90px;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--indigo);margin-bottom:12px;}
+  h1{font-size:clamp(26px,3.4vw,34px);margin-bottom:10px;}
+  p.sub{font-size:15px;color:var(--ink-soft);max-width:60ch;line-height:1.6;margin-bottom:28px;}
+
+  .mls-hint{font-size:12px;color:var(--ink-faint);margin-top:10px;}
+
+  /* form grid */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .module{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+  .module h3{font-size:15px;margin-bottom:16px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input, .field select{width:100%;padding:11px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);}
+  .field input:focus, .field select:focus{outline:none;border-color:var(--indigo);background:var(--surface);}
+  .chip-row{display:flex;gap:8px;}
+  .chip-opt{flex:1;text-align:center;padding:10px;border:1.5px solid var(--border-strong);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;}
+  .chip-opt.selected{border-color:var(--indigo);background:var(--indigo-wash);color:var(--indigo);}
+  .chip-row.big-row{gap:12px;}
+  .chip-row.big-row .chip-opt{padding:28px 18px;font-size:15.5px;border-radius:14px;}
+
+  /* wizard */
+  .wizard-progress{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+  .wizard-bar{height:4px;background:var(--border);border-radius:999px;margin-bottom:28px;overflow:hidden;}
+  .wizard-bar .fill{height:100%;background:var(--indigo);border-radius:999px;transition:width .3s ease;}
+  .wizard-step{display:none;}
+  .wizard-step.active{display:block;}
+  .wizard-nav{display:flex;gap:10px;margin-top:6px;}
+  .wizard-nav .calc-btn{width:auto;flex:1;margin-top:0;}
+  .back-btn{flex:0 0 auto;background:var(--surface);color:var(--ink-soft);border:1.5px solid var(--border-strong);font-weight:600;font-size:14px;padding:14px 22px;border-radius:12px;cursor:pointer;}
+  .back-btn:hover{border-color:var(--ink-soft);}
+
+  .calc-btn{width:100%;background:var(--indigo);color:#fff;border:none;font-weight:700;font-size:15px;padding:15px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .calc-btn:hover{background:var(--indigo-dark);}
+
+  /* results */
+  .results{display:none;}
+  .results.show{display:block;}
+  .score-card{background:linear-gradient(160deg, var(--ink), #102A40);color:#fff;border-radius:20px;padding:32px;text-align:center;margin-bottom:20px;}
+  .score-card .band{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#A7E8CC;margin-bottom:8px;}
+  .score-card .num{font-size:48px;font-weight:800;}
+  .score-card .badge{display:inline-block;margin-top:10px;padding:6px 16px;border-radius:999px;font-weight:700;font-size:13px;}
+  .badge.strong{background:var(--mint-wash);color:#0A7A46;}
+  .badge.good{background:#EAF0F5;color:var(--ink);}
+  .badge.review{background:var(--amber-wash);color:var(--amber);}
+  .badge.risk{background:var(--coral-wash);color:var(--coral);}
+  .score-card .disclaimer{font-size:11px;color:rgba(255,255,255,0.5);margin-top:16px;max-width:44ch;margin-left:auto;margin-right:auto;line-height:1.6;}
+
+  .ratio-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+  .ratio-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;}
+  .ratio-card .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);text-transform:uppercase;margin-bottom:8px;}
+  .ratio-card .bignum{font-size:28px;font-weight:800;}
+  .ratio-card .bignum.pass{color:var(--mint);}
+  .ratio-card .bignum.fail{color:var(--coral);}
+  .ratio-bar{height:6px;background:var(--border);border-radius:999px;margin-top:12px;overflow:hidden;}
+  .ratio-bar .fill{height:100%;border-radius:999px;}
+  .ratio-card .threshold{font-size:11.5px;color:var(--ink-faint);margin-top:8px;}
+
+  .breakdown{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;}
+  .breakdown .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+  .breakdown .row:last-child{border-bottom:none;font-weight:700;}
+  .breakdown .row span:last-child{font-family:'IBM Plex Mono',monospace;}
+
+  .prequal-offer{background:var(--indigo-wash);border:1px solid var(--indigo);border-radius:16px;padding:22px;margin:20px 0;}
+  .prequal-code-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+  .prequal-lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--indigo-dark);}
+  .prequal-code{font-size:16px;font-weight:800;letter-spacing:0.03em;color:var(--ink);background:var(--surface);padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);}
+  .code-mask{color:var(--coral);}
+  .cert-login-hint{text-align:center;font-size:12.5px;color:var(--ink-soft);margin-top:12px;}
+  .cert-login-hint a{color:var(--indigo-dark);font-weight:700;}
+  .prequal-code-wrap{display:flex;align-items:center;gap:6px;}
+  .prequal-copy-btn{background:var(--surface);border:1px solid var(--border-strong);border-radius:8px;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .prequal-copy-btn:hover{border-color:var(--indigo);}
+  .prequal-ask{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;}
+  .prequal-actions{display:flex;gap:10px;}
+  .prequal-form{margin-top:4px;}
+  .prequal-form-code{font-size:12.5px;color:var(--ink-soft);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:14px;}
+  .prequal-form-code strong{font-family:'IBM Plex Mono',monospace;color:var(--ink);letter-spacing:0.02em;}
+  .prequal-error{display:none;color:var(--coral);font-size:12px;margin-top:8px;font-weight:600;}
+  .prequal-recap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:16px 0;font-size:12.5px;color:var(--ink-soft);line-height:1.9;text-align:left;}
+  .prequal-recap strong{color:var(--ink);}
+  .prequal-callback{background:var(--surface);border:1px solid var(--indigo);color:var(--indigo-dark);border-radius:10px;padding:12px 16px;font-size:13px;font-weight:600;margin-top:14px;text-align:center;}
+  .help-nudge{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(0,0,0,0.25);z-index:500;max-width:92vw;}
+  .help-nudge a{color:#fff;font-weight:700;text-decoration:underline;}
+  .help-nudge button{background:none;border:none;color:rgba(255,255,255,0.65);cursor:pointer;font-size:15px;flex-shrink:0;}
+
+  .partner-caption{font-size:13px;color:var(--ink-soft);margin-bottom:12px;}
+  .partner-section{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+  .partner-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);}
+  .partner-card .avatar{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:var(--indigo-wash);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;}
+  .partner-card .info{flex:1;min-width:0;}
+  .partner-card .role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
+  .partner-card .name{font-weight:700;font-size:14px;}
+  .partner-card .stars{color:#F5A623;font-size:12px;letter-spacing:1px;margin:3px 0;}
+  .partner-card .contact{font-size:12px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .partner-card .contact a{color:var(--indigo);text-decoration:none;}
+  .btn-mini{background:var(--indigo);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:600;font-size:12.5px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+
+  /* admin view */
+  .admin-table{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);}
+  .at-head, .at-row{display:grid;grid-template-columns:1.4fr 1fr 0.8fr 0.8fr 0.8fr 1fr;padding:14px 20px;align-items:center;}
+  .at-head{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;border-bottom:1px solid var(--border);cursor:pointer;}
+  .at-head span:hover{color:var(--indigo);}
+  .at-row{border-bottom:1px solid var(--border);font-size:13.5px;}
+  .at-row:last-child{border-bottom:none;}
+  .at-row .name{font-weight:600;}
+  .at-row .sub{font-size:11.5px;color:var(--ink-faint);}
+  .at-score{font-family:'IBM Plex Mono',monospace;font-weight:700;}
+  .mini-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:700;}
+
+  .placeholder-flag{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+
+  /* chatbot */
+  .chatbot-widget{position:fixed;bottom:20px;right:20px;width:360px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--border-strong);border-radius:18px;box-shadow:var(--shadow-md);padding:20px;z-index:200;transform:translateY(24px) scale(0.97);opacity:0;transition:all .35s cubic-bezier(.2,.8,.2,1);pointer-events:none;}
+  .chatbot-widget.show{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+  .chatbot-widget .cb-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .chatbot-widget .cb-avatar{width:36px;height:36px;border-radius:50%;background:var(--indigo-wash);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;}
+  .chatbot-widget .cb-name{font-weight:700;font-size:13.5px;}
+  .chatbot-widget .cb-status{font-size:11px;color:var(--mint);display:flex;align-items:center;gap:4px;}
+  .chatbot-widget .cb-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);}
+  .chatbot-widget .cb-close{margin-left:auto;background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:18px;line-height:1;padding:2px;}
+  .chatbot-widget .cb-msg{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px;}
+  .chatbot-widget .cb-body{max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;margin-bottom:12px;padding-right:2px;}
+  .chatbot-widget .cb-bubble{font-size:13px;line-height:1.55;padding:9px 12px;border-radius:13px;max-width:90%;}
+  .chatbot-widget .cb-bubble.bot{background:var(--indigo-wash);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px;}
+  .chatbot-widget .cb-bubble.user{background:var(--indigo);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+  .chatbot-widget .cb-typing{font-size:11.5px;color:var(--ink-faint);align-self:flex-start;padding:2px 12px;font-style:italic;}
+  .chatbot-widget .cb-input-row{display:flex;gap:8px;margin-bottom:10px;}
+  .chatbot-widget .cb-input{flex:1;min-width:0;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--ink);}
+  .chatbot-widget .cb-input:focus{outline:none;border-color:var(--indigo);}
+  .chatbot-widget .cb-actions{display:flex;gap:8px;}
+  .chatbot-widget .cb-send{background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:0 15px;font-weight:700;cursor:pointer;font-size:12.5px;flex-shrink:0;}
+  .chatbot-widget .cb-send:hover{background:var(--indigo-dark);}
+  .chatbot-widget .cb-btn-primary{flex:1;background:var(--indigo);color:#fff;font-weight:700;font-size:12.5px;padding:11px;border-radius:9px;text-align:center;border:none;cursor:pointer;text-decoration:none;display:block;}
+  .chatbot-widget .cb-btn-primary:hover{background:var(--indigo-dark);}
+  .chatbot-widget .cb-btn-ghost{background:none;border:none;color:var(--ink-faint);font-size:12px;cursor:pointer;padding:11px 6px;white-space:nowrap;}
+  .chatbot-widget .cb-btn-ghost:hover{color:var(--ink-soft);}
+  .chatbot-widget .cb-disclaimer{font-size:10px;color:var(--ink-faint);line-height:1.4;margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);}
+  .chatbot-widget .cb-verify-note{font-size:10.5px;color:var(--ink-faint);font-style:italic;align-self:flex-start;padding:0 4px;margin-top:-5px;line-height:1.4;}
+
+  @media (max-width:760px){
+    .grid2, .ratio-grid{grid-template-columns:1fr 1fr;}
+    .partner-section{grid-template-columns:1fr;}
+    .at-head, .at-row{grid-template-columns:1.6fr 1fr 1fr;}
+    .at-head span:nth-child(4), .at-head span:nth-child(5), .at-row span:nth-child(4), .at-row span:nth-child(5){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="help-nudge" id="helpNudge" style="display:none;">
+  <span>Need help? Call or text James at <a href="tel:7782227109">778-222-7109</a></span>
+  <button onclick="dismissHelpNudge()" aria-label="Dismiss">✕</button>
+</div>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html">Partners</a>
+          <a href="mortgage-app.html">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="admin.html" class="btn-cta-sm">Admin</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- CLIENT VIEW -->
+  <div class="view active" id="view-client">
+    <span class="kicker">Pre-approval estimator</span>
+    <h1>Enter the numbers. Get a real answer.</h1>
+    <p class="sub">One question at a time — James's tool estimates where you'd land on approval, using the same math a lender uses.</p>
+
+    <div class="wizard-progress" id="wizProgress">Step 1 of 5</div>
+    <div class="wizard-bar"><div class="fill" id="wizBarFill" style="width:20%;"></div></div>
+
+    <!-- STEP 1: PURPOSE -->
+    <div class="wizard-step active" data-step="1">
+      <div class="module">
+        <h3>What's this mortgage for?</h3>
+        <div class="chip-row big-row" id="purposeSel">
+          <div class="chip-opt selected" data-val="purchase">Purchase</div>
+          <div class="chip-opt" data-val="refinance">Refinance</div>
+          <div class="chip-opt" data-val="renewal">Renewal</div>
+        </div>
+      </div>
+      <div class="mls-hint" style="text-align:center;">Tap an option to continue</div>
+    </div>
+
+    <!-- STEP 2: GOAL -->
+    <div class="wizard-step" data-step="2">
+      <div class="module">
+        <h3>What matters most to the client?</h3>
+        <div class="chip-row big-row" id="goalSel">
+          <div class="chip-opt selected" data-val="lowrate">Save money — lowest rate</div>
+          <div class="chip-opt" data-val="flex">Flexible — higher approval amount</div>
+        </div>
+      </div>
+      <div class="mls-hint" style="text-align:center;margin-bottom:10px;">Tap an option to continue</div>
+      <div class="wizard-nav">
+        <button class="back-btn" onclick="wizBack()">← Back</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: PROPERTY -->
+    <div class="wizard-step" data-step="3">
+      <div class="module">
+        <h3>Property</h3>
+        <div class="field">
+          <label id="priceLabel">Purchase price</label>
+          <input type="text" inputmode="numeric" id="f-price" value="$749,000">
+        </div>
+        <div class="field">
+          <label>Annual property taxes <span style="font-weight:400;color:var(--ink-faint);">(auto-estimated from city + price below — edit for an exact figure)</span></label>
+          <input type="text" inputmode="numeric" id="f-taxannual" value="$3,170.90">
+        </div>
+        <div class="field">
+          <label>City <span style="font-weight:400;color:var(--ink-faint);">(fallback only, if no exact tax figure entered)</span></label>
+          <select id="f-city">
+            <option value="0.298">Burnaby (0.298% — confirmed 2025)</option>
+            <option value="0.322">North Vancouver (0.322% — confirmed 2025)</option>
+            <option value="0.294">West Vancouver (0.294% — confirmed 2025)</option>
+            <option value="0.319">Richmond (0.319% — confirmed 2025)</option>
+            <option value="0.29">Vancouver (~0.29% — estimate, verify)</option>
+            <option value="0.42" selected>Port Moody (~0.42% — estimate, verify)</option>
+            <option value="0.45">Coquitlam (~0.45% — estimate, verify)</option>
+            <option value="0.41">Surrey (~0.41% — estimate, verify)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Property type</label>
+          <div class="chip-row" id="propType">
+            <div class="chip-opt selected" data-val="condo">Condo</div>
+            <div class="chip-opt" data-val="house">House</div>
+          </div>
+        </div>
+        <div class="field" id="condoFeeField" style="margin-bottom:0;">
+          <label>Condo fee (monthly) <span style="font-weight:400;color:var(--ink-faint);">(city average — edit if the client's fee differs)</span></label>
+          <input type="text" inputmode="numeric" id="f-condofee" value="$453.07">
+        </div>
+      </div>
+      <div class="wizard-nav">
+        <button class="back-btn" onclick="wizBack()">← Back</button>
+        <button class="calc-btn" onclick="wizNext()">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: LOAN DETAILS (purpose-dependent) -->
+    <div class="wizard-step" data-step="4">
+      <div class="module">
+        <h3>Loan details</h3>
+        <div class="field" id="downPaymentGroup">
+          <label>Down payment</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" inputmode="numeric" id="f-down" value="$75,000" style="flex:1;">
+            <input type="text" inputmode="numeric" id="f-downpct" value="10.0%" style="width:88px;text-align:right;">
+          </div>
+        </div>
+        <div class="field" id="currentBalanceGroup" style="display:none;">
+          <label id="currentBalanceLabel">Current mortgage balance</label>
+          <input type="text" inputmode="numeric" id="f-currentbalance" value="$450,000">
+        </div>
+        <div class="field" id="extraFundsGroup" style="display:none;margin-bottom:0;">
+          <label id="extraFundsLabel">Additional funds needed <span style="font-weight:400;color:var(--ink-faint);">(cash-out, optional — $0 if none)</span></label>
+          <input type="text" inputmode="numeric" id="f-extrafunds" value="$0">
+        </div>
+      </div>
+      <div class="wizard-nav">
+        <button class="back-btn" onclick="wizBack()">← Back</button>
+        <button class="calc-btn" onclick="wizNext()">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: INCOME & CREDIT -->
+    <div class="wizard-step" data-step="5">
+      <div class="module">
+        <h3>Income &amp; credit</h3>
+        <div class="field">
+          <label>Gross annual household income</label>
+          <input type="text" inputmode="numeric" id="f-income" value="$118,000">
+        </div>
+        <div class="field">
+          <label>Other monthly debt payments <span style="font-weight:400;color:var(--ink-faint);">(car, credit cards, loans)</span></label>
+          <input type="text" inputmode="numeric" id="f-debts" value="$340">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Credit score band</label>
+          <div class="chip-row" id="creditBand">
+            <div class="chip-opt" data-val="excellent">760+</div>
+            <div class="chip-opt selected" data-val="good">680–759</div>
+            <div class="chip-opt" data-val="fair">620–679</div>
+            <div class="chip-opt" data-val="below">&lt;620</div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-nav">
+        <button class="back-btn" onclick="wizBack()">← Back</button>
+        <button class="calc-btn" onclick="runCalc()">Calculate pre-approval estimate →</button>
+      </div>
+    </div>
+
+    <div class="results" id="results">
+      <div class="score-card">
+        <div class="band">Pre-approval likelihood</div>
+        <div class="num mono" id="scoreNum">—</div>
+        <div class="badge" id="scoreBadge">—</div>
+        <div class="disclaimer">This is a triage estimate using James's current stress-test qualifying rate and the qualification path selected above — not a lending decision or guarantee. Full underwriting can differ.</div>
+      </div>
+
+      <div class="prequal-offer" id="prequalOffer" style="display:none;">
+        <div class="prequal-code-row">
+          <span class="prequal-lbl">Your Pre-Qualification Code</span>
+          <span class="prequal-code-wrap">
+            <span class="prequal-code mono" id="prequalCodeDisplay">—</span>
+            <button class="prequal-copy-btn" id="prequalCopyBtn" onclick="copyPrequalCode()" aria-label="Copy code" title="Copy code">📋</button>
+          </span>
+        </div>
+        <p class="prequal-ask" id="prequalAskText">Strong number — nice work. James personally reviews every file that comes through here before anything's final, so let's get your certificate locked in.</p>
+
+        <div class="prequal-form" id="certForm">
+          <div class="prequal-form-code">Pre-Qualification Code: <strong id="certFormCode">—</strong></div>
+          <div class="field"><label>Full name</label><input type="text" id="cert-name" placeholder="Jane Doe"></div>
+          <div class="field"><label>Email</label><input type="text" id="cert-email" placeholder="jane@example.com"></div>
+          <div class="field"><label>Phone</label><input type="text" id="cert-phone" placeholder="(604) 555-0100"></div>
+          <div class="field"><label>Create a password</label><input type="password" id="cert-password" placeholder="At least 8 characters"></div>
+          <div class="field" style="margin-bottom:0;"><label>Confirm password</label><input type="password" id="cert-password2" placeholder="Re-enter password"></div>
+          <div class="prequal-error" id="certError">Please fill in every field — passwords must match and be at least 8 characters.</div>
+          <button class="calc-btn" style="width:100%;margin-top:14px;" onclick="submitCertificateAccount()">📄 Get My Certificate &amp; Create My Account →</button>
+          <p class="cert-login-hint">Already have an account? <a href="client-login.html">Log in</a> instead.</p>
+        </div>
+        <div class="prequal-confirm" id="certConfirm" style="display:none;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--surface);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 12px;">✓</div>
+          <p style="text-align:center;font-weight:700;font-size:15px;margin-bottom:8px;" id="certConfirmName">You're in!</p>
+          <p style="text-align:center;font-size:13.5px;color:var(--ink-soft);line-height:1.6;" id="certConfirmMsg">Your certificate just opened in a new tab, and James already has your file — a welcome email with your login is on its way too.</p>
+          <div class="prequal-recap" id="certRecap"></div>
+          <div class="prequal-callback" id="prequalCallbackMsg"></div>
+          <a href="mortgage-app.html" style="display:block;text-align:center;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;font-size:12.5px;font-weight:700;margin-top:10px;">📱 While you wait — grab the free mortgage app (12,000+ downloads, 4.8★) and track this file live →</a>
+          <a href="client-login.html" class="calc-btn" style="display:block;text-align:center;text-decoration:none;margin-top:10px;">Go to My Account →</a>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <div class="row"><span>Mortgage amount</span><span id="bMortgage">—</span></div>
+        <div class="row"><span>Monthly payment</span><span id="bPayment">—</span></div>
+        <div class="row"><span>Property tax (monthly)</span><span id="bTax">—</span></div>
+        <div class="row"><span>Condo fee counted (50%)</span><span id="bCondo">—</span></div>
+      </div>
+
+      <div class="partner-caption" id="partnerCaption" style="display:none;"></div>
+      <div class="partner-section" id="partnerSection" style="display:none;"></div>
+
+      <button class="back-btn" style="width:100%;margin-top:6px;" onclick="location.reload()">← Start a new estimate</button>
+    </div>
+  </div>
+
+
+</main>
+
+<script>
+  /* ---------- Live callback-time estimate for the confirmation screen ---------- */
+  function computeCallbackTimeText(){
+    function isBiz(d){
+      const dow = d.getDay(), hr = d.getHours() + d.getMinutes()/60;
+      if(dow === 0) return false;
+      if(dow === 6) return hr >= 10 && hr < 16;
+      return hr >= 9 && hr < 18;
+    }
+    function fmt(d){ return d.toLocaleTimeString('en-CA', {hour:'numeric', minute:'2-digit'}); }
+    const now = new Date();
+    if(isBiz(now)){
+      const target = new Date(now.getTime() + 30*60000);
+      return `📞 James will call you by ${fmt(target)} — usually within 30 minutes, during business hours.`;
+    }
+    const next = new Date(now);
+    next.setSeconds(0,0);
+    for(let i=0; i<24*8*4; i++){
+      next.setMinutes(next.getMinutes() + 15);
+      if(isBiz(next)) return `📞 You've reached James after hours — you'll be his first call at ${fmt(next)}, when he's back (Mon–Fri 9am–6pm, Sat 10am–4pm PT).`;
+    }
+    return `📞 James will call you as soon as he's back in the office.`;
+  }
+
+  /* ---------- Inactivity nudge — surfaces if someone stalls mid-wizard ---------- */
+  let helpNudgeTimer = null, helpNudgeDismissed = false;
+  function resetHelpNudgeTimer(){
+    if(helpNudgeDismissed) return;
+    clearTimeout(helpNudgeTimer);
+    const banner = document.getElementById('helpNudge');
+    if(banner) banner.style.display = 'none';
+    helpNudgeTimer = setTimeout(() => {
+      if(document.querySelector('.wizard-step.active') && document.getElementById('helpNudge')) document.getElementById('helpNudge').style.display = 'flex';
+    }, 45000);
+  }
+  function dismissHelpNudge(){
+    helpNudgeDismissed = true;
+    clearTimeout(helpNudgeTimer);
+    const banner = document.getElementById('helpNudge');
+    if(banner) banner.style.display = 'none';
+  }
+  document.addEventListener('input', resetHelpNudgeTimer);
+  document.addEventListener('click', resetHelpNudgeTimer);
+  resetHelpNudgeTimer();
+
+  /* ---------- WIZARD NAVIGATION ---------- */
+  const WIZ_TOTAL_STEPS = 5;
+  let wizCurrentStep = 1;
+  function showStep(n){
+    document.querySelectorAll('.wizard-step').forEach(s => s.classList.toggle('active', Number(s.dataset.step) === n));
+    document.getElementById('wizProgress').textContent = 'Step ' + n + ' of ' + WIZ_TOTAL_STEPS;
+    document.getElementById('wizBarFill').style.width = (n / WIZ_TOTAL_STEPS * 100) + '%';
+    document.getElementById('wizProgress').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  function wizNext(){
+    if(wizCurrentStep < WIZ_TOTAL_STEPS){ wizCurrentStep++; showStep(wizCurrentStep); }
+  }
+  function wizBack(){
+    if(wizCurrentStep > 1){ wizCurrentStep--; showStep(wizCurrentStep); }
+  }
+
+  /* ---------- PROPERTY TYPE CHIPS ---------- */
+  function setPropType(val){
+    document.querySelectorAll('#propType .chip-opt').forEach(c => c.classList.toggle('selected', c.dataset.val === val));
+    document.getElementById('condoFeeField').style.display = (val === 'condo') ? 'block' : 'none';
+  }
+  document.querySelectorAll('#propType .chip-opt').forEach(c => c.addEventListener('click', () => setPropType(c.dataset.val)));
+  document.querySelectorAll('#creditBand .chip-opt').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#creditBand .chip-opt').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+  }));
+  document.querySelectorAll('#purposeSel .chip-opt').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#purposeSel .chip-opt').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+    applyPurposeFields(c.dataset.val);
+    setTimeout(() => wizNext(), 280); // True North-style: tap a card, auto-advance
+  }));
+  document.querySelectorAll('#goalSel .chip-opt').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#goalSel .chip-opt').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+    setTimeout(() => wizNext(), 280);
+  }));
+
+  /* ---------- PURPOSE-DEPENDENT FIELDS ----------
+     Purchase: purchase price + down payment.
+     Refinance: market value + current mortgage balance + optional cash-out.
+     Renewal: current property value + current mortgage balance + optional top-up. */
+  function applyPurposeFields(purpose){
+    const priceLabel = document.getElementById('priceLabel');
+    if(purpose === 'purchase'){
+      priceLabel.textContent = 'Purchase price';
+      document.getElementById('downPaymentGroup').style.display = 'block';
+      document.getElementById('currentBalanceGroup').style.display = 'none';
+      document.getElementById('extraFundsGroup').style.display = 'none';
+    } else if(purpose === 'refinance'){
+      priceLabel.textContent = 'Market value';
+      document.getElementById('downPaymentGroup').style.display = 'none';
+      document.getElementById('currentBalanceGroup').style.display = 'block';
+      document.getElementById('currentBalanceLabel').textContent = 'Current mortgage balance';
+      document.getElementById('extraFundsGroup').style.display = 'block';
+      document.getElementById('extraFundsLabel').innerHTML = 'Additional funds needed <span style="font-weight:400;color:var(--ink-faint);">(cash-out, optional — $0 if none)</span>';
+    } else { // renewal
+      priceLabel.textContent = 'Estimated current property value';
+      document.getElementById('downPaymentGroup').style.display = 'none';
+      document.getElementById('currentBalanceGroup').style.display = 'block';
+      document.getElementById('currentBalanceLabel').textContent = 'Current mortgage balance being renewed';
+      document.getElementById('extraFundsGroup').style.display = 'block';
+      document.getElementById('extraFundsLabel').innerHTML = 'Additional funds needed <span style="font-weight:400;color:var(--ink-faint);">(top-up at renewal, optional — $0 if none)</span>';
+    }
+  }
+  applyPurposeFields('purchase');
+
+  /* ---------- CALC ENGINE ---------- */
+  function num(id){ return parseFloat(document.getElementById(id).value.replace(/[^0-9.]/g, '')) || 0; }
+
+  /* ---------- DOWN PAYMENT $ / % SYNC ---------- */
+  const downEl = document.getElementById('f-down');
+  const downPctEl = document.getElementById('f-downpct');
+  function syncDownFromDollar(){
+    const price = num('f-price');
+    const pct = price > 0 ? (num('f-down')/price)*100 : 0;
+    downPctEl.value = pct.toFixed(1) + '%';
+  }
+  function syncDownFromPercent(){
+    const price = num('f-price');
+    const down = price * (num('f-downpct')/100);
+    downEl.value = '$' + Math.round(down).toLocaleString();
+  }
+  downEl.addEventListener('input', syncDownFromDollar);
+  downPctEl.addEventListener('input', syncDownFromPercent);
+  document.getElementById('f-price').addEventListener('input', syncDownFromPercent);
+
+  /* ---------- CITY-BASED PROPERTY TAX + CONDO FEE ESTIMATES ---------- */
+  // Rough average monthly condo fee by city — keyed to the same rate value used on #f-city.
+  // Estimate only; the field stays fully editable if the client has a real figure.
+  const CITY_CONDO_FEE_ESTIMATES = {
+    "0.298": 430,  // Burnaby
+    "0.322": 480,  // North Vancouver
+    "0.294": 580,  // West Vancouver
+    "0.319": 460,  // Richmond
+    "0.29": 520,   // Vancouver
+    "0.42": 410,   // Port Moody
+    "0.45": 400,   // Coquitlam
+    "0.41": 380,   // Surrey
+  };
+  function updatePropertyEstimatesFromCity(){
+    const price = num('f-price');
+    const cityKey = document.getElementById('f-city').value;
+    const cityRate = parseFloat(cityKey);
+    if(price > 0 && !isNaN(cityRate)){
+      const annualTaxEstimate = price * (cityRate / 100);
+      document.getElementById('f-taxannual').value = '$' + annualTaxEstimate.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    const isCondo = document.querySelector('#propType .chip-opt.selected')?.dataset.val === 'condo';
+    if(isCondo && CITY_CONDO_FEE_ESTIMATES[cityKey] != null){
+      document.getElementById('f-condofee').value = '$' + CITY_CONDO_FEE_ESTIMATES[cityKey].toFixed(2);
+    }
+  }
+  document.getElementById('f-city').addEventListener('change', updatePropertyEstimatesFromCity);
+  document.getElementById('f-price').addEventListener('input', updatePropertyEstimatesFromCity);
+  updatePropertyEstimatesFromCity(); // seed with an estimate matching the default city on load
+
+  function monthlyPayment(principal, annualRatePct, years){
+    const i = (annualRatePct/100)/12;
+    const n = years*12;
+    if(i === 0) return principal/n;
+    return principal * i * Math.pow(1+i, n) / (Math.pow(1+i, n) - 1);
+  }
+
+  const BENCHMARK_RATE = 5.25;  // stress-test benchmark rate, from the Jul 13 2026 rate sheet
+
+  // 5-Year Fixed matrix — reads from the admin panel's Rate Sheet tab (localStorage) so the
+  // whole site relies on one editable source; falls back to this built-in default if admin
+  // hasn't saved anything yet. insured = <20% down (high-ratio). ins65/ins65_70/ins70_75/ins75_80
+  // = insurable LTV bands for 20%+ down (conventional).
+  function loadVariableRateSheet(){
+    try {
+      const raw = localStorage.getItem('jp_variable_rates_v2');
+      if(raw){ const parsed = JSON.parse(raw); if(parsed.length) return parsed; }
+    } catch(e){}
+    return [
+      {name:"Neo", rate:3.85}, {name:"Scotia", rate:4.05}, {name:"Strive", rate:3.99},
+      {name:"MCAP", rate:4.10}, {name:"First National", rate:4.15},
+    ];
+  }
+  function lowestVariableRate(){
+    const rates = loadVariableRateSheet().map(r => r.rate).filter(r => r != null);
+    return rates.length ? Math.min(...rates) : 3.85;
+  }
+  function loadFixedRateSheet(){
+    try {
+      const raw = localStorage.getItem('jp_fixed_rates_v1');
+      if(raw){ const parsed = JSON.parse(raw); if(parsed.length) return parsed; }
+    } catch(e){}
+    return [
+      {name:"B2B Bank", insured:4.39, ins65:4.74, ins65_70:4.74, ins70_75:4.74, ins75_80:4.74},
+      {name:"BMO", insured:4.69, ins65:5.09, ins65_70:5.09, ins70_75:5.09, ins75_80:5.09},
+      {name:"CMLS", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.59, ins75_80:4.64},
+      {name:"First National", insured:4.39, ins65:4.44, ins65_70:4.54, ins70_75:4.59, ins75_80:4.59},
+      {name:"Highclere", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.59, ins75_80:4.64},
+      {name:"Lendwise/Merix", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.54, ins75_80:4.59},
+      {name:"Manulife Bank Select", insured:4.39, ins65:4.69, ins65_70:4.69, ins70_75:4.74, ins75_80:4.74},
+      {name:"MCAP", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.54, ins75_80:4.59},
+      {name:"Neo", insured:4.29, ins65:4.29, ins65_70:4.44, ins70_75:4.49, ins75_80:4.54},
+      {name:"RFA", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.54, ins75_80:4.59},
+      {name:"RMG", insured:4.39, ins65:4.39, ins65_70:4.54, ins70_75:4.54, ins75_80:4.59},
+      {name:"Scotia", insured:4.19, ins65:4.44, ins65_70:4.44, ins70_75:4.44, ins75_80:4.44},
+      {name:"Strive", insured:4.29, ins65:4.29, ins65_70:4.44, ins70_75:4.44, ins75_80:4.49},
+      {name:"TD Bank", insured:4.49, ins65:4.79, ins65_70:4.79, ins70_75:4.79, ins75_80:4.79},
+      {name:"Tru Cooperative Bank", insured:4.34, ins65:4.59, ins65_70:4.59, ins70_75:4.59, ins75_80:4.59},
+    ];
+  }
+  const lenders5yf = loadFixedRateSheet();
+
+  function bestRateForTier(key){
+    let best = null;
+    lenders5yf.forEach(l => {
+      const v = l[key];
+      if(v != null && (best === null || v < best.rate)) best = { lender: l.name, rate: v };
+    });
+    return best;
+  }
+
+  // Takes the mortgage amount directly (not a down payment) so it generalizes across
+  // purchase (price - down), refinance, and renewal (current balance + extra funds).
+  function getLtvTierAndRate(price, mortgage){
+    const ltvPct = price > 0 ? (mortgage/price)*100 : 0;
+    const dpPct = 100 - ltvPct; // equity % — "down payment" equivalent for purchase, equity cushion otherwise
+    let category, bandKey, bandLabel, warning = null;
+
+    if(dpPct < 20){
+      category = 'Insured (high-ratio)';
+      bandKey = 'insured';
+      bandLabel = dpPct.toFixed(1) + '% equity';
+      if(price >= 1500000) warning = 'Price/value is $1.5M+ — insured qualifying is capped under $1,499,999 on this sheet. This deal likely needs Uninsurable pricing instead — flag before quoting.';
+    } else {
+      category = 'Insurable (conventional)';
+      if(dpPct >= 35){ bandKey = 'ins65'; bandLabel = '≤65% LTV'; }
+      else if(dpPct >= 30){ bandKey = 'ins65_70'; bandLabel = '65–70% LTV'; }
+      else if(dpPct >= 25){ bandKey = 'ins70_75'; bandLabel = '70–75% LTV'; }
+      else { bandKey = 'ins75_80'; bandLabel = '75–80% LTV'; }
+    }
+
+    const best = bestRateForTier(bandKey);
+    return { category, bandLabel, dpPct, ltvPct, lender: best ? best.lender : '—', rate: best ? best.rate : null, warning };
+  }
+
+  // Goal + LTV drive which GDS/TDS ceiling applies, per James's underwriting rules:
+  // "flex" (flexible / higher approval): unlimited GDS/TDS under 65% LTV; up to 60/60 up to 80% LTV.
+  // "lowrate" (save money / lowest rate): up to 48/48 up to 80% LTV.
+  // Either path flags orange ("needs a closer look") when GDS is up to 2 points over 39 (39–41)
+  // or TDS is up to 2 points over 44 (44–46), even though still within the hard cap.
+  function classifyGdsTds(gds, tds, ltvPct, goal){
+    const nearGuideline = (gds >= 39 && gds <= 41) || (tds >= 44 && tds <= 46);
+    if(goal === 'flex'){
+      if(ltvPct < 65) return {cls:'strong', label:'Strong — flexible-approval path, low LTV'};
+      if(ltvPct <= 80){
+        if(gds <= 60 && tds <= 60){
+          return nearGuideline
+            ? {cls:'review', label:'Needs a closer look — near the standard guideline'}
+            : {cls:'strong', label:'Strong — within flexible-approval limits (60/60)'};
+        }
+        return {cls:'risk', label:'Exceeds flexible-approval limits (60/60) — call before promising anything'};
+      }
+      return {cls:'risk', label:'LTV over 80% — not covered by current programs'};
+    }
+    if(ltvPct <= 80){
+      if(gds <= 48 && tds <= 48){
+        return nearGuideline
+          ? {cls:'review', label:'Needs a closer look — near the standard guideline'}
+          : {cls:'strong', label:'Strong — within lowest-rate program limits (48/48)'};
+      }
+      return {cls:'risk', label:'Exceeds lowest-rate program limits (48/48) — call before promising anything'};
+    }
+    return {cls:'risk', label:'LTV over 80% — not covered by current programs'};
+  }
+  // Client-facing verdict text — keeps rate/GDS/TDS/LTV detail out of anything the client sees;
+  // full detail (verdict.label) stays available internally for admin.
+  const CLIENT_VERDICT_TEXT = {strong:'Strong pre-qualification', review:'Good pre-qualification — worth a closer look', risk:'Needs a closer look — James will review personally'};
+
+  /* ---------- PARTNER DIRECTORY (demo data — pulls from James's real partner list in production) ---------- */
+  const partnerDirectory = {
+    realtor: [
+      {id:'wayne-dick', name:"Wayne Dick", firm:"RE/MAX", city:"port moody", phone:"(604) 555-0142", email:"wayne@waynedick.ca", website:"waynedick.ca", rating:5},
+      {id:'priya-chandra', name:"Priya Chandra", firm:"Sutton Group", city:"burnaby", phone:"(604) 555-0177", email:"priya@priyachandra.ca", website:"priyachandra.ca", rating:5},
+      {id:'marcus-reyes', name:"Marcus Reyes", firm:"Oakwyn Realty", city:"vancouver", phone:"(604) 555-0113", email:"marcus@marcusreyes.ca", website:"marcusreyes.ca", rating:5},
+    ],
+    lawyer: [
+      {name:"Anita Grewal", firm:"Grewal Law", city:"port moody", phone:"(604) 555-0221", website:"grewallaw.ca", rating:5},
+      {name:"David Cho", firm:"Cho & Associates", city:"vancouver", phone:"(604) 555-0289", website:"cholaw.ca", rating:5},
+    ]
+  };
+  let matchedRealtorForReferral = null;
+  function matchPartner(category, cityLabel){
+    const list = partnerDirectory[category];
+    const label = cityLabel.toLowerCase();
+    return list.find(p => label.includes(p.city)) || list[0];
+  }
+  function initials(name){
+    return name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+  }
+  function starString(rating){
+    return '★★★★★☆☆☆☆☆'.slice(5 - rating, 10 - rating);
+  }
+  function partnerCardHTML(category, p){
+    if(category === 'realtor'){
+      matchedRealtorForReferral = p;
+      return `
+      <div class="partner-card" style="align-items:flex-start;">
+        <div class="avatar">${initials(p.name)}</div>
+        <div class="info">
+          <div class="role">Realtor partner</div>
+          <div class="name">${p.name} <span style="font-weight:400;color:var(--ink-faint);font-size:12px;">· ${p.firm}</span></div>
+          <div class="stars">${starString(p.rating)}</div>
+          <div class="contact"><a href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${p.phone}</a> · <a href="https://${p.website}" target="_blank" rel="noopener">${p.website}</a></div>
+          <p style="font-size:12px;color:var(--ink-soft);margin:8px 0 6px;line-height:1.5;">Don't have a realtor yet? ${p.name} is one of James's most trusted partners in ${p.city.replace(/\b\w/g, c => c.toUpperCase())} — happy to make the introduction.</p>
+          <label style="display:flex;align-items:flex-start;gap:6px;font-size:12.5px;color:var(--ink);cursor:pointer;margin-bottom:4px;"><input type="checkbox" id="realtorConnect" onchange="toggleRealtorShare()" style="margin-top:2px;"> Yes, connect me with ${p.name}</label>
+          <label id="realtorShareWrap" style="display:none;align-items:flex-start;gap:6px;font-size:12px;color:var(--ink-soft);cursor:pointer;margin-left:18px;"><input type="checkbox" id="realtorShareAmount" style="margin-top:2px;"> Also share my pre-qualification amount, so ${p.name} knows my budget going in</label>
+        </div>
+      </div>`;
+    }
+    const roleLabel = 'Lawyer / notary partner';
+    return `
+      <div class="partner-card">
+        <div class="avatar">${initials(p.name)}</div>
+        <div class="info">
+          <div class="role">${roleLabel}</div>
+          <div class="name">${p.name} <span style="font-weight:400;color:var(--ink-faint);font-size:12px;">· ${p.firm}</span></div>
+          <div class="stars">${starString(p.rating)}</div>
+          <div class="contact"><a href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${p.phone}</a> · <a href="https://${p.website}" target="_blank" rel="noopener">${p.website}</a></div>
+        </div>
+        <button class="btn-mini" onclick="connectPartner(this)">Connect</button>
+      </div>`;
+  }
+  function connectPartner(btn){
+    // SIMULATED — production fires a real notification via backend, same
+    // pattern as the earlier apply wizard's realtor-match step.
+    btn.textContent = '✓ Notified';
+    btn.disabled = true;
+  }
+  function toggleRealtorShare(){
+    const connect = document.getElementById('realtorConnect');
+    const shareWrap = document.getElementById('realtorShareWrap');
+    shareWrap.style.display = connect.checked ? 'flex' : 'none';
+    if(!connect.checked) document.getElementById('realtorShareAmount').checked = false;
+  }
+  function renderPartners(purpose){
+    const cityLabel = document.querySelector('#f-city option:checked').textContent;
+    const captions = [];
+    let html = '';
+    if(purpose === 'purchase'){
+      html += partnerCardHTML('realtor', matchPartner('realtor', cityLabel));
+      captions.push('this is a purchase');
+    }
+    if(purpose === 'purchase' || purpose === 'refinance'){
+      html += partnerCardHTML('lawyer', matchPartner('lawyer', cityLabel));
+      captions.push(purpose === 'refinance' ? 'refinances need a lawyer for the new registration' : 'purchases need a lawyer for closing');
+    }
+    const captionEl = document.getElementById('partnerCaption');
+    const sectionEl = document.getElementById('partnerSection');
+    if(html){
+      captionEl.textContent = '✓ Since ' + captions.join(' and ') + ', here are James\'s trusted local partners:';
+      captionEl.style.display = 'block';
+      sectionEl.innerHTML = html;
+      sectionEl.style.display = 'grid';
+    } else {
+      captionEl.style.display = 'none';
+      sectionEl.style.display = 'none';
+      sectionEl.innerHTML = '';
+    }
+  }
+
+  function runCalc(){
+    const purpose = document.querySelector('#purposeSel .chip-opt.selected').dataset.val;
+    const price = num('f-price'); // purchase price, market value, or current property value depending on purpose
+    const income = num('f-income');
+    const debts = num('f-debts');
+    const isCondo = document.querySelector('#propType .chip-opt.selected').dataset.val === 'condo';
+    const condoFee = isCondo ? num('f-condofee') : 0;
+    const cityRate = parseFloat(document.getElementById('f-city').value);
+    const annualTaxInput = num('f-taxannual');
+    const credit = document.querySelector('#creditBand .chip-opt.selected').dataset.val;
+
+    const mortgage = purpose === 'purchase'
+      ? Math.max(price - num('f-down'), 0)
+      : Math.max(num('f-currentbalance') + num('f-extrafunds'), 0);
+    const tier = getLtvTierAndRate(price, mortgage);
+    const contractRate = tier.rate != null ? tier.rate : 4.79; // fallback if nothing matched
+    const qualRate = Math.max(contractRate + 2, BENCHMARK_RATE);
+    const amort = 25;
+    const payment = monthlyPayment(mortgage, qualRate, amort); // stress-tested — admin-only, drives GDS/TDS
+    const actualPayment = monthlyPayment(mortgage, contractRate, amort); // real rate — shown to the client
+    // Rate disclosure: only show a rate for purchases, using the lowest available variable rate
+    // (not the fixed-tier rate used for qualifying). Refinance/renewal never disclose a rate here.
+    const displayRate = purpose === 'purchase' ? lowestVariableRate() : null;
+    const displayPayment = purpose === 'purchase' ? monthlyPayment(mortgage, displayRate, amort) : actualPayment;
+    const usingRealTax = annualTaxInput > 0;
+    const taxMonthly = usingRealTax ? (annualTaxInput / 12) : (price * (cityRate/100)) / 12;
+    const heatMonthly = isCondo ? 100 : 150;
+    const condoCounted = condoFee * 0.5;
+
+    const housingTotal = payment + taxMonthly + heatMonthly + condoCounted;
+    const gds = income > 0 ? (housingTotal / (income/12)) * 100 : 0;
+    const tds = income > 0 ? ((housingTotal + debts) / (income/12)) * 100 : 0;
+
+    const goal = document.querySelector('#goalSel .chip-opt.selected').dataset.val;
+    const dpPct = tier.dpPct;
+    const ltvPct = tier.ltvPct;
+
+    // score — generic triage number, capped below 100 since this is an estimate, never a guarantee
+    let s = 0;
+    s += gds <= 32 ? 35 : gds <= 39 ? 25 : gds <= 44 ? 10 : 0;
+    s += tds <= 40 ? 35 : tds <= 44 ? 25 : tds <= 50 ? 10 : 0;
+    s += credit === 'excellent' ? 20 : credit === 'good' ? 15 : credit === 'fair' ? 8 : 0;
+    s += dpPct >= 20 ? 10 : dpPct >= 10 ? 6 : dpPct >= 5 ? 3 : 0;
+    s = Math.min(s, 95);
+
+    const verdict = classifyGdsTds(gds, tds, ltvPct, goal);
+
+    document.getElementById('scoreNum').textContent = s + ' / 100';
+    document.getElementById('scoreBadge').textContent = CLIENT_VERDICT_TEXT[verdict.cls] || verdict.label;
+    document.getElementById('scoreBadge').className = 'badge ' + verdict.cls;
+
+    document.getElementById('bMortgage').textContent = '$' + Math.round(mortgage).toLocaleString();
+    document.getElementById('bPayment').textContent = '$' + Math.round(displayPayment).toLocaleString() + '/mo (estimated, ' + amort + '-yr amortization)';
+    document.getElementById('bTax').textContent = '$' + Math.round(taxMonthly).toLocaleString() + '/mo' + (usingRealTax ? ' (exact figure entered)' : ' (city-rate estimate)');
+    document.getElementById('bCondo').textContent = isCondo ? ('$' + Math.round(condoCounted).toLocaleString() + '/mo (50% of $' + condoFee.toLocaleString() + ')') : 'N/A (house)';
+
+    renderPartners(purpose);
+    document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('wizProgress').style.display = 'none';
+    document.querySelector('.wizard-bar').style.display = 'none';
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+    if(verdict.cls !== 'risk') setTimeout(() => showChatbot(verdict.cls), 1600);
+
+    const cityText = (() => { const opt = document.getElementById('f-city').selectedOptions[0]; return opt ? opt.textContent.split(' (')[0].trim() : '—'; })();
+    initPrequalOffer({
+      purpose: purpose === 'purchase' ? 'Purchase' : purpose === 'refinance' ? 'Refinance' : 'Renewal',
+      city: cityText,
+      score: s,
+      verdictLabel: verdict.label,
+      clientVerdictLabel: CLIENT_VERDICT_TEXT[verdict.cls] || verdict.label,
+      compliant: verdict.cls !== 'risk',
+      gds: gds,
+      tds: tds,
+      credit: credit.charAt(0).toUpperCase() + credit.slice(1),
+      mortgageAmount: Math.round(mortgage),
+      mortgageFormatted: '$' + Math.round(mortgage).toLocaleString(),
+      paymentFormatted: '$' + Math.round(displayPayment).toLocaleString() + '/mo (estimate)',
+      income: income,
+      priceFormatted: '$' + Math.round(price).toLocaleString()
+    });
+  }
+
+  /* ---------- PRE-QUALIFICATION CODE + EMAIL/SMS CAPTURE ---------- */
+  let currentPrequalPayload = null;
+  function initPrequalOffer(payload){
+    currentPrequalPayload = payload;
+    currentPrequalPayload.code = generatePrequalCode();
+    document.getElementById('prequalCodeDisplay').innerHTML = maskCodeHTML(currentPrequalPayload.code);
+    document.getElementById('prequalOffer').style.display = 'block';
+    if(payload.compliant === false){
+      document.getElementById('prequalAskText').textContent = "Every file tells its own story, and yours has a few things worth a second look — which is exactly where James earns his fee. He personally reviews every application, successful number or not, and he's found the right lender and rate for trickier files than this one. Grab your certificate below and he'll take it from here.";
+    } else {
+      document.getElementById('prequalAskText').textContent = "Strong number — nice work. James personally reviews every file that comes through here before anything's final, so let's get your certificate locked in.";
+    }
+    document.getElementById('certForm').style.display = 'block';
+    document.getElementById('certConfirm').style.display = 'none';
+    document.getElementById('certError').style.display = 'none';
+    document.getElementById('certFormCode').innerHTML = maskCodeHTML(payload.code);
+  }
+  function copyPrequalCode(){
+    if(!currentPrequalPayload) return;
+    const btn = document.getElementById('prequalCopyBtn');
+    const original = btn.textContent;
+    btn.textContent = '🔒';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  }
+  function buildCertificateHTML(payload, contact){
+    const issued = new Date().toLocaleDateString('en-CA', {year:'numeric', month:'long', day:'numeric'});
+    const logoUrl = new URL('james-park-logo.png', window.location.href).href;
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Pre-Qualification Certificate</title>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;background:#FAFAFB;color:#234361;padding:60px 24px;}
+  .cert{max-width:640px;margin:0 auto;background:#fff;border:1px solid rgba(35,67,97,0.12);border-radius:22px;padding:48px;box-shadow:0 12px 32px rgba(35,67,97,0.10);}
+  .logo{display:block;margin:0 auto 14px;height:40px;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F9F6B;text-align:center;display:block;margin-bottom:10px;}
+  h1{text-align:center;font-size:26px;margin:0 0 6px;}
+  .sub{text-align:center;color:#52697D;font-size:13.5px;margin-bottom:4px;}
+  .contact-line{text-align:center;color:#52697D;font-size:12px;margin-bottom:28px;}
+  .code{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:800;letter-spacing:0.05em;background:#E8F8F0;color:#24805A;border-radius:12px;padding:14px;margin-bottom:22px;}
+  .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(35,67,97,0.10);font-size:14px;}
+  .row:last-of-type{border-bottom:none;}
+  .row span:first-child{color:#52697D;}
+  .row span:last-child{font-weight:700;font-family:'IBM Plex Mono',monospace;}
+  .foot{margin-top:32px;font-size:11.5px;color:#8B99A6;line-height:1.7;text-align:center;}
+  .print-btn{display:block;width:100%;margin-top:28px;background:#2F9F6B;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;}
+  @media print{ .print-btn{display:none;} body{background:#fff;padding:0;} .cert{box-shadow:none;border:none;} }
+</style></head><body>
+  <div class="cert">
+    <img class="logo" src="${logoUrl}" alt="James Park Mortgage">
+    <span class="kicker">James Park Mortgage — Pre-Qualification Certificate</span>
+    <h1>${contact.name}</h1>
+    <p class="sub">Issued ${issued} · Licensed Mortgage Broker, BC #503774</p>
+    <p class="contact-line">james@jamespark.ca &nbsp;·&nbsp; 778-222-7109</p>
+    <div class="code">${payload.code}</div>
+    <div class="row"><span>Purpose</span><span>${payload.purpose} — ${payload.city}</span></div>
+    <div class="row"><span>Estimated mortgage amount</span><span>${payload.mortgageFormatted}</span></div>
+    <div class="row"><span>Estimated monthly payment</span><span>${payload.paymentFormatted}</span></div>
+    <div class="row"><span>Credit band</span><span>${payload.credit}</span></div>
+    <div class="row"><span>Pre-qualification result</span><span>${payload.clientVerdictLabel || payload.verdictLabel}</span></div>
+    <div class="foot"><strong>This pre-qualification is subject to a full mortgage application, pre-approval with a rate hold, and full underwriting and lender review and approval.</strong><br><br>This certificate reflects a self-reported pre-qualification estimate, not a formal lender pre-approval or a guarantee of financing. James Park reviews every application personally before anything is final. Valid as a good-faith summary for 90 days from the issue date above.</div>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+</body></html>`;
+  }
+  function openCertificateWindow(payload, contact){
+    const html = buildCertificateHTML(payload, contact);
+    const blob = new Blob([html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+  let lastCertPayload = null, lastCertContact = null;
+  async function submitCertificateAccount(){
+    const name = document.getElementById('cert-name').value.trim();
+    const email = document.getElementById('cert-email').value.trim();
+    const phone = document.getElementById('cert-phone').value.trim();
+    const pw = document.getElementById('cert-password').value;
+    const pw2 = document.getElementById('cert-password2').value;
+    if(!name || !email || !phone || pw.length < 8 || pw !== pw2){
+      document.getElementById('certError').style.display = 'block';
+      return;
+    }
+    document.getElementById('certError').style.display = 'none';
+    const contact = {name, email, phone};
+
+    const { data: signUpData, error: signUpError } = await sb.auth.signUp({
+      email, password: pw, options: { data: { full_name: name } }
+    });
+    const alreadyRegistered = signUpError
+      ? (signUpError.code === 'user_already_exists' || /already registered/i.test(signUpError.message || ''))
+      : !!(signUpData && signUpData.user && signUpData.user.identities && signUpData.user.identities.length === 0);
+    if(signUpError && !alreadyRegistered){
+      console.error('[Supabase] signUp failed', signUpError);
+      document.getElementById('certError').textContent = 'Something went wrong creating your account — please try again in a moment.';
+      document.getElementById('certError').style.display = 'block';
+      return;
+    }
+
+    const newLead = await pushPrequalLead(currentPrequalPayload, contact);
+    pushInternalSmsAlert(currentPrequalPayload, contact);
+    pushEmailNotification(currentPrequalPayload, contact);
+    if(!alreadyRegistered) sendWelcomeEmail(currentPrequalPayload, contact);
+
+    let realtorNotifiedLine = '';
+    const realtorConnectEl = document.getElementById('realtorConnect');
+    if(realtorConnectEl && realtorConnectEl.checked && matchedRealtorForReferral){
+      const shareAmount = document.getElementById('realtorShareAmount') && document.getElementById('realtorShareAmount').checked;
+      await assignLeadToRealtor(newLead.id, matchedRealtorForReferral, shareAmount);
+      pushRealtorReferralEmail(currentPrequalPayload, contact, matchedRealtorForReferral, shareAmount);
+      pushRealtorSmsAlert(currentPrequalPayload, contact, matchedRealtorForReferral, shareAmount);
+      realtorNotifiedLine = `<div><strong>Realtor:</strong> ✓ ${matchedRealtorForReferral.name} has been notified and will be in touch</div>`;
+    }
+
+    lastCertPayload = currentPrequalPayload;
+    lastCertContact = contact;
+    openCertificateWindow(currentPrequalPayload, contact);
+    document.getElementById('certForm').style.display = 'none';
+    document.getElementById('certConfirmName').textContent = name.split(' ')[0] + ', you\'re in!';
+    document.getElementById('certConfirmMsg').innerHTML = alreadyRegistered
+      ? 'Your certificate just opened in a new tab. Looks like you already have an account with us — <a href="client-login.html" style="color:var(--indigo);font-weight:700;">log in</a> to see your file.'
+      : currentPrequalPayload.compliant === false
+      ? "Your certificate just opened in a new tab. James is looking at your file personally right now to line up the best rate and lender fit for your situation — a welcome email with your login is on its way too."
+      : "Your certificate just opened in a new tab, and James already has your file — a welcome email with your login is on its way too.";
+    document.getElementById('certRecap').innerHTML = `
+      <div><strong>Code:</strong> ${maskCodeHTML(currentPrequalPayload.code)} <span style="font-size:11px;color:var(--ink-faint);">(log in to reveal in full)</span></div>
+      <div><strong>Purpose:</strong> ${currentPrequalPayload.purpose} — ${currentPrequalPayload.city}</div>
+      <div><strong>Mortgage amount:</strong> ${currentPrequalPayload.mortgageFormatted}</div>
+      <div><strong>Estimated payment:</strong> ${currentPrequalPayload.paymentFormatted}</div>
+      <div><strong>Account:</strong> ${email} · ${phone}</div>
+      ${realtorNotifiedLine}`;
+    document.getElementById('prequalCallbackMsg').textContent = computeCallbackTimeText();
+    document.getElementById('certConfirm').style.display = 'block';
+  }
+  function reopenCertificate(){
+    if(lastCertPayload && lastCertContact) openCertificateWindow(lastCertPayload, lastCertContact);
+  }
+
+
+  /* ---------- CHATBOT (appears on a qualifying result; conversational, mortgage-knowledgeable) ---------- */
+  const APPLY_URL = 'https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup';
+
+
+  let chatbotTyping = false;
+  function scrollChatToBottom(){ const b = document.getElementById('cbBody'); if(b) b.scrollTop = b.scrollHeight; }
+  function pushChatBubble(text, sender){
+    const body = document.getElementById('cbBody');
+    if(!body) return;
+    const bubble = document.createElement('div');
+    bubble.className = 'cb-bubble ' + sender;
+    bubble.textContent = text;
+    body.appendChild(bubble);
+    scrollChatToBottom();
+  }
+  function pushVerifyNote(){
+    const body = document.getElementById('cbBody');
+    if(!body) return;
+    const note = document.createElement('div');
+    note.className = 'cb-verify-note';
+    note.textContent = CHATBOT_VERIFY_NOTE;
+    body.appendChild(note);
+    scrollChatToBottom();
+  }
+  function sendChatMessage(){
+    if(chatbotTyping) return;
+    const input = document.getElementById('cbInput');
+    const text = input.value.trim();
+    if(!text) return;
+    pushChatBubble(text, 'user');
+    input.value = '';
+    chatbotTyping = true;
+    const body = document.getElementById('cbBody');
+    const typingEl = document.createElement('div');
+    typingEl.className = 'cb-typing';
+    typingEl.id = 'cbTyping';
+    typingEl.textContent = "James's Assistant is typing…";
+    body.appendChild(typingEl);
+    scrollChatToBottom();
+    const reply = matchChatbotReply(text);
+    setTimeout(() => {
+      const t = document.getElementById('cbTyping');
+      if(t) t.remove();
+      pushChatBubble(reply, 'bot');
+      pushVerifyNote();
+      chatbotTyping = false;
+    }, 550 + Math.random() * 500);
+  }
+  function chatbotKeydown(e){ if(e.key === 'Enter'){ e.preventDefault(); sendChatMessage(); } }
+
+  function showChatbot(scoreCls){
+    if(document.getElementById('chatbotWidget')) return; // don't stack multiple
+    const contextMsg = {
+      strong: "Nice work — that's a strong result. I don't want to be pushy about it, but the natural next step is a real application whenever you're ready; no obligation either way, and James looks at every one personally.",
+      review: "You're in a reasonable range here, though it's worth a closer look with a real person before anything's certain."
+    };
+    const msg = contextMsg[scoreCls] || contextMsg.review;
+    const div = document.createElement('div');
+    div.className = 'chatbot-widget';
+    div.id = 'chatbotWidget';
+    div.innerHTML = `
+      <div class="cb-head">
+        <div class="cb-avatar">JP</div>
+        <div>
+          <div class="cb-name">James's Assistant</div>
+          <div class="cb-status">Online now</div>
+        </div>
+        <button class="cb-close" onclick="document.getElementById('chatbotWidget').remove()">×</button>
+      </div>
+      <div class="cb-body" id="cbBody"></div>
+      <div class="cb-input-row">
+        <input type="text" class="cb-input" id="cbInput" placeholder="Ask about rates, down payments…" onkeydown="chatbotKeydown(event)">
+        <button class="cb-send" onclick="sendChatMessage()">Send</button>
+      </div>
+      <div class="cb-actions">
+        <button class="cb-btn-ghost" onclick="document.getElementById('chatbotWidget').remove()">Not right now</button>
+        <a class="cb-btn-primary" href="${APPLY_URL}" target="_blank" rel="noopener">Apply Now</a>
+      </div>
+      <div class="cb-disclaimer">General info only, not formal advice — James has the final word on your actual numbers.</div>`;
+    document.body.appendChild(div);
+    requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('show')));
+    pushChatBubble(CHATBOT_DISCLAIMER, 'bot');
+    setTimeout(() => pushChatBubble(msg, 'bot'), 500);
+  }
+</script>
+
+</body>
+</html>

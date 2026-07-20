@@ -1,0 +1,6 @@
+# Local dev-only files — not part of the deployed site
+_static_server.ps1
+_uploads/
+handoff.md
+mls-api-scoping.md
+James Park.png

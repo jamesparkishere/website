@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No Hold Music. Just Mortgage Answers. | Free Download</title>
+<meta name="description" content="Pre-qualify without a credit check, track your application, and message James directly — all from your phone. Trusted by homebuyers across Vancouver and Burnaby.">
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['mortgage-app.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--brand);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-toggle.active{color:var(--brand);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;}
+  .btn-cta-sm{background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;}
+  .btn-cta-sm:hover{background:var(--brand-dark);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  main{padding:0 0 90px;}
+
+  /* HERO */
+  .app-hero{background:linear-gradient(160deg, var(--ink), #102A40);color:#fff;padding:64px 0 60px;}
+  .app-hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
+  .app-kicker{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A7E8CC;margin-bottom:14px;}
+  .app-hero h1{font-size:clamp(30px,4vw,42px);line-height:1.15;margin-bottom:16px;}
+  .app-hero h1 .accent{color:#5FD69B;}
+  .app-hero p.sub{font-size:16px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:52ch;margin-bottom:26px;}
+  .store-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px;}
+  .store-btn{display:flex;align-items:center;gap:10px;background:#fff;color:var(--ink);border-radius:12px;padding:10px 18px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,0.25);}
+  .store-btn:hover{transform:translateY(-1px);}
+  .store-btn .icon{font-size:22px;}
+  .store-btn .txt small{display:block;font-size:10px;font-weight:500;color:var(--ink-faint);}
+  .store-btn .txt strong{display:block;font-size:14px;}
+  .stat-row{display:flex;gap:28px;flex-wrap:wrap;}
+  .stat-row .stat{display:flex;flex-direction:column;}
+  .stat-row .stat b{font-size:22px;font-weight:800;}
+  .stat-row .stat span{font-size:12px;color:rgba(255,255,255,0.6);}
+  .stars{color:#FFC24B;letter-spacing:1px;}
+
+
+  /* FEATURES */
+  section.section{padding:64px 0;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 40px;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px;}
+  .section-head h2{font-size:clamp(24px,3vw,32px);margin-bottom:10px;}
+  .section-head p{font-size:15px;color:var(--ink-soft);line-height:1.6;}
+
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .feature-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow-sm);}
+  .feature-card .icon{width:46px;height:46px;border-radius:13px;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;}
+  .feature-card h3{font-size:16px;margin-bottom:8px;}
+  .feature-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0;}
+
+  /* HOW IT WORKS */
+  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .step-card{text-align:center;}
+  .step-num{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+  .step-card h3{font-size:15.5px;margin-bottom:8px;}
+  .step-card p{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+
+  /* APP SCREENSHOT SLIDER — shows 2.5 images at a time, arrow advances by exactly 1 image width */
+  .app-slider{display:flex;align-items:center;gap:12px;max-width:760px;margin:0 auto;}
+  .app-slider-viewport{overflow:hidden;flex:1;}
+  .app-slider-track{display:flex;gap:14px;transition:transform .4s cubic-bezier(.2,.8,.2,1);}
+  .app-slider-track img{flex:0 0 calc((100% - 28px) / 2.5);width:calc((100% - 28px) / 2.5);border-radius:18px;box-shadow:var(--shadow-md);display:block;cursor:zoom-in;}
+  .app-lightbox{display:none;position:fixed;inset:0;background:rgba(10,20,30,0.82);z-index:999;align-items:center;justify-content:center;padding:40px 20px;}
+  .app-lightbox.show{display:flex;}
+  .app-lightbox img{max-width:min(480px,90vw);max-height:88vh;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+  .app-lightbox-close{position:absolute;top:24px;right:28px;width:40px;height:40px;border-radius:50%;background:var(--surface);border:none;font-size:20px;cursor:pointer;color:var(--ink);}
+  .app-slider-arrow{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow-sm);font-size:20px;line-height:1;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .app-slider-arrow:hover:not(:disabled){background:var(--bg);}
+  .app-slider-arrow:disabled{opacity:0.35;cursor:default;}
+  .hero-app-slider{max-width:420px;margin:0;}
+  .hero-app-slider .app-slider-arrow{width:34px;height:34px;font-size:17px;}
+  @media (max-width:600px){ .app-slider-track img{flex-basis:calc((100% - 14px) / 2);width:calc((100% - 14px) / 2);} }
+
+  /* TESTIMONIALS */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .testi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);}
+  .testi-card .stars{display:block;margin-bottom:10px;font-size:14px;}
+  .testi-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 14px;}
+  .testi-card .who{font-size:12.5px;font-weight:700;color:var(--ink);}
+
+  /* DOWNLOAD CTA BAND */
+  .cta-band{background:linear-gradient(160deg, var(--ink), #102A40);border-radius:28px;padding:52px 40px;text-align:center;color:#fff;}
+  .cta-band h2{font-size:clamp(22px,3vw,30px);margin-bottom:12px;}
+  .cta-band p{color:rgba(255,255,255,0.75);font-size:14.5px;margin-bottom:24px;}
+  .cta-band .store-row{justify-content:center;margin-bottom:0;}
+
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--border);padding:18px 0;}
+  .faq-item h3{font-size:15px;margin-bottom:8px;}
+  .faq-item p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0;}
+
+  @media (max-width:860px){
+    .app-hero-grid{grid-template-columns:1fr;}
+    .hero-app-slider{max-width:100%;margin:0 auto;}
+    .feature-grid{grid-template-columns:1fr 1fr;}
+    .steps-row{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:600px){ .feature-grid{grid-template-columns:1fr;} }
+
+  footer.site-footer{border-top:1px solid var(--border);background:var(--surface);padding:40px 0 24px;margin-top:0;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;margin-bottom:28px;}
+  .footer-grid h4{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);margin-bottom:12px;}
+  .footer-grid a{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
+  .footer-grid a:hover{color:var(--brand);}
+  .footer-grid p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0;}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:18px;font-size:12px;color:var(--ink-faint);text-align:center;}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle active">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html">Partners</a>
+          <a href="mortgage-app.html" class="active">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="mortgage-pre-approval.html" class="btn-cta-sm">Instant Pre-Qualification</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="app-hero">
+    <div class="wrap app-hero-grid">
+      <div>
+        <span class="app-kicker">No Hold Music. Just Answers.</span>
+        <h1>Your mortgage. <span class="accent">In your pocket.</span></h1>
+        <p class="sub">Pre-Qualify in seconds — everything you need to buy, refinance, or renew, without being on hold.</p>
+        <div class="store-row">
+          <a class="store-btn" href="https://app.canadianmortgageapp.com/app/jamespark" target="_blank" rel="noopener">
+            <span class="icon"></span>
+            <span class="txt"><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store-btn" href="https://app.canadianmortgageapp.com/app/jamespark" target="_blank" rel="noopener">
+            <span class="icon">▶</span>
+            <span class="txt"><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>12,000+</b><span>Downloads</span></div>
+          <div class="stat"><b class="stars">★★★★★ 4.8</b><span>Average rating</span></div>
+          <div class="stat"><b>Free</b><span>No cost to download</span></div>
+        </div>
+      </div>
+      <div class="app-slider hero-app-slider">
+        <button class="app-slider-arrow" id="appSliderLeft" onclick="slideApp(-1)" aria-label="Previous screenshot">‹</button>
+        <div class="app-slider-viewport">
+          <div class="app-slider-track" id="appSliderTrack">
+            <img src="slide1.png" alt="Mortgage app — welcome screen" onclick="openLightbox(this.src, this.alt)">
+            <img src="slide2.png" alt="Mortgage app — trusted by over a million users" onclick="openLightbox(this.src, this.alt)">
+            <img src="slide3.png" alt="Mortgage app — shop rates from over 100 lenders" onclick="openLightbox(this.src, this.alt)">
+            <img src="slide4.png" alt="Mortgage app — easy, accurate mortgage payment calculator" onclick="openLightbox(this.src, this.alt)">
+            <img src="slide5.png" alt="Mortgage app — plan your purchase with confidence" onclick="openLightbox(this.src, this.alt)">
+            <img src="slide6.png" alt="Mortgage app — find out if refinancing saves you money" onclick="openLightbox(this.src, this.alt)">
+          </div>
+        </div>
+        <button class="app-slider-arrow" id="appSliderRight" onclick="slideApp(1)" aria-label="Next screenshot">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Everything In One App</span>
+        <h2>Built to make your mortgage feel simple.</h2>
+        <p>No more phone tag, wondering where you stand. It's all right here.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🎯</div>
+          <h3>Pre-Qualify, No Credit Check</h3>
+          <p>Get a real, honest pre-qualification number in seconds — without it touching your credit score.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🧮</div>
+          <h3>Calculators In Your Pocket</h3>
+          <p>Affordability, closing costs, income requirements, and mortgage payments — run the numbers anywhere, anytime.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">💬</div>
+          <h3>Direct Line to James</h3>
+          <p>Message your broker directly inside the app. No call centres, no runaround — just a real person who knows your file.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">How It Works</span>
+        <h2>Three steps. That's it.</h2>
+      </div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Download</h3>
+          <p>Free download, no account hoops — get started in seconds, right from your phone.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Pre-Qualify Numbers</h3>
+          <p>Answer a few questions and get your real pre-qualification number in under two minutes — no credit check required.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Get Pre-Approval</h3>
+          <p>Take those numbers to James for <strong>more</strong> if needed — including a full, document-backed pre-approval.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">What Users Say</span>
+        <h2>4.8 out of 5, from 12,000+ downloads.</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <span class="stars">★★★★★</span>
+          <p>"Ran my numbers on my lunch break and had a real pre-qualification before I finished my coffee — no credit check, no waiting on hold. James called that same afternoon."</p>
+          <div class="who">Priya T. — App Store review</div>
+        </div>
+        <div class="testi-card">
+          <span class="stars">★★★★★</span>
+          <p>"Got a real pre-qualification number without a hard credit check, which is exactly what I needed before I started house hunting."</p>
+          <div class="who">David K. — Google Play review</div>
+        </div>
+        <div class="testi-card">
+          <span class="stars">★★★★★</span>
+          <p>"The renewal alert alone paid for itself — got a heads up weeks before my bank even mailed my renewal letter."</p>
+          <div class="who">Sarah M. — App Store review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-band">
+        <h2>Get started in the next two minutes.</h2>
+        <p>Free to download. No obligation. Your mortgage, finally on your terms.</p>
+        <div class="store-row">
+          <a class="store-btn" href="https://app.canadianmortgageapp.com/app/jamespark" target="_blank" rel="noopener">
+            <span class="icon"></span>
+            <span class="txt"><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store-btn" href="https://app.canadianmortgageapp.com/app/jamespark" target="_blank" rel="noopener">
+            <span class="icon">▶</span>
+            <span class="txt"><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Questions</span>
+        <h2>Frequently asked.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>Is the app free?</h3>
+          <p>Yes — the app is completely free to download and use. There's never a charge to pre-qualify, calculate, or message James.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does checking my pre-qualification hurt my credit score?</h3>
+          <p>No. The in-app pre-qualification uses a soft, no-impact check on your self-reported information — nothing touches your credit score until you formally apply.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is my information secure?</h3>
+          <p>Yes. Personal information is encrypted in transit and at rest, the same standard used across the Canadian Mortgage App platform.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does the app replace working with James directly?</h3>
+          <p>Not at all — it's built to make working with James easier, not to replace him. Every file is still reviewed personally, and the in-app chat goes straight to him.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Where is it available?</h3>
+          <p>Anywhere in BC — purchases, refinances, renewals, and specialized lending are all supported in-app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a href="index.html"><img src="james-park-logo.png" alt="James Park MortgagePal" height="68"></a>
+      <p>BC's trusted mortgage experts. Helping you navigate every step of your mortgage journey.</p>
+      <p class="mono">778-222-7109</p>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="mortgage-pre-approval.html">Pre-Approval</a>
+      <a href="burn-my-mortgage.html">Burn My Mortgage</a>
+      <a href="mortgage-app.html">📱 Get the App</a>
+    </div>
+    <div>
+      <h4>Network</h4>
+      <a href="find-a-realtor.html">Realtors</a>
+      <a href="find-a-partner.html">Partners</a>
+      <a href="partner-portal.html">Partner Login</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a><br>© 2026 James Park Mortgage. Licensed Mortgage Broker — BC · License #503774.</div>
+</footer>
+
+<div class="app-lightbox" id="appLightbox" onclick="if(event.target===this) closeLightbox()">
+  <button class="app-lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+  <img id="appLightboxImg" src="" alt="">
+</div>
+
+<script>
+  /* ---------- APP SCREENSHOT SLIDER ---------- */
+  const APP_SLIDER_TOTAL = 6;
+  const APP_SLIDER_VISIBLE = 2.5;
+  const APP_SLIDER_MAX_INDEX = APP_SLIDER_TOTAL - Math.ceil(APP_SLIDER_VISIBLE);
+  let appSliderIndex = 0;
+  function updateAppSliderArrows(){
+    document.getElementById('appSliderLeft').disabled = appSliderIndex <= 0;
+    document.getElementById('appSliderRight').disabled = appSliderIndex >= APP_SLIDER_MAX_INDEX;
+  }
+  function slideApp(dir){
+    appSliderIndex = Math.max(0, Math.min(APP_SLIDER_MAX_INDEX, appSliderIndex + dir));
+    const track = document.getElementById('appSliderTrack');
+    const firstImg = track.querySelector('img');
+    const gap = parseFloat(getComputedStyle(track).columnGap || '14');
+    const step = firstImg.getBoundingClientRect().width + gap;
+    track.style.transform = 'translateX(' + (-appSliderIndex * step) + 'px)';
+    updateAppSliderArrows();
+  }
+  window.addEventListener('resize', () => {
+    const track = document.getElementById('appSliderTrack');
+    track.style.transition = 'none';
+    slideApp(0);
+    requestAnimationFrame(() => { track.style.transition = ''; });
+  });
+  updateAppSliderArrows();
+
+  /* ---------- SCREENSHOT LIGHTBOX ---------- */
+  function openLightbox(src, alt){
+    document.getElementById('appLightboxImg').src = src;
+    document.getElementById('appLightboxImg').alt = alt || '';
+    document.getElementById('appLightbox').classList.add('show');
+  }
+  function closeLightbox(){
+    document.getElementById('appLightbox').classList.remove('show');
+  }
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>

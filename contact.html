@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact James Park | Vancouver & Burnaby Mortgage Broker</title>
+<meta name="description" content="Get in touch for a free, no-obligation mortgage consultation. Serving Vancouver, Burnaby, and all of BC — real answers, fast.">
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['contact.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--brand);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-toggle.active{color:var(--brand);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;}
+  .btn-cta-sm{background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;}
+  .btn-cta-sm:hover{background:var(--brand-dark);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  main{padding:44px 0 90px;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px;text-align:center;}
+  h1{font-size:clamp(28px,3.6vw,38px);text-align:center;margin-bottom:10px;}
+  p.sub{font-size:15.5px;color:var(--ink-soft);text-align:center;max-width:56ch;margin:0 auto 40px;line-height:1.6;}
+
+  .contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;}
+  .contact-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);text-align:center;}
+  .contact-card .icon{width:44px;height:44px;border-radius:12px;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto 14px;}
+  .contact-card h3{font-size:14px;margin-bottom:6px;}
+  .contact-card .val{font-weight:700;font-size:15px;margin-bottom:4px;}
+  .contact-card .sub2{font-size:12px;color:var(--ink-faint);}
+
+  .form-module{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;box-shadow:var(--shadow-sm);max-width:520px;margin:0 auto;}
+  .form-module h2{font-size:19px;text-align:center;margin-bottom:6px;}
+  .form-module p.formsub{text-align:center;font-size:13.5px;color:var(--ink-soft);margin:0 0 24px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input, .field select{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .field input:focus, .field select:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+  .btn-primary{width:100%;background:var(--brand);color:#fff;border:none;font-weight:700;font-size:15px;padding:14px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .btn-primary:hover{background:var(--brand-dark);}
+
+  .success-icon{width:52px;height:52px;border-radius:50%;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;margin:0 auto 16px;}
+  .success-box{display:none;text-align:center;}
+  .success-box.show{display:block;}
+  .form-body.hide{display:none;}
+
+  footer.site-footer{border-top:1px solid var(--border);background:var(--surface);padding:40px 0 24px;margin-top:56px;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;margin-bottom:28px;}
+  .footer-grid h4{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);margin-bottom:12px;}
+  .footer-grid a{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
+  .footer-grid a:hover{color:var(--brand);}
+  .footer-grid p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0;}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:18px;font-size:12px;color:var(--ink-faint);text-align:center;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html">Partners</a>
+          <a href="mortgage-app.html">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="mortgage-pre-approval.html" class="btn-cta-sm">Instant Pre-Qualification</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Get in Touch</span>
+  <h1>Let's talk about your mortgage.</h1>
+  <p class="sub">We're here to help you navigate every step. Reach out any way that works for you.</p>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="icon">📞</div>
+      <h3>Call Us</h3>
+      <div class="val"><a href="tel:7782227109">778-222-7109</a></div>
+      <div class="sub2">Speak directly with a broker</div>
+    </div>
+    <div class="contact-card">
+      <div class="icon">📅</div>
+      <h3>Book a Session</h3>
+      <div class="val">Free Strategy Call</div>
+      <div class="sub2">Pick a time that works for you</div>
+    </div>
+    <div class="contact-card">
+      <div class="icon">✉️</div>
+      <h3>Email Us</h3>
+      <div class="val"><a href="mailto:james@jamespark.ca">james@jamespark.ca</a></div>
+      <div class="sub2">We respond within 24 hours</div>
+    </div>
+    <div class="contact-card">
+      <div class="icon">📍</div>
+      <h3>Visit Us</h3>
+      <div class="val">Burnaby, BC</div>
+      <div class="sub2">5589 Byrne Rd #227</div>
+    </div>
+  </div>
+
+  <div class="form-module">
+    <div class="form-body" id="formBody">
+      <h2>Request a Callback</h2>
+      <p class="formsub">Send us a message and we'll get back to you fast.</p>
+      <div class="field"><label>Full Name *</label><input type="text" id="c-name" placeholder="Jane Doe"></div>
+      <div class="field"><label>Phone Number *</label><input type="text" id="c-phone" placeholder="(604) 555-0100"></div>
+      <div class="field"><label>Email <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label><input type="text" id="c-email" placeholder="jane@example.com"></div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Best time to call</label>
+        <select id="c-time">
+          <option>Morning</option>
+          <option>Afternoon</option>
+          <option>Evening</option>
+          <option>Anytime</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="submitContact()">Request a Callback</button>
+    </div>
+    <div class="success-box" id="successBox">
+      <div class="success-icon">✓</div>
+      <h2>Request sent</h2>
+      <p class="formsub" style="margin-bottom:0;">Thanks, <strong id="sentName">—</strong> — James will call you back <span id="sentTime">soon</span>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="james-park-logo.png" alt="James Park MortgagePal" height="68">
+      <p>BC's trusted mortgage experts. Helping you navigate every step of your mortgage journey.</p>
+      <p class="mono">778-222-7109</p>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="mortgage-pre-approval.html">Pre-Approval</a>
+      <a href="burn-my-mortgage.html">Burn My Mortgage</a>
+      <a href="mortgage-app.html">📱 Get the App</a>
+    </div>
+    <div>
+      <h4>Network</h4>
+      <a href="find-a-realtor.html">Realtors</a>
+      <a href="find-a-partner.html">Partners</a>
+      <a href="partner-portal.html">Partner Login</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a><br>© 2026 James Park Mortgage. Licensed Mortgage Broker — BC · License #503774.</div>
+</footer>
+
+<script>
+  function submitContact(){
+    // SIMULATED — production fires a real lead notification via backend.
+    const name = document.getElementById('c-name').value.trim() || 'there';
+    const time = document.getElementById('c-time').value.toLowerCase();
+    document.getElementById('sentName').textContent = name;
+    document.getElementById('sentTime').textContent = time === 'anytime' ? 'as soon as possible' : 'this ' + time;
+    document.getElementById('formBody').classList.add('hide');
+    document.getElementById('successBox').classList.add('show');
+  }
+</script>
+
+</body>
+</html>

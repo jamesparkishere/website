@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mortgage Blog | Vancouver & Burnaby Rate Updates | James Park</title>
+<meta name="description" content="Expert guides and rate updates for Vancouver and Burnaby homeowners — from first-time buyers to renewal season.">
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['blog.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{color:var(--brand);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-toggle.active{color:var(--brand);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;}
+  .btn-cta-sm{background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;}
+  .btn-cta-sm:hover{background:var(--brand-dark);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  main{padding:44px 0 90px;}
+  .kicker{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px;text-align:center;}
+  h1{font-size:clamp(28px,3.6vw,38px);text-align:center;margin-bottom:10px;}
+  p.sub{font-size:15.5px;color:var(--ink-soft);text-align:center;max-width:56ch;margin:0 auto 28px;line-height:1.6;}
+
+  .author-card{display:flex;align-items:center;gap:14px;max-width:480px;margin:0 auto 28px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-sm);}
+  .author-card img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+  .author-name{font-weight:700;font-size:13.5px;}
+  .author-role{font-size:11.5px;color:var(--ink-faint);}
+
+  .search-row{max-width:480px;margin:0 auto 16px;}
+  .search-row input{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--border-strong);font-size:13.5px;background:var(--surface);font-family:inherit;}
+  .search-row input:focus{outline:none;border-color:var(--brand);}
+
+  .cat-toggle-wrap{max-width:480px;margin:0 auto 28px;position:relative;}
+  .cat-toggle-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:10px;border:1.5px solid var(--border-strong);background:var(--surface);color:var(--ink);font-size:13.5px;font-weight:600;cursor:pointer;}
+  .cat-toggle-btn:hover{border-color:var(--brand);}
+  .cat-toggle-btn .arrow{transition:transform .2s ease;}
+  .cat-toggle-btn.open .arrow{transform:rotate(180deg);}
+  .cat-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:40;background:var(--surface);border:1px solid var(--border-strong);border-radius:12px;box-shadow:var(--shadow-md);padding:10px;max-height:320px;overflow-y:auto;}
+  .cat-menu.show{display:block;}
+  .cat-menu-item{padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;display:flex;justify-content:space-between;}
+  .cat-menu-item:hover{background:var(--bg);}
+  .cat-menu-item.selected{background:var(--brand-wash);color:var(--brand-dark);}
+
+  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+  .post-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+  .post-image{height:140px;display:block;overflow:hidden;background:var(--bg);}
+  .post-image img{width:100%;height:100%;object-fit:cover;display:block;}
+  .post-card .body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1;}
+  .post-card .cat-tag{display:inline-block;align-self:flex-start;background:var(--brand-wash);color:var(--brand-dark);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;padding:4px 11px;border-radius:999px;margin-bottom:12px;}
+  .post-card .yt-tag{display:inline-block;align-self:flex-start;background:var(--coral-wash);color:var(--coral);font-size:10.5px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:12px;margin-left:6px;}
+  .post-card h3{font-size:16.5px;line-height:1.35;margin-bottom:10px;}
+  .post-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;flex:1;}
+  .post-card .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;}
+  .post-card .meta .read-more{color:var(--brand);font-weight:700;}
+  .post-card:hover{border-color:var(--border-strong);}
+
+  .results-count{text-align:center;font-size:12.5px;color:var(--ink-faint);margin-bottom:18px;font-family:'IBM Plex Mono',monospace;}
+  .empty-state{text-align:center;padding:60px 20px;color:var(--ink-faint);font-size:14px;}
+
+  footer.site-footer{border-top:1px solid var(--border);background:var(--surface);padding:40px 0 24px;margin-top:40px;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;margin-bottom:28px;}
+  .footer-grid h4{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);margin-bottom:12px;}
+  .footer-grid a{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:9px;}
+  .footer-grid a:hover{color:var(--brand);}
+  .footer-grid p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0;}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:18px;font-size:12px;color:var(--ink-faint);text-align:center;}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html">Partners</a>
+          <a href="mortgage-app.html">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="mortgage-pre-approval.html" class="btn-cta-sm">Instant Pre-Qualification</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Resources</span>
+  <h1>Mortgage Resources & Blog</h1>
+  <p class="sub">Expert guides for every stage of your BC mortgage journey.</p>
+
+  <div class="author-card">
+    <img src="james-park-headshot.png" alt="James Park">
+    <div>
+      <div class="author-name">Written by James Park</div>
+      <div class="author-role">Licensed Mortgage Broker — BC · License #503774</div>
+    </div>
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="searchBox" placeholder="Search all posts...">
+  </div>
+
+  <div class="cat-toggle-wrap">
+    <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCatMenu()">
+      <span id="catToggleLabel">Category: All</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="cat-menu" id="catMenu"></div>
+  </div>
+
+  <div class="results-count" id="resultsCount"></div>
+  <div class="post-grid" id="postGrid"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="james-park-logo.png" alt="James Park MortgagePal" height="68">
+      <p>BC's trusted mortgage experts. Helping you navigate every step of your mortgage journey.</p>
+      <p class="mono">778-222-7109</p>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="mortgage-pre-approval.html">Pre-Approval</a>
+      <a href="burn-my-mortgage.html">Burn My Mortgage</a>
+      <a href="mortgage-app.html">📱 Get the App</a>
+    </div>
+    <div>
+      <h4>Network</h4>
+      <a href="find-a-realtor.html">Realtors</a>
+      <a href="find-a-partner.html">Partners</a>
+      <a href="partner-portal.html">Partner Login</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a><br>© 2026 James Park Mortgage. Licensed Mortgage Broker — BC · License #503774.</div>
+</footer>
+
+<script>
+  const CATEGORIES = ["All","First-Time Buyers","Move-Up & Next Home","Renewals & Switches","Refinancing","Market Insights","General"];
+  const CAT_STYLE = {
+    "First-Time Buyers": {img:"https://images.unsplash.com/photo-1741156386380-0236c72eb6f9?auto=format&fit=crop&w=600&q=80"},
+    "Move-Up & Next Home": {img:"https://images.unsplash.com/photo-1581573950452-5a438c5f390f?auto=format&fit=crop&w=600&q=80"},
+    "Renewals & Switches": {img:"https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&w=600&q=80"},
+    "Refinancing": {img:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80"},
+    "Market Insights": {img:"https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=600&q=80"},
+    "General": {img:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80"}
+  };
+
+  const posts = [
+    {title:"5 things first-time buyers get wrong", category:"First-Time Buyers", excerpt:"From skipping pre-approval to underestimating closing costs — the mistakes that cost buyers the most, and how to avoid them.", read:"5 min", date:"2026-06-20", youtube:false},
+    {title:"Should you break your mortgage to refinance right now?", category:"Refinancing", excerpt:"Breaking a mortgage isn't free — but sometimes the penalty pays for itself fast. Here's the math to run before you decide.", read:"6 min", date:"2026-07-02", youtube:true},
+    {title:"Renewal season: what changed since your last term", category:"Renewals & Switches", excerpt:"Rates, stress-test rules, and lender appetite have all shifted. Don't assume your renewal offer is the best one available.", read:"4 min", date:"2026-07-09", youtube:false},
+    {title:"Beating the clock: protecting your equity in foreclosure", category:"General", excerpt:"Facing foreclosure doesn't mean losing your home overnight — early, proactive action is what actually protects your equity.", read:"5 min", date:"2026-05-28", youtube:false},
+    {title:"Bill C-4 guide: 100% GST rebate for first-time buyers", category:"First-Time Buyers", excerpt:"The GST rebate on new builds under $1M, paired with the FHSA, is one of the biggest savings levers available right now.", read:"5 min", date:"2026-05-15", youtube:false},
+    {title:"Move-up buyers: how to bridge without breaking your budget", category:"Move-Up & Next Home", excerpt:"Selling and buying at the same time is a logistics problem as much as a financial one. Here's how bridge financing actually works.", read:"7 min", date:"2026-06-10", youtube:true},
+    {title:"BC rate outlook: what the next Bank of Canada decision means for you", category:"Market Insights", excerpt:"A plain-language read on where fixed and variable rates are likely headed, and what it means if you're renewing this year.", read:"4 min", date:"2026-07-11", youtube:false},
+    {title:"Bank of Canada holds rate steady: what it means for your renewal", category:"Market Insights", excerpt:"The overnight rate didn't move this time — here's how that ripples through to fixed and variable mortgage pricing.", read:"4 min", date:"2026-07-13", youtube:false},
+    {title:"5-year fixed vs variable: which makes sense in today's market", category:"Market Insights", excerpt:"The spread between fixed and variable has narrowed. Here's how to think about the trade-off right now.", read:"6 min", date:"2026-06-30", youtube:true},
+    {title:"Vancouver housing starts hit a 3-year high — what it signals", category:"Market Insights", excerpt:"More supply coming online could shift negotiating power back toward buyers over the next 12-18 months.", read:"5 min", date:"2026-06-22", youtube:false},
+    {title:"How bond yields quietly move your mortgage rate", category:"Market Insights", excerpt:"Fixed rates don't track the Bank of Canada directly — they track the bond market. Here's the connection explained simply.", read:"5 min", date:"2026-06-05", youtube:false},
+    {title:"Inflation cools again: could rate cuts be coming?", category:"Market Insights", excerpt:"The latest CPI print gives the Bank of Canada more room to manoeuvre. What that could mean for borrowers this year.", read:"4 min", date:"2026-05-20", youtube:false},
+    {title:"BC housing market forecast for the second half of 2026", category:"Market Insights", excerpt:"Inventory, rates, and demand — a plain-language read on where the BC market is headed through year-end.", read:"6 min", date:"2026-07-05", youtube:true},
+    {title:"What the spring market usually means for BC buyers", category:"Market Insights", excerpt:"Seasonal patterns in listings and pricing, and how to use them to your advantage when timing an offer.", read:"4 min", date:"2026-04-28", youtube:false},
+    {title:"FHSA vs RRSP Home Buyers' Plan: which should you use first?", category:"First-Time Buyers", excerpt:"Both let you save tax-sheltered for a down payment, but the rules are different. Here's how to sequence them.", read:"6 min", date:"2026-06-15", youtube:false},
+    {title:"How much down payment do you actually need in BC?", category:"First-Time Buyers", excerpt:"The minimum isn't always the smart number. Here's how down payment size affects your rate, insurance, and payment.", read:"5 min", date:"2026-05-30", youtube:false},
+    {title:"CMHC insurance explained: what it costs and why it exists", category:"First-Time Buyers", excerpt:"If you're putting down less than 20%, this premium is added to your mortgage. Here's exactly how it's calculated.", read:"4 min", date:"2026-05-08", youtube:false},
+    {title:"The hidden costs of buying a home nobody warns you about", category:"First-Time Buyers", excerpt:"Legal fees, adjustments, moving costs, and more — a full checklist of what to budget beyond the down payment.", read:"7 min", date:"2026-04-18", youtube:true},
+    {title:"Pre-approval vs pre-qualification: what's the difference?", category:"First-Time Buyers", excerpt:"They sound similar but mean very different things to a seller. Here's which one actually strengthens your offer.", read:"3 min", date:"2026-04-02", youtube:false},
+    {title:"How your credit score affects the rate you're offered", category:"First-Time Buyers", excerpt:"Lenders don't just approve or decline — your score shapes the actual rate on the table. Here's the relationship.", read:"5 min", date:"2026-03-22", youtube:false},
+    {title:"Selling first or buying first? The pros and cons of each", category:"Move-Up & Next Home", excerpt:"Neither order is risk-free. Here's how to decide based on your market and your risk tolerance.", read:"6 min", date:"2026-06-25", youtube:false},
+    {title:"Porting your mortgage when you move: how it actually works", category:"Move-Up & Next Home", excerpt:"Porting can save you a penalty, but it comes with conditions most people don't know about until it's too late.", read:"5 min", date:"2026-05-25", youtube:false},
+    {title:"Bridge financing 101: covering the gap between closings", category:"Move-Up & Next Home", excerpt:"A short-term loan that covers you between selling and buying — how it's priced and when it's worth it.", read:"5 min", date:"2026-05-02", youtube:true},
+    {title:"When does it make sense to break your mortgage to move?", category:"Move-Up & Next Home", excerpt:"Sometimes the penalty is worth paying. Here's the math that tells you which side of that line you're on.", read:"6 min", date:"2026-04-10", youtube:false},
+    {title:"Your renewal letter arrived — should you sign it or shop around?", category:"Renewals & Switches", excerpt:"The rate on that letter is rarely the lender's best offer. Here's what to do in the 120 days before your term ends.", read:"5 min", date:"2026-06-28", youtube:false},
+    {title:"Switching lenders at renewal: what actually changes", category:"Renewals & Switches", excerpt:"No legal fees in most cases, minimal paperwork — here's what switching really involves.", read:"4 min", date:"2026-06-01", youtube:false},
+    {title:"Blend-and-extend explained: is it ever worth it?", category:"Renewals & Switches", excerpt:"Your lender may offer to blend your old and new rate mid-term. Here's when that's actually a good deal.", read:"5 min", date:"2026-05-12", youtube:false},
+    {title:"What happens if you do nothing at renewal?", category:"Renewals & Switches", excerpt:"Your lender auto-renews you into a posted rate if you don't respond. Here's why that's rarely in your favour.", read:"3 min", date:"2026-04-25", youtube:false},
+    {title:"Debt consolidation through refinancing: when it makes sense", category:"Refinancing", excerpt:"Rolling high-interest debt into your mortgage can lower your monthly costs — but it's not free money. Here's the trade-off.", read:"6 min", date:"2026-06-18", youtube:false},
+    {title:"Refinancing to fund a renovation: what lenders want to see", category:"Refinancing", excerpt:"Home equity can fund a reno, but lenders will ask specific questions before approving the extra funds.", read:"5 min", date:"2026-05-22", youtube:true},
+    {title:"How much equity do you need to refinance in BC?", category:"Refinancing", excerpt:"The 80% LTV rule, explained with real numbers, plus what changes if you're self-employed.", read:"4 min", date:"2026-04-30", youtube:false},
+    {title:"Cash-out refinance vs HELOC: which is cheaper?", category:"Refinancing", excerpt:"Both unlock home equity, but the costs and flexibility are different. Here's how to choose.", read:"6 min", date:"2026-04-05", youtube:false},
+    {title:"How mortgage default insurance actually protects the lender, not you", category:"General", excerpt:"A common misconception cleared up — plus what it means for your premium and your rate.", read:"4 min", date:"2026-06-08", youtube:false},
+    {title:"Reading your mortgage statement: what all those numbers mean", category:"General", excerpt:"Principal, interest, prepayment privileges — a line-by-line guide to your annual statement.", read:"5 min", date:"2026-05-18", youtube:false},
+    {title:"Joint mortgages: what happens if one applicant's credit is weak", category:"General", excerpt:"Lenders blend incomes but not always credit scores the way you'd expect. Here's how it actually works.", read:"5 min", date:"2026-04-22", youtube:false},
+    {title:"Self-employed? Here's how lenders actually assess your income", category:"General", excerpt:"Two years of NOAs, add-backs, and stated income programs — a practical guide for business owners.", read:"7 min", date:"2026-03-30", youtube:true},
+    {title:"What a stress test really tests, in plain English", category:"General", excerpt:"It's not about whether you can afford your payment today — it's about a scenario that may never happen. Here's why it exists.", read:"4 min", date:"2026-03-15", youtube:false},
+  ];
+
+  let currentFilter = 'All';
+  let searchTerm = '';
+
+  function toggleCatMenu(){
+    document.getElementById('catMenu').classList.toggle('show');
+    document.getElementById('catToggleBtn').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const wrap = document.querySelector('.cat-toggle-wrap');
+    if(wrap && !wrap.contains(e.target)){
+      document.getElementById('catMenu').classList.remove('show');
+      document.getElementById('catToggleBtn').classList.remove('open');
+    }
+  });
+  function renderCatMenu(){
+    document.getElementById('catMenu').innerHTML = CATEGORIES.map(c => {
+      const count = c === 'All' ? posts.length : posts.filter(p => p.category === c).length;
+      return `<div class="cat-menu-item ${c === currentFilter ? 'selected' : ''}" onclick="selectCategory('${c}')"><span>${c}</span><span class="mono">${count}</span></div>`;
+    }).join('');
+  }
+  function selectCategory(c){
+    currentFilter = c;
+    document.getElementById('catToggleLabel').textContent = 'Category: ' + c;
+    document.getElementById('catMenu').classList.remove('show');
+    document.getElementById('catToggleBtn').classList.remove('open');
+    renderCatMenu();
+    renderPosts();
+  }
+
+  function renderPosts(){
+    const grid = document.getElementById('postGrid');
+    const q = searchTerm.trim().toLowerCase();
+    const rows = posts.filter(p => {
+      const matchesCat = currentFilter === 'All' || p.category === currentFilter;
+      const matchesQ = !q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+      return matchesCat && matchesQ;
+    });
+    document.getElementById('resultsCount').textContent = rows.length + ' post' + (rows.length === 1 ? '' : 's');
+    if(rows.length === 0){ grid.innerHTML = '<div class="empty-state">No posts match your search.</div>'; return; }
+    grid.innerHTML = rows.map(p => {
+      const style = CAT_STYLE[p.category] || CAT_STYLE['General'];
+      return `
+      <a class="post-card" href="#">
+        <div class="post-image"><img src="${style.img}" alt="${p.category}" loading="lazy"></div>
+        <div class="body">
+          <div><span class="cat-tag">${p.category}</span>${p.youtube ? '<span class="yt-tag">▶ Video</span>' : ''}</div>
+          <h3>${p.title}</h3>
+          <p>${p.excerpt}</p>
+          <div class="meta"><span>${p.read} read</span><span class="read-more">Read more →</span></div>
+        </div>
+      </a>`;
+    }).join('');
+  }
+  document.getElementById('searchBox').addEventListener('input', (e) => { searchTerm = e.target.value; renderPosts(); });
+  renderCatMenu();
+  renderPosts();
+</script>
+
+</body>
+</html>

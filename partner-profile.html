@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Profile | James Park Mortgage</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/lead-capture.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF;
+    --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --brand:#2F9F6B; --brand-dark:#24805A; --brand-wash:#E8F8F0;
+    --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,250,251,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;padding:6px 28px;max-width:1080px;gap:16px;}
+  .brand-logo img{height:90px;display:block;}
+  .nav-links{display:flex;align-items:center;gap:20px;font-size:12.6px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a{display:inline-flex;align-items:center;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:3px;}
+  .nav-dropdown-toggle:hover{color:var(--ink);}
+  .nav-dropdown-menu{display:none;flex-direction:column;gap:2px;position:absolute;top:100%;left:0;margin-top:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);padding:20px 8px 8px 8px;min-width:180px;z-index:50;}
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu{display:flex;}
+  .nav-dropdown-menu a{padding:9px 12px;border-radius:8px;white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:var(--bg);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .btn-ghost-sm{font-size:13px;font-weight:600;color:var(--ink-soft);padding:8px 14px;}
+  .btn-cta-sm{background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;}
+  .btn-cta-sm:hover{background:var(--brand-dark);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  main{padding:44px 0 90px;}
+  .back-link{display:inline-block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:20px;}
+  .back-link:hover{color:var(--brand);}
+
+  .profile-grid{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start;}
+  .profile-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:var(--shadow-sm);text-align:center;}
+  .featured-tag{display:inline-block;background:var(--amber-wash);color:var(--amber);font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;margin-bottom:12px;}
+  .profile-photo{width:140px;height:140px;border-radius:50%;margin:0 auto 18px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:40px;overflow:hidden;}
+  .profile-photo img{width:100%;height:100%;object-fit:cover;}
+  .profile-card .name{font-size:20px;margin-bottom:4px;}
+  .profile-card .firm{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .city-pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;}
+  .city-pill{background:var(--bg);border:1px solid var(--border);color:var(--ink-soft);font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;}
+  .city-pill.primary{background:var(--brand-wash);border-color:transparent;color:var(--brand-dark);}
+  .exp-line{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-faint);margin-bottom:4px;}
+  .province-line{font-size:12px;color:var(--ink-faint);margin-bottom:16px;}
+  .contact-list{text-align:left;font-size:13px;color:var(--ink-soft);line-height:2;margin-bottom:14px;padding-top:14px;border-top:1px solid var(--border);}
+  .contact-list a{color:var(--brand-dark);}
+  .social-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .social-row a{background:var(--bg);border:1px solid var(--border);color:var(--ink-soft);font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:8px;}
+  .social-row a:hover{border-color:var(--brand);color:var(--brand-dark);}
+
+  .detail-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+  .detail-card h3{font-size:15px;margin-bottom:14px;}
+  .detail-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin:0;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag-pill{background:var(--bg);border:1px solid var(--border);color:var(--ink-soft);font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;}
+
+  .contact-form .field{margin-bottom:16px;}
+  .contact-form label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .contact-form input, .contact-form select, .contact-form textarea{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .contact-form textarea{resize:vertical;min-height:80px;}
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus{outline:none;border-color:var(--brand);background:var(--surface);}
+  .contact-form .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .btn-send{width:100%;background:var(--brand);color:#fff;border:none;font-weight:700;font-size:14.5px;padding:13px;border-radius:10px;cursor:pointer;margin-top:6px;}
+  .btn-send:hover{background:var(--brand-dark);}
+  .btn-send.sent{background:var(--ink);}
+  .success-icon{width:44px;height:44px;border-radius:50%;background:var(--brand-wash);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 12px;}
+
+  .not-found{text-align:center;padding:80px 20px;}
+  .not-found h1{font-size:22px;margin-bottom:10px;}
+  .not-found p{color:var(--ink-soft);margin-bottom:20px;}
+
+  @media (max-width:760px){ .profile-grid{grid-template-columns:1fr;} .contact-form .field-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" class="brand-logo"><img src="james-park-logo.png" alt="James Park MortgagePal"></a>
+    <div class="nav-links">
+      <a href="https://verico-paragon-mortgagepal-inc-james-park.mtg-app.com/signup" target="_blank" rel="noopener">Apply Now</a>
+      <a href="burn-my-mortgage.html">🔥 Burn My Mortgage</a>
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle">Connect ▾</span>
+        <div class="nav-dropdown-menu">
+          <a href="find-a-realtor.html">Realtors</a>
+          <a href="find-a-partner.html">Partners</a>
+          <a href="mortgage-app.html">📱 Get the App</a>
+        </div>
+      </div>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-dropdown">
+        <span class="nav-dropdown-toggle btn-ghost-sm" style="cursor:pointer;">Login ▾</span>
+        <div class="nav-dropdown-menu" style="left:auto;right:0;">
+          <a href="partner-portal.html">Partner</a>
+          <a href="client-login.html">Mortgage Customer</a>
+        </div>
+      </div>
+      <a href="mortgage-pre-approval.html" class="btn-cta-sm">Instant Pre-Qualification</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap" id="mainContent"></main>
+
+<script>
+  async function loadPartnerById(id){
+    const { data, error } = await sb.from('partners').select('*').eq('status', 'active').eq('id', id).maybeSingle();
+    if(error){ console.error('[Supabase] partner load failed', error); return null; }
+    if(!data) return null;
+    return { ...data.data, id: data.id, email: data.email, category: data.category, status: data.status };
+  }
+  const categoryLabel = {realtor:'Realtor', 'lawyer-notary':'Lawyer / Notary', 'financial-planner':'Financial Planner', 'insurance-agent':'Insurance Agent', 'accountant-cpa':'Accountant / CPA', other:'Other'};
+
+  function initials(name){ return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+
+  let currentProfilePartner = null;
+  (async function(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const p = await loadPartnerById(id);
+  currentProfilePartner = p;
+
+  const main = document.getElementById('mainContent');
+  if(!p){
+    main.innerHTML = `
+      <div class="not-found">
+        <h1>Profile not found</h1>
+        <p>This partner may have been removed, or the link is out of date.</p>
+        <a href="find-a-realtor.html" class="btn-cta-sm" style="padding:12px 22px;">← Back to directory</a>
+      </div>`;
+  } else {
+    const backHref = p.category === 'realtor' ? 'find-a-realtor.html' : 'find-a-partner.html';
+    const backLabel = p.category === 'realtor' ? '← Back to Directory' : '← Back to Directory';
+    const social = p.social || {};
+    const socialLinks = [
+      p.website ? `<a href="https://${p.website}" target="_blank" rel="noopener">Website</a>` : '',
+      social.linkedin ? `<a href="${social.linkedin}" target="_blank" rel="noopener">LinkedIn</a>` : '',
+      social.instagram ? `<a href="${social.instagram}" target="_blank" rel="noopener">Instagram</a>` : '',
+      social.facebook ? `<a href="${social.facebook}" target="_blank" rel="noopener">Facebook</a>` : '',
+    ].filter(Boolean).join('');
+    main.innerHTML = `
+      <a class="back-link" href="${backHref}">${backLabel}</a>
+      <div class="profile-grid">
+        <div class="profile-card">
+          ${p.featured ? '<span class="featured-tag">⭐ Featured</span><br>' : ''}
+          <div class="profile-photo">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : initials(p.name)}</div>
+          <div class="name">${p.name}</div>
+          <div class="firm">${p.firm}</div>
+          <div class="city-pills">${(p.cities && p.cities.length ? p.cities : [p.city]).map((c,i) => `<span class="city-pill ${i===0?'primary':''}">${c}</span>`).join('')}</div>
+          <div class="exp-line">${p.exp || 0} yrs experience</div>
+          <div class="province-line">${p.province || 'BC'} · ${categoryLabel[p.category]}</div>
+          <div class="contact-list">
+            ✉️ <a href="mailto:${p.email}">${p.email}</a><br>
+            ${p.firm}<br>
+            📞 <a href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${p.phone}</a>
+          </div>
+          <div class="social-row">${socialLinks}</div>
+        </div>
+        <div>
+          <div class="detail-card">
+            <h3>About</h3>
+            <p>${p.bio}</p>
+          </div>
+          <div class="detail-card">
+            <h3>Specialties</h3>
+            <div class="tag-row">${(p.tags||[]).map(t => `<span class="tag-pill">${t}</span>`).join('') || '<span style="color:var(--ink-faint);font-size:13px;">Not specified</span>'}</div>
+          </div>
+          <div class="detail-card">
+            <h3>Works With</h3>
+            <div class="tag-row">${(p.worksWith||[]).map(t => `<span class="tag-pill">${t}</span>`).join('') || '<span style="color:var(--ink-faint);font-size:13px;">Not specified</span>'}</div>
+          </div>
+          <div class="detail-card">
+            <h3>Languages</h3>
+            <div class="tag-row">${(p.languages||['English']).map(t => `<span class="tag-pill">${t}</span>`).join('')}</div>
+          </div>
+          <div class="detail-card contact-form">
+            <h3>Contact ${p.name.split(' ')[0]}</h3>
+            <div id="formBody">
+              <div class="field"><label>Your Name *</label><input type="text" id="cf-name" placeholder="Jane Smith"></div>
+              <div class="field"><label>Email *</label><input type="email" id="cf-email" placeholder="you@email.com"></div>
+              <div class="field"><label>Phone</label><input type="tel" id="cf-phone" placeholder="778-555-0000"></div>
+              <div class="field-grid">
+                <div class="field">
+                  <label>Property Type</label>
+                  <select id="cf-proptype"><option value="">Select type...</option><option>Condo</option><option>Townhouse</option><option>Detached House</option><option>Commercial</option></select>
+                </div>
+                <div class="field">
+                  <label>Timeframe</label>
+                  <select id="cf-timeframe"><option value="">Select timeframe...</option><option>Immediately</option><option>1-3 months</option><option>3-6 months</option><option>6+ months</option></select>
+                </div>
+              </div>
+              <div class="field">
+                <label>Location</label>
+                <select id="cf-location"><option value="">Select city...</option>${(p.cities && p.cities.length ? p.cities : [p.city.replace(', BC','')]).map(c => `<option>${c}</option>`).join('')}</select>
+              </div>
+              <div class="field" style="margin-bottom:0;"><label>Message</label><textarea id="cf-message" placeholder="Hi, I'm looking to buy in..."></textarea></div>
+              <button class="btn-send" id="cfSendBtn" onclick="sendMessage()">Send Message</button>
+            </div>
+            <div id="formSuccess" style="display:none;text-align:center;">
+              <div class="success-icon">✓</div>
+              <p style="margin:0;">Message sent to ${p.name.split(' ')[0]} — they'll be in touch soon.</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+  })();
+
+  async function sendMessage(){
+    const p = currentProfilePartner;
+    if(!p) return;
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    if(!name || !email){ alert('Please fill in your name and email.'); return; }
+    const propType = document.getElementById('cf-proptype').value;
+    const timeframe = document.getElementById('cf-timeframe').value;
+    const location = document.getElementById('cf-location').value;
+    const message = document.getElementById('cf-message').value.trim();
+
+    const todayStr = new Date().toISOString().slice(0,10);
+    const nameParts = name.split(' ');
+    const noteLines = [
+      propType ? `Property type: ${propType}` : null,
+      timeframe ? `Timeframe: ${timeframe}` : null,
+      location ? `Location: ${location}` : null,
+      message ? `Message: ${message}` : null
+    ].filter(Boolean).join(' · ');
+    const newLead = {
+      id: 'lead-profile-' + Date.now(), name, firstName: nameParts[0] || name, lastName: nameParts.slice(1).join(' '),
+      email, phone, city: location || '—', purposeType: 'Realtor Profile Inquiry', keyDate: todayStr,
+      amount: 0, gds: 0, tds: 0, credit: '—', score: 0, temperature: 'warm',
+      notes: [{text: noteLines || `Submitted via ${p.name}'s public profile.`, date: timestamp()}],
+      scoreLog: [], registered: todayStr, pipeline: 'Purchase Pipeline', stage: 'New',
+      opens: 0, clicks: 0, custom: {},
+      assignedPartnerId: p.id, assignedPartnerName: p.name, partnerStage: 'New'
+    };
+    const { error } = await sb.from('leads').insert({ id: newLead.id, record_type: 'lead', email, data: newLead });
+    if(error){
+      console.error('[Supabase] profile lead insert failed', error);
+      alert('Something went wrong sending your message — please try again or call James directly at 778-222-7109.');
+      return;
+    }
+
+    const subject = `New Inquiry via ${p.name}'s Profile — ${name}`;
+    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}` + (noteLines ? `\n\n${noteLines}` : '');
+    const key = 'jp_email_log_v1';
+    let log;
+    try { log = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){ log = []; }
+    log.push({id:'email'+Date.now()+'-profile', to:'james@jamespark.ca', subject, body, when: timestamp(), read:false});
+    localStorage.setItem(key, JSON.stringify(log));
+    sendRealEmail('james@jamespark.ca', subject, body.replace(/\n/g, '<br>'));
+
+    document.getElementById('formBody').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

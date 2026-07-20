@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://jamespark.ca/index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://jamespark.ca/purchase.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://jamespark.ca/refinance.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://jamespark.ca/renewal.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://jamespark.ca/mortgage-pre-approval.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://jamespark.ca/burn-my-mortgage.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jamespark.ca/foreclosure.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jamespark.ca/mortgage-app.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://jamespark.ca/find-a-realtor.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://jamespark.ca/find-a-partner.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://jamespark.ca/blog.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://jamespark.ca/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://jamespark.ca/client-login.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://jamespark.ca/partner-portal.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://jamespark.ca/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://jamespark.ca/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

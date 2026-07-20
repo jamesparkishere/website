@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Portal Login | James Park Mortgage</title>
+<meta name="description" content="Log in or register as a realtor, lawyer, financial planner, or insurance agent partner serving Vancouver, Burnaby, and BC, and manage your referrals.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script>(function(){try{var s=JSON.parse(localStorage.getItem('jp_seo_pages_v2')||'{}')['partner-portal.html'];if(s){if(s.title)document.title=s.title;if(s.desc){var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',s.desc);}}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAFB; --surface:#FFFFFF; --ink:#234361; --ink-soft:#52697D; --ink-faint:#8B99A6;
+    --indigo:#2F9F6B; --indigo-dark:#24805A; --indigo-wash:#E8F8F0;
+    --mint:#2F9F6B; --mint-wash:#E8F8F0; --amber:#B54708; --amber-wash:#FFF6E9;
+    --coral:#F04438; --coral-wash:#FEF0EE;
+    --border:rgba(35,67,97,0.10); --border-strong:rgba(35,67,97,0.18);
+    --shadow-sm:0 1px 2px rgba(35,67,97,0.06); --shadow-md:0 12px 32px rgba(35,67,97,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-weight:700;margin:0;letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:2px;border-radius:4px;}
+
+  header.site{border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:center;padding:10px 28px;}
+  .brand{font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:7px;height:7px;background:var(--indigo);border-radius:50%;}
+  .brand .tag{font-weight:400;color:var(--ink-soft);}
+
+  main{padding:56px 20px 90px;display:flex;justify-content:center;}
+  .card{width:100%;max-width:460px;transition:max-width .2s ease;}
+  .card.wide{max-width:960px;}
+
+  .kicker{display:block;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--indigo);margin-bottom:12px;}
+  h1{font-size:26px;text-align:center;margin-bottom:8px;}
+  p.sub{font-size:14.5px;color:var(--ink-soft);text-align:center;line-height:1.6;margin-bottom:28px;}
+
+  .module{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;box-shadow:var(--shadow-sm);}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:7px;color:var(--ink-soft);}
+  .field input, .field select, .field textarea{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--border-strong);font-size:14px;background:var(--bg);font-family:inherit;}
+  .field textarea{resize:vertical;min-height:80px;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none;border-color:var(--indigo);background:var(--surface);}
+
+  .oauth-btn{width:100%;display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--border-strong);color:var(--ink);font-weight:600;font-size:14px;padding:13px 16px;border-radius:10px;cursor:pointer;margin-bottom:10px;}
+  .oauth-btn:hover{border-color:var(--ink-soft);background:var(--bg);}
+  .oauth-icon{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--indigo-wash);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip-opt{flex:1;text-align:center;padding:10px;border:1.5px solid var(--border-strong);border-radius:9px;font-size:12.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+  .chip-opt.selected{border-color:var(--indigo);background:var(--indigo-wash);color:var(--indigo);}
+
+  .btn-primary{width:100%;background:var(--indigo);color:#fff;border:none;font-weight:700;font-size:15px;padding:14px;border-radius:12px;cursor:pointer;margin-top:6px;}
+  .btn-primary:hover{background:var(--indigo-dark);}
+  .link-btn{background:none;border:none;color:var(--indigo);font-weight:600;font-size:13px;cursor:pointer;padding:0;}
+  .link-btn:hover{text-decoration:underline;}
+
+  .switcher{display:flex;justify-content:center;gap:6px;margin-bottom:24px;}
+  .switcher button{background:var(--surface);border:1px solid var(--border-strong);color:var(--ink-soft);font-weight:600;font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;}
+  .switcher button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  .foot-link{text-align:center;margin-top:18px;font-size:13px;color:var(--ink-soft);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .success-icon{width:52px;height:52px;border-radius:50%;background:var(--mint-wash);color:#0A7A46;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;margin:0 auto 16px;}
+  .status-badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11.5px;font-weight:700;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
+  .status-badge.pending{background:var(--amber-wash);color:var(--amber);}
+  .status-badge.active{background:var(--mint-wash);color:#0A7A46;}
+
+  .lead-mini-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+  .lead-mini-card .top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+  .lead-mini-card .lname{font-weight:700;font-size:14px;}
+  .lead-mini-card .temp{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+  .lead-mini-card .temp.hot{background:var(--coral-wash);color:var(--coral);}
+  .lead-mini-card .temp.warm{background:var(--amber-wash);color:var(--amber);}
+  .lead-mini-card .temp.dead{background:var(--border);color:var(--ink-faint);}
+  .lead-mini-card .meta{font-size:12px;color:var(--ink-soft);margin-top:6px;line-height:1.6;}
+  .lead-mini-card .referred{font-size:10.5px;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:0.04em;margin-top:8px;}
+  .lead-mini-card{cursor:pointer;}
+  .lead-mini-card:hover{border-color:var(--indigo);}
+
+  .btn-mini-outline{background:var(--surface);border:1.5px solid var(--border-strong);color:var(--ink);font-weight:600;font-size:12.5px;padding:8px 14px;border-radius:9px;cursor:pointer;}
+  .btn-mini-outline:hover{border-color:var(--indigo);}
+
+  .callback-banner{background:var(--amber-wash);border:1px solid var(--amber);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--amber);}
+  .callback-banner b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;}
+
+  .partner-board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media (max-width:820px){ .partner-board{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .partner-board{grid-template-columns:1fr;} }
+  .partner-col{background:var(--bg);border-radius:12px;padding:10px;min-height:60px;}
+  .partner-col h4{font-size:10.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink-faint);margin:2px 0 10px;}
+  .partner-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;font-size:12.5px;}
+  .partner-card:hover{border-color:var(--indigo);}
+  .partner-card .pname{font-weight:700;margin-bottom:4px;}
+  .partner-card .pmeta{color:var(--ink-soft);font-size:11.5px;}
+  .partner-card .pmove{display:flex;gap:6px;margin-top:8px;}
+  .partner-card .pmove button{flex:1;font-size:10.5px;padding:5px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);cursor:pointer;}
+  .outcome-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;margin-left:6px;}
+  .outcome-tag.won{background:var(--mint-wash);color:#0A7A46;}
+  .outcome-tag.lost{background:var(--coral-wash);color:var(--coral);}
+
+  .dash-head{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .dash-head .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--indigo) 0%,#3730A3 100%);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex-shrink:0;}
+  .dash-head .name{font-weight:700;font-size:17px;}
+  .dash-head .role{font-size:12.5px;color:var(--ink-soft);}
+
+  .dev-note{background:var(--indigo-wash);color:var(--indigo);font-size:12px;border-radius:10px;padding:10px 14px;margin-top:18px;line-height:1.6;}
+
+  .error-msg{background:var(--coral-wash);color:var(--coral);font-size:12.5px;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:none;}
+  .error-msg.show{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;"><img src="james-park-logo.png" alt="James Park MortgagePal" height="90"><span style="font-size:12px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.05em;">Partner Portal</span></a>
+  </nav>
+</header>
+
+<main>
+  <div class="card">
+
+    <!-- LOGIN / REGISTER SWITCHER VIEW -->
+    <div class="view active" id="view-auth">
+      <span class="kicker">Partner Portal</span>
+      <h1 id="authTitle">Welcome back</h1>
+      <p class="sub" id="authSub">Log in to manage your profile and see your referral status.</p>
+
+      <div class="switcher">
+        <button class="active" data-mode="login" onclick="setAuthMode('login')">Log in</button>
+        <button data-mode="register" onclick="setAuthMode('register')">Register</button>
+      </div>
+
+      <div class="module">
+        <!-- LOGIN — OAuth only, matching the real site (no email/password anywhere) -->
+        <div id="loginForm">
+          <button class="oauth-btn" onclick="doOAuthLogin()"><span class="oauth-icon">G</span> Continue with Google</button>
+          <button class="oauth-btn" onclick="doOAuthLogin()"><span class="oauth-icon">M</span> Continue with Microsoft</button>
+          <button class="oauth-btn" onclick="doOAuthLogin()"><span class="oauth-icon">f</span> Continue with Facebook</button>
+          <button class="oauth-btn" style="margin-bottom:0;" onclick="doOAuthLogin()"><span class="oauth-icon">A</span> Continue with Apple</button>
+        </div>
+
+        <!-- REGISTER — application form, no password (matches the real Partner Signup form, which has no password field either) -->
+        <div id="registerForm" style="display:none;">
+          <div class="field" style="text-align:center;">
+            <label>Profile photo <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
+            <div id="regPhotoPreview" style="width:72px;height:72px;border-radius:50%;background:var(--bg);border:1.5px dashed var(--border-strong);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--ink-faint);font-size:11px;">No photo</div>
+            <input type="file" accept="image/*" id="reg-photo" onchange="previewPhoto(this, 'regPhotoPreview')" style="max-width:220px;margin:0 auto;display:block;">
+          </div>
+          <div class="field">
+            <label>I'm a...</label>
+            <div class="chip-row" id="regCategory">
+              <div class="chip-opt selected" data-val="realtor">Realtor</div>
+              <div class="chip-opt" data-val="lawyer-notary">Lawyer / Notary</div>
+              <div class="chip-opt" data-val="financial-planner">Financial Planner</div>
+              <div class="chip-opt" data-val="insurance-agent">Insurance Agent</div>
+              <div class="chip-opt" data-val="accountant-cpa">Accountant / CPA</div>
+              <div class="chip-opt" data-val="other">Other</div>
+              <div class="chip-opt" data-val="borrower">Just looking for a mortgage</div>
+            </div>
+          </div>
+          <div class="field"><label>Full name</label><input type="text" id="reg-name" placeholder="Jane Doe"></div>
+          <div class="field-grid">
+            <div class="field"><label>Email</label><input type="text" id="reg-email" placeholder="jane@example.com"></div>
+            <div class="field"><label>Phone</label><input type="text" id="reg-phone" placeholder="(604) 555-0100"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Company / firm name</label><input type="text" id="reg-firm" placeholder="RE/MAX"></div>
+            <div class="field"><label>Website</label><input type="text" id="reg-website" placeholder="janedoe.ca"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>City</label><input type="text" id="reg-city" placeholder="Port Moody"></div>
+            <div class="field">
+              <label>Province</label>
+              <select id="reg-province">
+                <option value="BC">British Columbia</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0;"><label>Brief bio / why you'd like to partner</label><textarea id="reg-bio" rows="3" placeholder="Tell James a bit about yourself..."></textarea></div>
+          <div class="error-msg" id="regError">Please fill in your name and email.</div>
+          <button class="btn-primary" style="margin-top:16px;" onclick="doRegister()">Submit Application</button>
+        </div>
+      </div>
+      <div class="dev-note">Login is OAuth-only, matching the real site — no email/password. This demo simulates a successful login as "Wayne Dick" regardless of which provider button you click, since there's no real OAuth app registered yet.</div>
+    </div>
+
+    <!-- REGISTRATION SUBMITTED VIEW -->
+    <div class="view" id="view-registered">
+      <div class="module" style="text-align:center;">
+        <div class="success-icon">✓</div>
+        <h1 style="margin-bottom:10px;">Registration submitted</h1>
+        <p class="sub">Thanks, <strong id="regSentName">—</strong>. James reviews every new partner before you appear in the directory — you'll get an email once you're approved.</p>
+        <span class="status-badge pending">Pending review</span>
+        <div class="dev-note">Your application is now in James's admin panel Registrations queue, ready for approval. (Stored in this browser's local storage for the demo — a real backend/database is still needed before this is production-real.)</div>
+      </div>
+      <div class="foot-link"><button class="link-btn" onclick="setView('auth')">← Back to log in</button></div>
+    </div>
+
+    <!-- PARTNER DASHBOARD VIEW (after simulated login) -->
+    <div class="view" id="view-dashboard">
+      <div class="module" id="myLeadsModule" style="display:none;">
+        <div id="callbackBanner"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <h3 style="font-size:15px;margin:0;">My CRM</h3>
+          <button class="btn-mini-outline" onclick="togglePartnerAddLead()">+ Add lead</button>
+        </div>
+        <p class="sub" style="text-align:left;font-size:12.5px;margin-bottom:14px;">Leads referred to you by James, plus any you add yourself — contact info and deal status only, never income or credit details.</p>
+        <div class="module" id="partnerAddLeadForm" style="display:none;margin-bottom:16px;background:var(--bg);">
+          <div class="field-grid">
+            <div class="field"><label>Full name</label><input type="text" id="pl-name" placeholder="Jane Doe"></div>
+            <div class="field"><label>Phone</label><input type="text" id="pl-phone" placeholder="(604) 555-0100"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Email</label><input type="text" id="pl-email" placeholder="jane@example.com"></div>
+            <div class="field"><label>City</label><input type="text" id="pl-city" placeholder="Vancouver, BC"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Market value ($)</label><input type="text" inputmode="numeric" id="pl-marketvalue" placeholder="750000"></div>
+            <div class="field"><label>Mortgage volume ($)</label><input type="text" inputmode="numeric" id="pl-mortgagevolume" placeholder="600000"></div>
+          </div>
+          <button class="btn-primary" onclick="addPartnerLead()">Add lead</button>
+        </div>
+        <div class="partner-board" id="partnerBoard"></div>
+      </div>
+      <div class="module">
+        <div class="dash-head">
+          <div class="avatar" id="dashAvatar">WD</div>
+          <div>
+            <div class="name">Wayne Dick</div>
+            <div class="role">Realtor · RE/MAX</div>
+          </div>
+          <div style="margin-left:auto;"><span class="status-badge active">Active</span></div>
+        </div>
+        <div class="field">
+          <label>Profile photo</label>
+          <input type="file" accept="image/*" id="dash-photo" onchange="previewPhoto(this, 'dashAvatar', true)">
+        </div>
+        <div class="field"><label>Firm / company</label><input type="text" id="dash-firm" value="RE/MAX"></div>
+        <div class="field-grid">
+          <div class="field"><label>City</label><input type="text" id="dash-city" value="Port Moody, BC"></div>
+          <div class="field"><label>Phone</label><input type="text" id="dash-phone" value="(604) 555-0142"></div>
+        </div>
+        <div class="field-grid">
+          <div class="field"><label>Email</label><input type="text" id="dash-email" value="wayne@waynedick.ca"></div>
+          <div class="field"><label>Website</label><input type="text" id="dash-website" value="waynedick.ca"></div>
+        </div>
+        <button class="btn-primary" onclick="saveDashboardProfile()">Save changes</button>
+      </div>
+      <div class="foot-link"><button class="link-btn" onclick="setView('auth')">Log out</button></div>
+    </div>
+
+    <!-- LEAD DETAIL VIEW -->
+    <div class="view" id="view-leaddetail">
+      <button class="link-btn" onclick="setView('dashboard')" style="margin-bottom:14px;">← Back to CRM</button>
+      <div class="module" id="partnerLeadDetailBody"></div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  /* ---------- PHOTO UPLOAD (client-side preview + base64 storage — no backend needed for this) ---------- */
+  let regPhotoData = null;
+  function previewPhoto(input, targetId, isDashboard){
+    const file = input.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      document.getElementById(targetId).innerHTML = `<img src="${dataUrl}" alt="Preview" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      if(isDashboard){ dashPhotoData = dataUrl; } else { regPhotoData = dataUrl; }
+    };
+    reader.readAsDataURL(file);
+  }
+  let dashPhotoData = null;
+
+  async function saveDashboardProfile(){
+    if(!currentPartnerRow) return;
+    const updatedData = {
+      ...currentPartnerRow.data,
+      name: currentPartnerRow.data.name,
+      firm: document.getElementById('dash-firm').value,
+      city: document.getElementById('dash-city').value,
+      phone: document.getElementById('dash-phone').value,
+      website: document.getElementById('dash-website').value,
+      ...(dashPhotoData ? { photo: dashPhotoData } : {})
+    };
+    const newEmail = document.getElementById('dash-email').value.trim();
+    const { error } = await sb.from('partners').update({ data: updatedData, email: newEmail }).eq('id', currentPartnerRow.id);
+    if(error){ console.error('[Supabase] saveDashboardProfile failed', error); toast('Failed to save — try again.'); return; }
+    currentPartnerRow = { ...currentPartnerRow, data: updatedData, email: newEmail };
+    alert('Profile updated — changes are live on the Realtor Directory and your public profile page.');
+  }
+
+  function populateDashboardFromPartner(p){
+    document.getElementById('dashAvatar').innerHTML = p.data.photo
+      ? `<img src="${p.data.photo}" alt="${p.data.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      : (p.data.name || '').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+    document.querySelector('#view-dashboard .dash-head .name').textContent = p.data.name || '';
+    document.querySelector('#view-dashboard .dash-head .role').textContent = categoryLabel(p.category) + (p.data.firm ? ' · ' + p.data.firm : '');
+    document.getElementById('dash-firm').value = p.data.firm || '';
+    document.getElementById('dash-city').value = p.data.city || '';
+    document.getElementById('dash-phone').value = p.data.phone || '';
+    document.getElementById('dash-email').value = p.email || '';
+    document.getElementById('dash-website').value = p.data.website || '';
+  }
+  function categoryLabel(cat){
+    const labels = {realtor:'Realtor', 'lawyer-notary':'Lawyer / Notary', 'financial-planner':'Financial Planner', 'insurance-agent':'Insurance Agent', 'accountant-cpa':'Accountant / CPA', other:'Other'};
+    return labels[cat] || cat;
+  }
+
+  /* ---------- VIEW SWITCHING ---------- */
+  function setView(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelector('.card').classList.toggle('wide', name === 'dashboard' || name === 'leaddetail');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function setAuthMode(mode){
+    document.querySelectorAll('.switcher button').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
+    document.getElementById('authTitle').textContent = mode === 'login' ? 'Welcome back' : 'Join James\'s network';
+    document.getElementById('authSub').textContent = mode === 'login'
+      ? 'Log in to manage your profile and see your referral status.'
+      : 'Realtors, lawyers/notaries, financial planners, insurance agents, and accountants James refers clients to.';
+  }
+
+  document.querySelectorAll('#regCategory .chip-opt').forEach(c => c.addEventListener('click', () => {
+    if (c.dataset.val === 'borrower') {
+      window.location.href = 'index.html#estimator';
+      return;
+    }
+    document.querySelectorAll('#regCategory .chip-opt').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+  }));
+
+  /* ---------- REAL AUTH (Supabase Auth + Google OAuth) ---------- */
+  async function signInWithGoogle(){
+    await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
+  }
+  function doOAuthLogin(){ signInWithGoogle(); } // all 4 provider buttons call this; only Google is actually wired
+
+  let currentPartnerRow = null;
+  let CURRENT_PARTNER_ID = null, CURRENT_PARTNER_NAME = null; // set at runtime once linked, not hardcoded
+  const PARTNER_PIPELINE_STAGES = ['New', 'Contacted', 'In Progress', 'Closed'];
+  function timestamp(){ const d = new Date(); return d.toLocaleDateString('en-CA', {month:'short', day:'numeric'}) + ', ' + d.toLocaleTimeString('en-CA', {hour:'numeric', minute:'2-digit'}); }
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+
+  /* ---------- PARTNER CRM leads — Supabase-backed in-memory cache, server-filtered to this partner's own leads.
+     Same adapter pattern as admin.html: synchronous loadAllLeads()/saveAllLeads() so the 8 existing call sites
+     below (renderPartnerCrm, movePartnerStage, addPartnerLead, etc.) need zero changes. ---------- */
+  let leadsCache = [], leadsCacheLoaded = false, leadsSyncedSnapshot = new Map();
+  async function initPartnerLeadsCache(partnerUserId){
+    const { data, error } = await sb.from('leads').select('*').eq('assigned_partner_id', partnerUserId).order('created_at', { ascending: false });
+    if(error){ console.error('[Supabase] partner leads load failed', error); toast('Could not load your leads — refresh to retry.'); leadsCache = []; }
+    else { leadsCache = data.map(row => ({ ...row.data, id: row.id })); leadsSyncedSnapshot = new Map(data.map(r => [r.id, JSON.stringify(r.data)])); }
+    leadsCacheLoaded = true;
+  }
+  function loadAllLeads(){ return leadsCache; }
+  function saveAllLeads(list){ leadsCache = list; queueLeadsSync(list); }
+  function loadLeadsForPartner(){ return loadAllLeads(); } // already server-filtered by the query above
+
+  let leadsSyncTimer = null;
+  function queueLeadsSync(list){ clearTimeout(leadsSyncTimer); leadsSyncTimer = setTimeout(() => flushLeadsSync(list), 150); }
+  async function flushLeadsSync(list){
+    const toUpsert = [], currentIds = new Set();
+    list.forEach(l => {
+      currentIds.add(l.id);
+      const snap = JSON.stringify(l);
+      if(leadsSyncedSnapshot.get(l.id) !== snap){
+        toUpsert.push({ id: l.id, record_type: l.recordType || 'lead', email: l.email || null, assigned_partner_id: currentPartnerRow.user_id, data: l, updated_at: new Date().toISOString() });
+      }
+    });
+    const deletedIds = [...leadsSyncedSnapshot.keys()].filter(id => !currentIds.has(id));
+    try {
+      if(toUpsert.length){
+        const { error } = await sb.from('leads').upsert(toUpsert, { onConflict: 'id' });
+        if(error) throw error;
+        toUpsert.forEach(r => leadsSyncedSnapshot.set(r.id, JSON.stringify(r.data)));
+      }
+      if(deletedIds.length){
+        const { error } = await sb.from('leads').delete().in('id', deletedIds);
+        if(error) throw error;
+        deletedIds.forEach(id => leadsSyncedSnapshot.delete(id));
+      }
+    } catch(err){
+      console.error('[Supabase] partner leads sync failed', err);
+      toast('⚠ Change saved on screen but failed to sync — refresh shortly to confirm it stuck.');
+    }
+  }
+
+  /* ---------- BOOTSTRAP ---------- */
+  async function bootstrapPartner(){
+    const { data: { session } } = await sb.auth.getSession();
+    if(!session) return; // login view is already the default
+
+    const draftRaw = sessionStorage.getItem('jp_pending_reg_draft');
+    if(draftRaw){ await finalizePendingRegistrationDraft(session.user.id); return; }
+
+    const { data: linkResult, error } = await sb.rpc('link_partner_account');
+    if(error){ console.error('[link_partner_account] failed', error); showPartnerAccessDenied(session.user.email); return; }
+    if(!linkResult.found){
+      if(linkResult.reason === 'no_match') showPartnerNoProfileFound(session.user.email);
+      else showPartnerAccessDenied(session.user.email);
+      return;
+    }
+    if(linkResult.matched_count > 1) console.warn('[link_partner_account] duplicate email match, linked oldest:', linkResult.partner.id);
+    currentPartnerRow = linkResult.partner;
+    CURRENT_PARTNER_ID = currentPartnerRow.id;
+    CURRENT_PARTNER_NAME = currentPartnerRow.data.name;
+    if(currentPartnerRow.status !== 'active'){ showPartnerDeactivated(); return; }
+
+    await initPartnerLeadsCache(currentPartnerRow.user_id);
+    populateDashboardFromPartner(currentPartnerRow);
+    setView('dashboard');
+    renderPartnerCrm();
+    sb.auth.onAuthStateChange((event) => { if(event === 'SIGNED_OUT') location.reload(); });
+  }
+  function showPartnerAccessDenied(email){
+    document.getElementById('authTitle').textContent = 'Something went wrong';
+    document.getElementById('authSub').textContent = `Signed in as ${email}, but we couldn't load your partner profile. Contact James, or try signing in again.`;
+  }
+  function showPartnerNoProfileFound(email){
+    document.getElementById('authTitle').textContent = 'No partner profile found';
+    document.getElementById('authSub').textContent = `We couldn't find a partner profile for ${email}. Contact James to be added to the network, then sign in again.`;
+  }
+  function showPartnerDeactivated(){
+    document.getElementById('authTitle').textContent = 'Account inactive';
+    document.getElementById('authSub').textContent = 'Your partner account is currently inactive. Contact James if you think this is a mistake.';
+  }
+  bootstrapPartner();
+
+  function pipelineDisplayName(lead){
+    const nameParts = (lead.name||'').trim().split(/\s+/);
+    const first = (lead.firstName && lead.firstName.replace(/\.$/,'')) || nameParts[0] || '';
+    const last = lead.lastName || nameParts.slice(1).join(' ') || '';
+    const lastInitial = last ? last.trim().charAt(0).toUpperCase() + '.' : '';
+    return lastInitial ? `${first} ${lastInitial}` : first;
+  }
+  function renderPartnerCrm(){
+    const leads = loadLeadsForPartner();
+    const module = document.getElementById('myLeadsModule');
+    if(!leads.length){ module.style.display = 'block'; document.getElementById('partnerBoard').innerHTML = '<div class="empty-state" style="grid-column:1/-1;text-align:center;color:var(--ink-faint);font-size:13px;padding:20px;">No leads yet — James hasn\'t referred anyone yet, or add your own above.</div>'; document.getElementById('callbackBanner').innerHTML = ''; return; }
+    module.style.display = 'block';
+
+    const dueCallbacks = leads.filter(l => l.callbackDate && new Date(l.callbackDate) <= new Date(todayStr()));
+    document.getElementById('callbackBanner').innerHTML = dueCallbacks.length === 0 ? '' : `
+      <div class="callback-banner"><b>📞 Callback reminders</b>${dueCallbacks.map(l => `${l.name} — ${l.callbackDate}`).join(' · ')}</div>`;
+
+    document.getElementById('partnerBoard').innerHTML = PARTNER_PIPELINE_STAGES.map((stage, si) => `
+      <div class="partner-col">
+        <h4>${stage}</h4>
+        ${leads.filter(l => (l.partnerStage || 'New') === stage).map(l => `
+          <div class="partner-card" onclick="openPartnerLeadDetail('${l.id}')">
+            <div class="pname">${pipelineDisplayName(l)}${l.outcome ? `<span class="outcome-tag ${l.outcome}">${l.outcome}</span>` : ''}</div>
+            <div class="pmeta">${l.temperature || 'warm'} · Score ${l.score}<br>$${(l.mortgageVolume || l.amount || 0).toLocaleString()} mortgage volume</div>
+            <div class="pmove" onclick="event.stopPropagation()">
+              ${si > 0 ? `<button onclick="movePartnerStage('${l.id}', -1)">← Back</button>` : ''}
+              ${si < PARTNER_PIPELINE_STAGES.length - 1 ? `<button onclick="movePartnerStage('${l.id}', 1)">Next →</button>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>`).join('');
+  }
+  function movePartnerStage(id, dir){
+    const leads = loadAllLeads();
+    const lead = leads.find(l => l.id === id);
+    if(!lead) return;
+    const idx = PARTNER_PIPELINE_STAGES.indexOf(lead.partnerStage || 'New');
+    const next = Math.max(0, Math.min(PARTNER_PIPELINE_STAGES.length - 1, idx + dir));
+    lead.partnerStage = PARTNER_PIPELINE_STAGES[next];
+    saveAllLeads(leads);
+    renderPartnerCrm();
+  }
+
+  function togglePartnerAddLead(){
+    const f = document.getElementById('partnerAddLeadForm');
+    f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  }
+  function addPartnerLead(){
+    const name = document.getElementById('pl-name').value.trim();
+    const phone = document.getElementById('pl-phone').value.trim();
+    const email = document.getElementById('pl-email').value.trim();
+    const city = document.getElementById('pl-city').value.trim();
+    if(!name || !phone || !email){ alert('Name, phone, and email are required.'); return; }
+    const marketValue = parseFloat(document.getElementById('pl-marketvalue').value) || 0;
+    const mortgageVolume = parseFloat(document.getElementById('pl-mortgagevolume').value) || 0;
+    const nameParts = name.split(' ');
+    const todayS = todayStr();
+    const newLead = {
+      id: 'lead-partner-' + Date.now(), name, firstName: nameParts[0] || name, lastName: nameParts.slice(1).join(' '),
+      email, phone, city: city || '—', purposeType: 'Purchase', keyDate: todayS,
+      amount: mortgageVolume, marketValue, mortgageVolume, gds: 0, tds: 0, credit: '—', score: 50, temperature: 'warm',
+      notes: [{text: `Added by partner ${CURRENT_PARTNER_NAME}.`, date: timestamp()}],
+      scoreLog: [{delta: 50, reason: 'Added by partner', date: todayS}],
+      registered: todayS, pipeline: 'Purchase Pipeline', stage: 'New', opens: 0, clicks: 0, custom: {},
+      addedBy: 'partner:' + CURRENT_PARTNER_ID,
+      assignedPartnerId: CURRENT_PARTNER_ID, assignedPartnerName: CURRENT_PARTNER_NAME, partnerStage: 'New',
+      partnerNotes: []
+    };
+    const leads = loadAllLeads();
+    leads.unshift(newLead);
+    saveAllLeads(leads);
+    ['pl-name','pl-phone','pl-email','pl-city','pl-marketvalue','pl-mortgagevolume'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('partnerAddLeadForm').style.display = 'none';
+    renderPartnerCrm();
+  }
+
+  /* ---------- PARTNER LEAD DETAIL ---------- */
+  let currentPartnerLeadId = null;
+  function openPartnerLeadDetail(id){
+    currentPartnerLeadId = id;
+    setView('leaddetail');
+    renderPartnerLeadDetail();
+  }
+  // Foreclosure leads use a shared notes thread with admin (lead.notes) instead of the
+  // partner-private thread (lead.partnerNotes) used everywhere else.
+  function notesFieldFor(lead){
+    return lead.pipeline === 'Foreclosures Pipeline' ? 'notes' : 'partnerNotes';
+  }
+  function renderPartnerLeadDetail(){
+    const lead = loadAllLeads().find(l => l.id === currentPartnerLeadId);
+    if(!lead) return;
+    document.getElementById('partnerLeadDetailBody').innerHTML = `
+      <div class="dash-head" style="margin-bottom:18px;">
+        <div class="avatar">${lead.name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase()}</div>
+        <div>
+          <div class="name">${lead.name}${lead.outcome ? `<span class="outcome-tag ${lead.outcome}">${lead.outcome}</span>` : ''}</div>
+          <div class="role">${lead.email} · ${lead.phone}</div>
+        </div>
+      </div>
+      <div class="field-grid" style="margin-bottom:18px;">
+        <div class="field"><label>City</label><div style="font-size:14px;font-weight:600;">${lead.city}</div></div>
+        <div class="field"><label>Registered</label><div style="font-size:14px;font-weight:600;">${lead.registered}</div></div>
+        <div class="field"><label>Lead score</label><div style="font-size:14px;font-weight:600;">${lead.score}/100 · ${lead.temperature || 'warm'}</div></div>
+        <div class="field"><label>Stage</label><div style="font-size:14px;font-weight:600;">${lead.partnerStage || 'New'}</div></div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Deal Outcome</label>
+        <div class="chip-row">
+          <div class="chip-opt ${lead.outcome==='won'?'selected':''}" onclick="setPartnerOutcome('won')">✅ Won</div>
+          <div class="chip-opt ${lead.outcome==='lost'?'selected':''}" onclick="setPartnerOutcome('lost')">❌ Lost</div>
+          ${lead.outcome ? `<div class="chip-opt" onclick="setPartnerOutcome(null)">↺ Reset</div>` : ''}
+        </div>
+      </div>
+
+      <div class="field-grid" style="margin-bottom:18px;">
+        <div class="field">
+          <label>Market value ($)</label>
+          <div style="display:flex;gap:6px;"><input type="text" inputmode="numeric" id="pd-marketvalue" value="${lead.marketValue||0}"><button class="btn-mini-outline" onclick="savePartnerDealField('marketValue')">Save</button></div>
+        </div>
+        <div class="field">
+          <label>Mortgage volume ($)</label>
+          <div style="display:flex;gap:6px;"><input type="text" inputmode="numeric" id="pd-mortgagevolume" value="${lead.mortgageVolume||0}"><button class="btn-mini-outline" onclick="savePartnerDealField('mortgageVolume')">Save</button></div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Callback date</label>
+        <div style="display:flex;gap:6px;"><input type="date" id="pd-callback" value="${lead.callbackDate||''}"><button class="btn-mini-outline" onclick="savePartnerCallback()">Save</button></div>
+      </div>
+
+      <div class="field" style="margin-bottom:0;">
+        <label>Notes</label>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input type="text" id="pd-noteInput" placeholder="Add a note..." style="flex:1;" onkeydown="if(event.key==='Enter') addPartnerNote();">
+          <button class="btn-primary" style="width:auto;padding:12px 18px;margin-top:0;" onclick="addPartnerNote()">Add</button>
+        </div>
+        ${(lead[notesFieldFor(lead)]||[]).length === 0 ? '<div style="font-size:12.5px;color:var(--ink-faint);">No notes yet.</div>' : (lead[notesFieldFor(lead)]||[]).slice().reverse().map(n => `
+          <div style="padding:10px 0;border-top:1px solid var(--border);font-size:13px;">${n.text}<div style="font-size:11px;color:var(--ink-faint);margin-top:2px;">${n.date}</div></div>`).join('')}
+      </div>`;
+  }
+  function setPartnerOutcome(outcome){
+    const leads = loadAllLeads();
+    const lead = leads.find(l => l.id === currentPartnerLeadId);
+    if(!lead) return;
+    lead.outcome = outcome;
+    lead.outcomeDate = outcome ? todayStr() : null;
+    const nf = notesFieldFor(lead);
+    lead[nf] = lead[nf] || [];
+    lead[nf].push({text: outcome ? `Deal marked ${outcome.toUpperCase()} by ${CURRENT_PARTNER_NAME}.` : 'Deal reset to open.', date: timestamp()});
+    saveAllLeads(leads);
+    renderPartnerLeadDetail();
+  }
+  function savePartnerDealField(field){
+    const leads = loadAllLeads();
+    const lead = leads.find(l => l.id === currentPartnerLeadId);
+    if(!lead) return;
+    const inputId = field === 'marketValue' ? 'pd-marketvalue' : 'pd-mortgagevolume';
+    lead[field] = parseFloat(document.getElementById(inputId).value) || 0;
+    saveAllLeads(leads);
+    renderPartnerLeadDetail();
+  }
+  function savePartnerCallback(){
+    const leads = loadAllLeads();
+    const lead = leads.find(l => l.id === currentPartnerLeadId);
+    if(!lead) return;
+    lead.callbackDate = document.getElementById('pd-callback').value || null;
+    const nf1 = notesFieldFor(lead);
+    lead[nf1] = lead[nf1] || [];
+    if(lead.callbackDate) lead[nf1].push({text: 'Callback scheduled for ' + lead.callbackDate + '.', date: timestamp()});
+    saveAllLeads(leads);
+    renderPartnerLeadDetail();
+  }
+  function addPartnerNote(){
+    const input = document.getElementById('pd-noteInput');
+    const text = input.value.trim();
+    if(!text) return;
+    const leads = loadAllLeads();
+    const lead = leads.find(l => l.id === currentPartnerLeadId);
+    if(!lead) return;
+    const nf = notesFieldFor(lead);
+    lead[nf] = lead[nf] || [];
+    lead[nf].push({text, date: timestamp()});
+    saveAllLeads(leads);
+    input.value = '';
+    renderPartnerLeadDetail();
+  }
+
+  function doRegister(){
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const errorEl = document.getElementById('regError');
+    if(!name || !email){
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+    const draft = {
+      category: document.querySelector('#regCategory .chip-opt.selected').dataset.val,
+      name,
+      firm: document.getElementById('reg-firm').value.trim() || '—',
+      city: (document.getElementById('reg-city').value.trim() || '—') + ', BC',
+      phone: document.getElementById('reg-phone').value.trim() || '—',
+      email,
+      website: document.getElementById('reg-website').value.trim() || '—',
+      bio: document.getElementById('reg-bio').value.trim(),
+      photo: regPhotoData,
+      submitted: todayStr()
+    };
+    sessionStorage.setItem('jp_pending_reg_draft', JSON.stringify(draft));
+    // Sign-in is required to submit — this makes linking the new partner row to a real
+    // account fully deterministic (no email-matching needed for this path). If already
+    // signed in, submit immediately; otherwise redirect and bootstrapPartner() picks the
+    // draft back up on return.
+    sb.auth.getSession().then(({ data: { session } }) => {
+      if(session) finalizePendingRegistrationDraft(session.user.id);
+      else signInWithGoogle();
+    });
+  }
+  async function finalizePendingRegistrationDraft(userId){
+    const raw = sessionStorage.getItem('jp_pending_reg_draft');
+    if(!raw) return;
+    const draft = JSON.parse(raw);
+    const { category, name, ...rest } = draft;
+    const { error } = await sb.from('pending_registrations').insert({
+      id: 'pending-' + Date.now(), category, email: draft.email,
+      data: { ...rest, name, applicantUserId: userId }
+    });
+    sessionStorage.removeItem('jp_pending_reg_draft');
+    if(error){ console.error('[Supabase] registration insert failed', error); toast('Submission failed — try again.'); return; }
+    document.getElementById('regSentName').textContent = name;
+    setView('registered');
+  }
+</script>
+
+</body>
+</html>
