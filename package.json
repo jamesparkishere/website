@@ -1,0 +1,12 @@
+{
+  "name": "jamespark-ca",
+  "version": "1.0.0",
+  "private": true,
+  "description": "jamespark.ca — static site (no build step). server.js is a zero-dependency fallback for hosts that require a Node start command.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
