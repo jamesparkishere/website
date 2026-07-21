@@ -138,11 +138,20 @@
   .thumb-preview{width:100%;max-width:220px;aspect-ratio:16/9;border-radius:8px;background-color:var(--bg);background-size:cover;background-position:center;border:1px solid var(--border);margin-bottom:8px;}
 
   /* CRM sub-nav */
-  .crm-subnav, .email-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;border-bottom:1px solid var(--border);padding-bottom:14px;}
-  .crm-sub-btn, .email-sub-btn{background:var(--bg);border:1px solid var(--border);color:var(--ink-soft);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer;}
-  .crm-sub-btn.active, .email-sub-btn.active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
-  .crm-sub, .email-sub{display:none;}
-  .crm-sub.active, .email-sub.active{display:block;}
+  .crm-subnav, .email-subnav, .partners-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;border-bottom:1px solid var(--border);padding-bottom:14px;}
+  .crm-sub-btn, .email-sub-btn, .partners-sub-btn{background:var(--bg);border:1px solid var(--border);color:var(--ink-soft);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer;}
+  .crm-sub-btn.active, .email-sub-btn.active, .partners-sub-btn.active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .crm-sub, .email-sub, .partners-sub{display:none;}
+  .crm-sub.active, .email-sub.active, .partners-sub.active{display:block;}
+
+  /* Command Center accordion */
+  .acc-item{border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .acc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;}
+  .acc-head h3{margin:0;font-size:15px;}
+  .acc-caret{font-size:12px;color:var(--ink-faint);transition:transform 0.15s ease;flex:none;margin-left:12px;}
+  .acc-item.open .acc-caret{transform:rotate(90deg);}
+  .acc-body{display:none;padding:0 20px 20px;}
+  .acc-item.open .acc-body{display:block;}
 
   /* lead detail */
   .lead-detail-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:14px;}
@@ -295,7 +304,6 @@
       <button class="tab-btn active" data-tab="command">🎯 Command Center</button>
       <button class="tab-btn" data-tab="crm">CRM</button>
       <button class="tab-btn" data-tab="partners">Partners</button>
-      <button class="tab-btn" data-tab="registrations">Registrations <span class="mini-badge badge risk" id="regCountBadge" style="margin-left:4px;">2</span></button>
       <button class="tab-btn" data-tab="blog">Blog</button>
       <button class="tab-btn" data-tab="rates">Rates</button>
       <button class="tab-btn" data-tab="calendar">Calendar</button>
@@ -306,7 +314,7 @@
       <button class="tab-btn" data-tab="outreach">Social Outreach</button>
       <button class="tab-btn" data-tab="seo">SEO</button>
       <button class="tab-btn" data-tab="videopages">🎬 Video Pages</button>
-      <button class="tab-btn" data-tab="bigsix" style="margin-left:auto;background:var(--ink);color:#fff;">🔒 Big Six</button>
+      <button class="tab-btn" data-tab="bigsix" style="margin-left:auto;background:var(--ink);color:#fff;">🔒 Big 6</button>
     </div>
   </nav>
 </header>
@@ -329,57 +337,120 @@
   <div class="section active" id="section-command">
     <span class="kicker">Admin — internal only</span>
     <h1>Command Center.</h1>
-    <p class="sub">Everything to review today, in one place: blog drafts, social posts, and outreach for people who've engaged with you. <strong>Approving/sending is simulated</strong> — same as the rest of this admin panel.</p>
+    <p class="sub">Everything to review today, in one place. Click a section below to expand it. <strong>Approving/sending is simulated</strong> — same as the rest of this admin panel.</p>
 
-    <div class="module">
-      <h3 style="font-size:14px;margin-bottom:10px;">Log an engagement</h3>
-      <p class="sub" style="text-align:left;margin-bottom:12px;">No live social API is connected yet, so log people who liked, commented, followed, or DM'd you, and this drafts the outreach for you.</p>
-      <div class="field-grid">
-        <div class="field"><label>Name</label><input type="text" id="eng-name" placeholder="e.g. Priya Chandra"></div>
-        <div class="field"><label>Platform</label>
-          <select id="eng-platform"><option>Instagram</option><option>Facebook</option><option>LinkedIn</option><option>TikTok</option></select>
+    <div class="acc-item" id="acc-calllist">
+      <div class="acc-head" onclick="toggleAccordion('acc-calllist')"><h3>📞 Daily Call List</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
+        <div class="module" style="background:var(--indigo-wash);border-color:transparent;">
+          <h3 style="color:var(--indigo);">📧 7:00 AM daily digest — preview</h3>
+          <p class="sub" style="margin-bottom:0;">This is exactly what gets emailed to James every morning at 7:00 AM. <strong>Sending itself is simulated</strong> — a real scheduled send needs a backend cron job and an email service (e.g. SendGrid/Postmark) connected, which isn't set up yet.</p>
         </div>
+        <div id="callListBody"></div>
       </div>
-      <div class="field-grid">
-        <div class="field"><label>They</label>
-          <select id="eng-action"><option value="liked">Liked a post</option><option value="commented">Commented</option><option value="followed">Followed / started following</option><option value="messaged">Sent a DM</option></select>
-        </div>
-        <div class="field"><label>Category</label>
-          <div class="chip-row" id="eng-category">
-            <div class="chip-opt selected" data-val="follower">💬 Follower / Customer</div>
-            <div class="chip-opt" data-val="realtor">🤝 Realtor</div>
+    </div>
+
+    <div class="acc-item" id="acc-tasksroutine">
+      <div class="acc-head" onclick="toggleAccordion('acc-tasksroutine')"><h3>📋 Task &amp; Daily Routine</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
+        <p class="mls-hint" style="margin-top:0;margin-bottom:18px;">Today — <span id="bigSixDateLabel"></span></p>
+        <div class="task-grid">
+          <div>
+            <div class="task-col-head">
+              <h3 style="margin-bottom:0;">My To-Do List</h3>
+              <button class="btn-mini" onclick="toggleTodoForm()">+ Add Task</button>
+            </div>
+            <div class="module" id="todoAddForm" style="display:none;padding:16px;margin-bottom:14px;">
+              <div class="field"><label>Task</label><input type="text" id="todoInput" placeholder="e.g. Follow up with Realtors"></div>
+              <div class="field" style="margin-bottom:0;"><label>Due date <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label><input type="date" id="todoDue"></div>
+              <button class="btn-primary" style="margin-top:12px;" onclick="addTodo()">Add Task</button>
+            </div>
+            <div id="todoActiveList"></div>
+            <div id="todoCompletedWrap"></div>
+          </div>
+          <div>
+            <div class="task-col-head">
+              <div><h3 style="margin-bottom:0;">Daily Routine</h3><div class="task-sub2" id="routineProgressLabel">Today: 0% complete</div></div>
+              <button class="btn-mini" onclick="toggleRoutineForm()">+ Add Task</button>
+            </div>
+            <div class="module" id="routineAddForm" style="display:none;padding:16px;margin-bottom:14px;">
+              <div class="field" style="margin-bottom:12px;"><label>Routine item</label><input type="text" id="routineInput" placeholder="e.g. Read 10 pages"></div>
+              <button class="btn-primary" onclick="addRoutineExtra()">Add Task</button>
+            </div>
+            <div id="routineList"></div>
           </div>
         </div>
       </div>
-      <div class="field"><label>What did you see them post/comment? <span style="font-weight:400;color:var(--ink-faint);">(optional but makes the draft feel real)</span></label>
-        <input type="text" id="eng-note" placeholder="e.g. commented asking about renewal timing"></div>
-      <button class="btn-primary" onclick="logEngagement()">+ Log engagement</button>
     </div>
 
-    <div class="cc-grid">
-      <div class="cc-col">
+    <div class="acc-item" id="acc-crmtasks">
+      <div class="acc-head" onclick="toggleAccordion('acc-crmtasks')"><h3>✅ CRM Tasks</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
+        <h3 style="font-size:14px;margin-bottom:10px;">📞 Callback Tasks</h3>
+        <p class="sub" style="margin-bottom:16px;">Callback dates set from any lead's detail page — synced with the assigned partner's own tasks.</p>
+        <div id="callbackRemindersList" style="margin-bottom:28px;"></div>
+        <h3 style="font-size:14px;margin-bottom:10px;">Key Date Tasks</h3>
+        <p class="sub" style="margin-bottom:16px;">Every date on file per lead — labeled by exactly what it is (closing, conditions of financing, interest adjustment, or the general key date). These also appear on your Daily Call List when due.</p>
+        <div id="remindersList"></div>
+        <div id="doneTasksSection" style="margin-top:24px;">
+          <h3 style="font-size:13px;margin-bottom:10px;color:var(--ink-faint);cursor:pointer;" onclick="toggleDoneTasks()">▸ Completed tasks (<span id="doneTasksCount">0</span>) — click to show</h3>
+          <div id="doneTasksList" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item" id="acc-blog">
+      <div class="acc-head" onclick="toggleAccordion('acc-blog')"><h3>📝 Blog — today's queue</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
         <div class="section-head">
-          <h3 style="font-size:15px;margin-bottom:0;">📝 Blog — today's queue</h3>
+          <span id="ccBlogCount" class="sub" style="margin-bottom:0;">—</span>
           <button class="btn-mini ghost" onclick="suggestExtraBlogDraft()">✨ Suggest another (20 to cycle)</button>
         </div>
-        <span id="ccBlogCount" class="sub" style="margin-bottom:8px;display:block;">—</span>
         <div id="ccBlogDrafts"></div>
       </div>
-      <div class="cc-col">
-        <div class="section-head">
-          <h3 style="font-size:15px;margin-bottom:0;">📣 Social posts — today's queue</h3>
-        </div>
+    </div>
+
+    <div class="acc-item" id="acc-social">
+      <div class="acc-head" onclick="toggleAccordion('acc-social')"><h3>📣 Social posts — today's queue</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
         <span id="ccSocialCount" class="sub" style="margin-bottom:8px;display:block;">—</span>
         <div id="ccSocialDrafts"></div>
       </div>
-      <div class="cc-col">
+    </div>
+
+    <div class="acc-item" id="acc-outreach">
+      <div class="acc-head" onclick="toggleAccordion('acc-outreach')"><h3>💬 Outreach queue</h3><span class="acc-caret">▸</span></div>
+      <div class="acc-body">
         <div class="section-head">
-          <h3 style="font-size:15px;margin-bottom:0;">💬 Outreach queue</h3>
+          <span id="ccEngagementCount" class="sub" style="margin-bottom:0;">—</span>
+          <button class="btn-mini ghost" onclick="toggleQuickAddOutreach()">+ Add</button>
         </div>
-        <span id="ccEngagementCount" class="sub" style="margin-bottom:8px;display:block;">—</span>
+        <div class="module" id="quickAddOutreachForm" style="display:none;">
+          <div class="field-grid">
+            <div class="field"><label>Name</label><input type="text" id="eng-name" placeholder="e.g. Priya Chandra"></div>
+            <div class="field"><label>Platform</label>
+              <select id="eng-platform"><option>Instagram</option><option>Facebook</option><option>LinkedIn</option><option>TikTok</option></select>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>They</label>
+              <select id="eng-action"><option value="liked">Liked a post</option><option value="commented">Commented</option><option value="followed">Followed / started following</option><option value="messaged">Sent a DM</option></select>
+            </div>
+            <div class="field"><label>Category</label>
+              <div class="chip-row" id="eng-category">
+                <div class="chip-opt selected" data-val="follower">💬 Follower / Customer</div>
+                <div class="chip-opt" data-val="realtor">🤝 Realtor</div>
+              </div>
+            </div>
+          </div>
+          <div class="field"><label>Note <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
+            <input type="text" id="eng-note" placeholder="e.g. commented asking about renewal timing"></div>
+          <button class="btn-primary" onclick="logEngagement()">Add to queue</button>
+        </div>
         <div id="ccEngagementQueue"></div>
       </div>
     </div>
+
   </div>
 
   <!-- CRM -->
@@ -392,9 +463,7 @@
       <button class="crm-sub-btn active" data-sub="leadtable">Leads</button>
       <button class="crm-sub-btn" data-sub="dbmining">🎯 DB Mining</button>
       <button class="crm-sub-btn" data-sub="pipeline">Pipeline</button>
-      <button class="crm-sub-btn" data-sub="tasks">Tasks</button>
       <button class="crm-sub-btn" data-sub="revenue">Revenue</button>
-      <button class="crm-sub-btn" data-sub="calllist">Daily Call List</button>
       <button class="crm-sub-btn" data-sub="analytics">Engagement</button>
       <button class="crm-sub-btn" data-sub="scheduling">Email/SMS</button>
       <button class="crm-sub-btn" data-sub="import">Import CSV</button>
@@ -569,34 +638,11 @@
       <div class="pipeline-board" id="pipelineBoard"></div>
     </div>
 
-    <!-- TASKS -->
-    <div class="crm-sub" id="crm-tasks">
-      <h3 style="font-size:14px;margin-bottom:10px;">📞 Callback Tasks</h3>
-      <p class="sub" style="margin-bottom:16px;">Callback dates set from any lead's detail page — synced with the assigned partner's own tasks.</p>
-      <div id="callbackRemindersList" style="margin-bottom:28px;"></div>
-      <h3 style="font-size:14px;margin-bottom:10px;">Key Date Tasks</h3>
-      <p class="sub" style="margin-bottom:16px;">Every date on file per lead — labeled by exactly what it is (closing, conditions of financing, interest adjustment, or the general key date). These also appear on your Daily Call List when due.</p>
-      <div id="remindersList"></div>
-      <div id="doneTasksSection" style="margin-top:24px;">
-        <h3 style="font-size:13px;margin-bottom:10px;color:var(--ink-faint);cursor:pointer;" onclick="toggleDoneTasks()">▸ Completed tasks (<span id="doneTasksCount">0</span>) — click to show</h3>
-        <div id="doneTasksList" style="display:none;"></div>
-      </div>
-    </div>
-
     <!-- REVENUE -->
     <div class="crm-sub" id="crm-revenue">
       <div class="stats-row" id="revenueStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;"></div>
       <h3 style="font-size:14px;margin-bottom:10px;">Closed Deals</h3>
       <div id="revenueList"></div>
-    </div>
-
-    <!-- DAILY CALL LIST -->
-    <div class="crm-sub" id="crm-calllist">
-      <div class="module" style="background:var(--indigo-wash);border-color:transparent;">
-        <h3 style="color:var(--indigo);">📧 7:00 AM daily digest — preview</h3>
-        <p class="sub" style="margin-bottom:0;">This is exactly what gets emailed to James every morning at 7:00 AM. <strong>Sending itself is simulated</strong> — a real scheduled send needs a backend cron job and an email service (e.g. SendGrid/Postmark) connected, which isn't set up yet.</p>
-      </div>
-      <div id="callListBody"></div>
     </div>
 
     <!-- ENGAGEMENT ANALYTICS -->
@@ -1145,39 +1191,8 @@
   <!-- BIG SIX (private) -->
   <div class="section" id="section-bigsix">
     <span class="kicker" style="color:var(--coral);">🔒 Private — James only</span>
-    <h1>The Big Six.</h1>
-    <p class="sub">Daily discipline tracker, scored weekly/monthly/annually, and checked against closed deals.</p>
-
-    <div class="module">
-      <h3 style="margin-bottom:4px;">📋 Tasks &amp; Daily Routine</h3>
-      <p class="mls-hint" style="margin-top:0;margin-bottom:18px;">Today — <span id="bigSixDateLabel"></span></p>
-      <div class="task-grid">
-        <div>
-          <div class="task-col-head">
-            <h3 style="margin-bottom:0;">My To-Do List</h3>
-            <button class="btn-mini" onclick="toggleTodoForm()">+ Add Task</button>
-          </div>
-          <div class="module" id="todoAddForm" style="display:none;padding:16px;margin-bottom:14px;">
-            <div class="field"><label>Task</label><input type="text" id="todoInput" placeholder="e.g. Follow up with Realtors"></div>
-            <div class="field" style="margin-bottom:0;"><label>Due date <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label><input type="date" id="todoDue"></div>
-            <button class="btn-primary" style="margin-top:12px;" onclick="addTodo()">Add Task</button>
-          </div>
-          <div id="todoActiveList"></div>
-          <div id="todoCompletedWrap"></div>
-        </div>
-        <div>
-          <div class="task-col-head">
-            <div><h3 style="margin-bottom:0;">Daily Routine</h3><div class="task-sub2" id="routineProgressLabel">Today: 0% complete</div></div>
-            <button class="btn-mini" onclick="toggleRoutineForm()">+ Add Task</button>
-          </div>
-          <div class="module" id="routineAddForm" style="display:none;padding:16px;margin-bottom:14px;">
-            <div class="field" style="margin-bottom:12px;"><label>Routine item</label><input type="text" id="routineInput" placeholder="e.g. Read 10 pages"></div>
-            <button class="btn-primary" onclick="addRoutineExtra()">Add Task</button>
-          </div>
-          <div id="routineList"></div>
-        </div>
-      </div>
-    </div>
+    <h1>The Big 6.</h1>
+    <p class="sub">Daily discipline tracker, scored weekly/monthly/annually, and checked against closed deals. Daily tasks &amp; routine now live on the Command Center.</p>
 
     <div class="ring-band" id="bigSixScoreBand"></div>
 
@@ -1225,58 +1240,62 @@
     <h1>Partner directory management.</h1>
     <p class="sub">Realtors get their own public Realtor Directory; everyone else (lawyers/notaries, financial planners, insurance agents, accountants, other) feeds the public Partner Directory. Managed together here since it's the same underlying data.</p>
 
-    <div class="section-head">
-      <div class="chip-row" id="partnerFilter">
-        <div class="chip-opt selected" data-val="all">All</div>
-        <div class="chip-opt" data-val="realtor">Realtors</div>
-        <div class="chip-opt" data-val="lawyer-notary">Lawyer / Notary</div>
-        <div class="chip-opt" data-val="financial-planner">Financial Planner</div>
-        <div class="chip-opt" data-val="insurance-agent">Insurance Agent</div>
-        <div class="chip-opt" data-val="accountant-cpa">Accountant / CPA</div>
-        <div class="chip-opt" data-val="other">Other</div>
-      </div>
-      <button class="btn-primary" onclick="toggleAddPartnerForm()">+ Add partner</button>
+    <div class="partners-subnav" id="partnersSubnav">
+      <button class="partners-sub-btn active" data-sub="directory" onclick="switchPartnersSub('directory')">Directory</button>
+      <button class="partners-sub-btn" data-sub="registrations" onclick="switchPartnersSub('registrations')">Registrations <span class="mini-badge badge risk" id="regCountBadge">2</span></button>
     </div>
 
-    <div class="module" id="addPartnerForm" style="display:none;">
-      <h3>Add partner</h3>
-      <div class="field">
-        <label>Category</label>
-        <div class="chip-row" id="newPartnerCategory">
-          <div class="chip-opt selected" data-val="realtor">Realtor</div>
+    <div class="partners-sub active" id="partners-directory">
+      <div class="section-head">
+        <div class="chip-row" id="partnerFilter">
+          <div class="chip-opt selected" data-val="all">All</div>
+          <div class="chip-opt" data-val="realtor">Realtors</div>
           <div class="chip-opt" data-val="lawyer-notary">Lawyer / Notary</div>
           <div class="chip-opt" data-val="financial-planner">Financial Planner</div>
           <div class="chip-opt" data-val="insurance-agent">Insurance Agent</div>
           <div class="chip-opt" data-val="accountant-cpa">Accountant / CPA</div>
           <div class="chip-opt" data-val="other">Other</div>
         </div>
+        <button class="btn-primary" onclick="toggleAddPartnerForm()">+ Add partner</button>
       </div>
-      <div class="field" style="text-align:center;">
-        <label>Profile photo <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
-        <div id="npPhotoPreview" style="width:72px;height:72px;border-radius:50%;background:var(--bg);border:1.5px dashed var(--border-strong);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--ink-faint);font-size:11px;">No photo</div>
-        <input type="file" accept="image/*" id="np-photo" onchange="previewNewPartnerPhoto(this)" style="max-width:220px;margin:0 auto;display:block;">
+
+      <div class="module" id="addPartnerForm" style="display:none;">
+        <h3>Add partner</h3>
+        <div class="field">
+          <label>Category</label>
+          <div class="chip-row" id="newPartnerCategory">
+            <div class="chip-opt selected" data-val="realtor">Realtor</div>
+            <div class="chip-opt" data-val="lawyer-notary">Lawyer / Notary</div>
+            <div class="chip-opt" data-val="financial-planner">Financial Planner</div>
+            <div class="chip-opt" data-val="insurance-agent">Insurance Agent</div>
+            <div class="chip-opt" data-val="accountant-cpa">Accountant / CPA</div>
+            <div class="chip-opt" data-val="other">Other</div>
+          </div>
+        </div>
+        <div class="field" style="text-align:center;">
+          <label>Profile photo <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
+          <div id="npPhotoPreview" style="width:72px;height:72px;border-radius:50%;background:var(--bg);border:1.5px dashed var(--border-strong);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--ink-faint);font-size:11px;">No photo</div>
+          <input type="file" accept="image/*" id="np-photo" onchange="previewNewPartnerPhoto(this)" style="max-width:220px;margin:0 auto;display:block;">
+        </div>
+        <div class="field-grid">
+          <div class="field"><label>Full name</label><input type="text" id="np-name" placeholder="Jane Doe"></div>
+          <div class="field"><label>Firm / company</label><input type="text" id="np-firm" placeholder="RE/MAX"></div>
+          <div class="field"><label>City</label><input type="text" id="np-city" placeholder="Port Moody, BC"></div>
+          <div class="field"><label>Rating (1–5)</label><input type="text" inputmode="numeric" id="np-rating" placeholder="5"></div>
+          <div class="field"><label>Phone</label><input type="text" id="np-phone" placeholder="(604) 555-0100"></div>
+          <div class="field"><label>Email</label><input type="text" id="np-email" placeholder="jane@example.com"></div>
+          <div class="field" style="grid-column:1/-1;"><label>Website</label><input type="text" id="np-website" placeholder="janedoe.ca"></div>
+        </div>
+        <button class="btn-primary" onclick="addPartner()">Save partner</button>
       </div>
-      <div class="field-grid">
-        <div class="field"><label>Full name</label><input type="text" id="np-name" placeholder="Jane Doe"></div>
-        <div class="field"><label>Firm / company</label><input type="text" id="np-firm" placeholder="RE/MAX"></div>
-        <div class="field"><label>City</label><input type="text" id="np-city" placeholder="Port Moody, BC"></div>
-        <div class="field"><label>Rating (1–5)</label><input type="text" inputmode="numeric" id="np-rating" placeholder="5"></div>
-        <div class="field"><label>Phone</label><input type="text" id="np-phone" placeholder="(604) 555-0100"></div>
-        <div class="field"><label>Email</label><input type="text" id="np-email" placeholder="jane@example.com"></div>
-        <div class="field" style="grid-column:1/-1;"><label>Website</label><input type="text" id="np-website" placeholder="janedoe.ca"></div>
-      </div>
-      <button class="btn-primary" onclick="addPartner()">Save partner</button>
+
+      <div class="partner-grid" id="partnerGrid"></div>
     </div>
 
-    <div class="partner-grid" id="partnerGrid"></div>
-  </div>
-
-  <!-- REGISTRATIONS -->
-  <div class="section" id="section-registrations">
-    <span class="kicker">Admin — internal only</span>
-    <h1>Pending partner registrations.</h1>
-    <p class="sub">Realtors, lawyers, and financial planners who self-registered through the public partner sign-up form, awaiting approval before they appear in any directory.</p>
-    <div id="regList"></div>
+    <div class="partners-sub" id="partners-registrations">
+      <p class="sub" style="margin-top:0;">Realtors, lawyers, and financial planners who self-registered through the public partner sign-up form, awaiting approval before they appear in any directory.</p>
+      <div id="regList"></div>
+    </div>
   </div>
 
   <!-- BLOG -->
@@ -3530,7 +3549,20 @@
     saveEngagementLog(log);
     document.getElementById('eng-name').value = '';
     document.getElementById('eng-note').value = '';
+    document.getElementById('quickAddOutreachForm').style.display = 'none';
     renderCommandCenter();
+  }
+  function toggleAccordion(id){
+    document.getElementById(id).classList.toggle('open');
+  }
+  function toggleQuickAddOutreach(){
+    const el = document.getElementById('quickAddOutreachForm');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+  function switchPartnersSub(sub){
+    document.querySelectorAll('#partnersSubnav .partners-sub-btn').forEach(b => b.classList.toggle('active', b.dataset.sub === sub));
+    document.getElementById('partners-directory').classList.toggle('active', sub === 'directory');
+    document.getElementById('partners-registrations').classList.toggle('active', sub === 'registrations');
   }
   function draftOutreachForEngagement(id){
     const log = loadEngagementLog();
@@ -3629,7 +3661,10 @@
     const engagements = loadEngagementLog();
     const pending = engagements.filter(e => e.status !== 'sent').length;
     document.getElementById('ccEngagementCount').textContent = pending + ' to review' + (engagements.length ? ' · ' + engagements.length + ' total' : '');
-    document.getElementById('ccEngagementQueue').innerHTML = engagements.length === 0 ? '<div class="empty-state">No engagements logged yet — log one above.</div>' : engagements.map(engagementCardHTML).join('');
+    document.getElementById('ccEngagementQueue').innerHTML = engagements.length === 0 ? '<div class="empty-state">No engagements logged yet — click + Add above.</div>' : engagements.map(engagementCardHTML).join('');
+    renderCallList();
+    renderReminders();
+    renderCallbackReminders();
   }
 
   /* ---------- EMAIL MARKETING (mini GetResponse — SIMULATED sending/tracking until a real ESP is connected) ---------- */
