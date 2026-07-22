@@ -2557,6 +2557,10 @@
   }
   function runImport(){
     if(!importState) return;
+    if(!leadsCacheLoaded){
+      toast('Still loading your leads — wait a second and try again.');
+      return;
+    }
     const {headers, dataRows} = importState;
     const recordType = document.querySelector('#importCategory .chip-opt.selected').dataset.val;
     const mapping = headers.map((h, i) => document.getElementById('import-map-' + i).value);
